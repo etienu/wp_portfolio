@@ -1,0 +1,68 @@
+@use "../global" as global;
+//--------------------------------
+//  GoogleReCaptcha消す
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+//--------------------------------
+//    contact
+//--------------------------------
+.l-contact {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.l-contact__inner {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    form {
+        max-width: 800px;
+        width: 100%;
+    }
+}
+
+//  コンバージョンボタン
+.l-contact__cvwrapper {
+    width: 100%;
+}
+
+//  レスポンシブ
+@include global.mq('sp-tab2') {
+    .l-contact__inner {
+        flex-direction: column;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+}
+
+@include global.mq('sp') {
+    .l-contact__inner {
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .c-lead__hard {
+                margin-left: 20px;
+                margin-right: 20px;
+                max-width: 480px;
+                text-align: left;
+            }
+            .p-contact__form-items {
+                width: 100%;
+            }
+            .p-contact__form-footer {
+                margin: 0 20px;
+            }
+        }
+    }
+}

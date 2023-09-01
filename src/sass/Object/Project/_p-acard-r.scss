@@ -1,0 +1,140 @@
+@use "../../global" as global;
+// project - PostCard-Rect
+// 投稿記事カード - 横長長方形
+//----------------------------------------
+//  投稿記事・一覧枠
+//----------------------------------------
+.p-pcard-r {
+    width: 100%;
+    a {
+        width: 100%;
+        padding: 0px auto 0px auto;
+        display: flex;
+        flex-direction: row;
+        border-radius: 10px;
+        background-color: rgb(0, 40, 20);
+        overflow: hidden;
+        transition: 0.3s;
+        &:hover {
+            transform: translate(0px, -2px);
+            box-shadow: 0 4px 20px 0 rgba(40, 255, 40, 0.6);
+        }
+    }
+    @include global.mq('tab-pc') {
+        width: calc(50% - 10px);
+        margin-top: 20px;
+    }
+    // 1090
+    // 590/54% : 560/51%
+    @include global.mq('sp') {
+        width: calc(50% - 10px);
+        margin-top: 20px;
+        //        flex-direction: column;
+    }
+}
+
+.p-pcard-r__image {
+    position: relative;
+    aspect-ratio: 16/9;
+}
+
+.p-pcard-r__content {
+    width: calc( 100% - 200px);
+    height: calc( 100% - 10px);
+    margin: auto 10px auto 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @include global.mq('tab') {
+        //        width: calc( 100% - 180px);
+    }
+    //サイドと同じにする
+    @include global.mq('sp') {
+        margin: auto 10px auto 10px;
+        //        width: calc(100% - 160px);
+    }
+}
+
+.p-pcard-r__meta {
+    width: 100%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    @include global.mq('sp') {}
+}
+
+.p-pcard-r__meta-tag {
+    position: absolute;
+    right: 0;
+    background-color: global.$color-accent;
+    //filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.5));
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 1);
+    // 104x36
+    padding: 2px 8px;
+    font-size: 14px;
+    font-weight: normal;
+    color: white; //global.$color-key-red;
+    @include global.mq('sp') {
+        padding: 3px 12px;
+        font-size: 12px;
+    }
+}
+
+.p-pcard-r__meta-new {
+    margin-left: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: global.$color-key-red;
+    @include global.mq('sp') {
+        margin-left: 8px;
+        font-size: 14px;
+    }
+}
+
+.p-pcard-r__meta-date {
+    //margin-left: 20px; //auto;
+    color: global.$color-key-gray;
+    text-align: right;
+    i {
+        margin-right: 8px;
+    }
+    @include global.mq('sp') {
+        width: 50%;
+    }
+}
+
+.p-pcard-r__meta-modified-date {
+    @extend .p-pcard-r__meta-date;
+    margin-left: 20px;
+    @include global.mq('sp') {
+        width: calc(50% - 20px);
+    }
+}
+
+.p-pcard-r__lead {
+    //margin-top: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    color: white; //$color-title;
+    text-align: left;
+    @include global.mq('sp-tab') {
+        margin-top: 4px;
+        font-size: 14px;
+        line-height: 1.4em;
+    }
+}
+
+.p-pcard-r__excerpt {
+    margin-top: 8px;
+    font-weight: normal;
+    font-size: 14px;
+    color: global.$color-key-gray;
+    ;
+    text-align: left;
+    @include global.mq('sp') {
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 1.4em;
+    }
+}

@@ -1,0 +1,61 @@
+/*カスタムブロックスタイル*/
+
+
+/*ツリー構成図リストスタイル*/
+
+.is-style-tree {
+    list-style-type: none;
+    display: block;
+    position: relative;
+    background-color: #eee;
+    padding: 30px;
+    border: solid 1px #ccc;
+    font-size: 12px;
+}
+
+.is-style-tree li {
+    line-height: 21px;
+    margin: 0 !important;
+}
+
+.is-style-tree ul {
+    display: block;
+    position: relative;
+    padding: 0;
+    padding-left: 21px;
+    padding-inline-start: 21px;
+    margin: 0;
+    margin-bottom: 10px !important;
+}
+
+.is-style-tree ul:before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    bottom: 0;
+    left: -20px;
+    width: 0;
+    border-left: 1px solid gray;
+    margin-left: 24px;
+}
+
+.is-style-tree ul li {
+    display: block;
+    position: relative;
+}
+
+.is-style-tree ul li:before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    bottom: 0;
+    left: -17px;
+    width: 14px;
+    height: 0;
+    border-top: 1px solid gray;
+}
+
+.is-style-tree ul li:last-child:before {
+    height: auto;
+    background-color: #eee;
+}

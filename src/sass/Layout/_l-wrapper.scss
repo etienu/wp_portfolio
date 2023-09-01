@@ -1,0 +1,49 @@
+@use "../global" as global;
+// どのレイアウトでも使いそうな汎用枠組み
+.l-wrapper__returnbutton {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+//  半球のでっぱり枠
+//  ページの読み込まれ方によってはtranslateYが効いていない事があり、あまり設計的によくない。
+.l-wrapper__hemispherebody {
+    position: absolute;
+    content: "";
+    left: 0;
+    width: 120vw;
+    height: 140px;
+    margin: 0 calc(50% - 60vw);
+    border-radius: 50%;
+    z-index: 2;
+    @include global.mq('sp') {
+        height: 60px;
+    }
+}
+
+//  半球のでっぱり枠上側
+.l-wrapper__hemispherebody-top {
+    @extend .l-wrapper__hemispherebody;
+    top: -5%;
+    //margin-top: -50%;
+    //    transform: translateY(-50%);
+}
+
+//  半球のでっぱり枠下側
+.l-wrapper__hemispherebody-bottom {
+    @extend .l-wrapper__hemispherebody;
+    bottom: -5%;
+    //margin-top: 50%;
+    //    transform: translateY(50%);
+}
+
+//  色はu-color-bgで指定
+.l-wrapper__hemisphere--white {
+    background-color: #fff;
+}
+
+.l-wrapper__hemisphere--main {
+    background-color: global.$color-background-main;
+}

@@ -1,0 +1,106 @@
+@use "../global" as global;
+
+/*--------------------------------------------------
+    記事
+    431 matter.jsはweb制作に使えるのか試してサンプル作った
+    431.php
+--------------------------------------------------*/
+
+.test {
+    background-color: purple;
+    color: yellow;
+}
+
+.content-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    //height: 100%;
+    //    margin: 20px auto;
+    @include global.mq('sp') {
+        //    margin: 20px auto;
+    }
+}
+
+.content-inner {
+    display: block;
+    position: relative;
+    min-width: 200px;
+    max-width: 640px;
+    max-height: 480px;
+    //width: 100%;
+    height: 100%; //480px;
+    //    max-width: 320px;
+    //    max-height: 320px;
+    background-color: transparent;
+    box-shadow: 1px 1px 8px black;
+    //    overflow: hidden;
+    transition: 0.3s;
+    @include global.mq('sp') {
+        //max-width: 320px;
+        //max-height: 240px;
+    }
+}
+
+//========================================================
+//----------------------------------------
+//  matter.js
+//----------------------------------------
+.canvas-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-image: url(../content/yoyocafe/img/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-height: 480px;
+}
+
+//  キャンバス内の情報表示
+.canvas-infoframe {
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 28px;
+    right: 50%;
+    bottom: 5%;
+    @include global.mq('sp') {
+        right: 37%;
+        bottom: 1%;
+    }
+}
+
+.canvas-info {
+    position: relative;
+    //    width: 100px;
+    //    height: 28px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    text-align: center;
+    @include global.mq('sp') {
+        //        right: 40%;
+        //        bottom: 1%;
+    }
+    &:after {
+        position: absolute;
+        content: " ";
+        @include global.mq('tab-pc') {
+            left: 8px;
+            top: -16px;
+            border-left: 0px solid transparent;
+            border-bottom: 16px solid rgba(0, 0, 0, 0.5);
+            border-right: 10px solid transparent;
+        }
+        @include global.mq('sp') {
+            left: 8px;
+            top: -10px;
+            border-left: 2px solid transparent;
+            border-bottom: 10px solid rgba(0, 0, 0, 0.5);
+            border-right: 8px solid transparent;
+        }
+    }
+}

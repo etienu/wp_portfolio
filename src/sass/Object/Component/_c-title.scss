@@ -1,0 +1,260 @@
+@use "../../global" as global;
+//--------------------------------
+//  見出し
+//--------------------------------
+.c-title {
+    position: relative;
+    display: inline-block;
+    font-size: global.$size-font-h2-en;
+    font-family: global.$font-title;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: global.$color-font;
+    p {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+.c-title__h2 {
+    font-family: global.$font-title;
+    font-weight: bold;
+    width: 100%;
+    font-size: 28px;
+    text-align: left;
+    position: relative;
+    line-height: 1.5em;
+    color: white;
+    padding-bottom: 8px;
+    span {
+        margin-left: 40px;
+        font-size: 16px;
+        color: rgb(60, 80, 60);
+        @include global.mq('sp') {
+            margin-left: 0px;
+            display: none;
+        }
+    }
+    &:before {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        content: "";
+        width: 100%;
+        height: 8px;
+        border: 4px solid lightgreen;
+        border-radius: 10px;
+    }
+}
+
+.c-title__h2--solid-h2 {
+    &:before {
+        height: 2px;
+        border: 2px solid lightgreen;
+    }
+}
+
+.c-title__h2--dotted {
+    &:before {
+        height: 2px;
+        border: 1px dotted lightgreen;
+    }
+}
+
+.c-title__h2--dashed {
+    &:before {
+        height: 2px;
+        border: 1px dashed lightgreen;
+    }
+}
+
+.c-title__heading {
+    color: global.$color-font-dark;
+    width: 100%;
+    background-color: #a3e7a3; //gray;
+    font-size: 20px;
+    padding: 6px 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 20px;
+    border: 4px double rgba(0, 0, 0, 0.3);
+}
+
+//----------------------------------------
+//  ポートフォリオで使用
+//----------------------------------------
+.c-title__modan {
+    position: relative;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1.4em;
+    font-family: global.$font-title;
+    color: global.$color-font;
+    p,
+    h2 {
+        font-size: clamp( 0.8em, 7vw, 1em);
+        position: relative;
+        z-index: 2;
+    }
+}
+
+.c-title__bg__modan {
+    position: relative;
+    span {
+        position: absolute;
+        color: white;
+        text-shadow: 0px 0px 16px rgba(255, 255, 255, 1);
+        font-size: clamp( 5rem, 10vw, 7rem);
+        line-height: 4rem;
+        left: 50%;
+        transform: translate( -50%, 0);
+        z-index: 0;
+        // 文字選択できなくするが、範囲に入ると文字選択中に突然途切れるので、クリック感が悪くなる
+        user-select: none;
+        &:selection {
+            background: none;
+        }
+        //z-index: 1;
+        $w: 32px;
+        $h: 32px;
+        b,
+        i,
+        u {
+            position: absolute;
+            content: "";
+            opacity: 0.6;
+            border-radius: 2px;
+            z-index: -1;
+            background-color: lightgreen;
+        }
+        b {
+            left: calc( 0%);
+            top: calc( -10px);
+            width: calc( 100%);
+            height: calc( 100% + 20px);
+            border: clamp(4px, 1vw, 8px) double white;
+        }
+        i {
+            left: -7px;
+            top: -17px;
+            width: $w;
+            height: $h;
+            border: 3px solid white;
+        }
+        u {
+            left: calc( 100% - 24px);
+            top: calc( 100% - 14px);
+            width: $w;
+            height: $h;
+            border: 3px solid white;
+        }
+    }
+    @include global.mq('sp') {
+        span {
+            font-size: 5rem;
+            line-height: 4rem;
+            b {
+                position: absolute;
+                top: calc( 0);
+                content: "";
+                width: calc( 100%);
+                height: calc( 100%);
+            }
+            $w: 24px;
+            $h: 24px;
+            i {
+                left: -7px;
+                top: -6px;
+                width: $w;
+                height: $h;
+                border: 2px solid white;
+            }
+            u {
+                left: calc( 100% - 16px);
+                top: calc( 100% - 16px);
+                width: $w;
+                height: $h;
+                border: 2px solid white;
+            }
+        }
+    }
+}
+
+.c-title__bg__modan--green {
+    span {
+        color: global.$color-main-background;
+        text-shadow: 0px 0px 8px global.$color-main-background;
+        b {
+            background-color: lightgreen;
+            border: 8px double global.$color-main-background;
+        }
+        i {
+            border: 3px solid global.$color-main-background;
+        }
+        u {
+            border: 3px solid global.$color-main-background;
+        }
+    }
+    @include global.mq('sp') {
+        b {
+            border: 4px double global.$color-main-background;
+        }
+    }
+}
+
+//  セクションタイトル以下のアイテムタイトル等
+.c-title__h3 {
+    font-family: global.$font-title;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: bold;
+    height: clamp(1.5em, 2vw, 3em);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+//  セクションタイトル以下のアイテムタイトル等
+.c-title__h4 {
+    font-family: global.$font-title;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: bold;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+//----------------------------------
+//  見出しbackground演出
+//----------------------------------
+$bgcol1: global.$color-main-background-dark;
+$bgcol: global.$color-accent;
+//  見出し背景
+.c-title__bg {
+    padding: 24px 40px;
+    margin-bottom: 8px;
+    width: fit-content;
+    min-width: 4em;
+    border-radius: 2px;
+    filter: drop-shadow( 0px 0px 10px rgba(0, 0, 0, 0.5));
+    border-top-left-radius: 20px;
+}
+
+//  Macのボタンみたいなドロップ
+.c-title__bg__drop {
+    background: linear-gradient( to bottom, transparent 0%, transparent 50%, $bgcol 60%, $bgcol 100%);
+    border: 3px double global.$color-main-background;
+}
+
+//  グラデーション影入り
+.c-title__bg__grad {
+    background: linear-gradient( 135deg, $bgcol1 0%, $bgcol1 20%, $bgcol 40%, $bgcol 100%);
+    border: 3px double global.$color-main-background;
+}
+
+//  グラデーション影入り
+.c-title__bg__grad2 {
+    background: linear-gradient( -45deg, $bgcol1 0%, $bgcol1 20%, $bgcol 40%, $bgcol 100%);
+    border: 3px double global.$color-main-background;
+}

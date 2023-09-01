@@ -1,0 +1,420 @@
+@use "../../global" as global;
+//----------------------------------------
+//  変数
+//----------------------------------------
+$color-widgetback: white;
+$color-background: rgba(0, 20, 0, 1);
+$color-heading: white; //見出し
+$color-title: white; //black; //white; //global.$color-font;
+$color-excerpt: lightgray; //rgb(60, 60, 60);
+$color-separate: rgb(54, 54, 54); //rgb(235, 235, 235);
+$color-tagbg: lightgreen;
+$color-titlebg: lightgreen;
+$color-catseparate: rgba(0, 0, 0, 0.2); //rgb(235, 235, 235);
+.p-widget__title {
+    width: 100%;
+    background-color: $color-titlebg;
+    color: $color-heading; //global.$color-font;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 1);
+    font-weight: bold;
+    text-align: left;
+    font-size: 14px;
+    border-top-left-radius: 15px;
+    border: 3px double rgba(40, 100, 60, 1);
+    padding: 4px 20px;
+}
+
+//----------------------------------------
+//  サイドバー プロフィール
+//----------------------------------------
+.p-widget__profile {
+    width: 100%;
+    // height: 400px;
+    //    background-color: lightgray;
+    //border: 2px solid lightgreen;
+    padding-bottom: 20px;
+    margin-bottom: 60px;
+    color: $color-title;
+    //background-color: $color-widgetback;
+    @include global.mq('sp') {
+        margin-bottom: 40px;
+        margin-top: 40px;
+    }
+}
+
+.p-widget__profile-image {
+    width: 100%;
+    height: 100%;
+    max-width: 100px;
+    max-height: 100px;
+    background-color: transparent;
+    border-radius: 50%;
+    margin: 10px auto;
+    left: 0;
+    img {
+        width: 100%;
+        height: 100%;
+        max-width: 100px;
+        max-height: 100px;
+        border-radius: 50%;
+    }
+}
+
+.p-widget__profile-name {
+    //    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.p-widget__profile-lead {
+    //    margin: 0 20px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.p-widget__profile-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.p-widget__profile-links-sns {
+    margin-top: 8px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.p-widget__profile-links-twitter {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background-color: #1da1f2;
+    border-radius: 5px;
+    color: white;
+    transition: 0.3s;
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.p-widget__profile-links-text {
+    margin-top: 16px;
+    color: gray;
+    font-size: 16px;
+    transition: 0.3s;
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.p-widget__profile-buttonwrapper {
+    margin: 20px auto 0;
+    display: flex;
+    justify-content: center;
+}
+
+.p-widget__profile-button {
+    border-radius: 20px;
+    height: 40px;
+}
+
+//----------------------------------------
+//  サイドバー ニュース
+//----------------------------------------
+.p-widget__news {
+    width: 100%;
+    @include global.mq('sp') {
+        //margin-top: 100px;
+    }
+}
+
+.p-widget__news-items {
+    position: relative;
+    width: 100%;
+    margin: 0px auto 0 auto;
+    // 678 - 622 
+    li {
+        &:nth-child(n+2) {}
+    }
+}
+
+.p-widget__news-item {
+    width: 100%;
+    padding: 0px auto 0px auto;
+    display: flex;
+    margin-top: 16px;
+    // 1090
+    // 590/54% : 560/51%
+}
+
+.p-widget__news-item-image {
+    //    max-width: 100px;
+    //    max-height: 100px;
+    position: relative;
+    width: 7.8125vw;
+    height: 7.8125vw;
+    max-width: 100px;
+    max-height: 100px;
+    left: 0;
+    img {
+        left: 0;
+        position: absolute;
+        width: 7.8125vw;
+        height: 7.8125vw;
+        max-width: 100px;
+        max-height: 100px;
+        object-fit: cover;
+        @include global.mq('sp') {
+            width: 100%;
+            height: 100%;
+            max-width: 250px;
+            max-height: 156px;
+            //20 +120+12+203+20
+            //120+215 = 335
+            // 120/335 = 35.82%
+            // 203/335 = 60.59%
+            //  12/335 =  3.58%
+        }
+    }
+    @include global.mq('sp') {
+        width: calc(35.82%);
+        max-width: 170px;
+        min-width: 140px;
+        max-height: 120px;
+        min-height: 100px;
+    }
+}
+
+.p-widget__news-item-content {
+    //    width: calc( 100% - 100px);
+    width: calc( 100% - 7.8125vw);
+    margin: 0px auto auto 10px;
+    @include global.mq('sp') {
+        //        width: auto; //calc( 100% - 250px);
+        //width: auto;
+    }
+}
+
+.p-widget__news-item-meta {
+    width: 100%;
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: space-between;
+    @include global.mq('sp') {
+        font-size: 14px;
+    }
+}
+
+.p-widget__news-item-meta-tag {
+    position: absolute;
+    //border: solid 1px global.$color-key-red;
+    background-color: $color-tagbg; //global.$color-key-red;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 1);
+    // 104x36
+    right: 0;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: normal;
+    white-space: nowrap;
+    color: white; //global.$color-key-red;
+    @include global.mq('sp') {
+        font-size: 10px;
+    }
+}
+
+.p-widget__news-item-meta-new {
+    margin-left: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: global.$color-key-red;
+    @include global.mq('sp') {
+        margin-left: 8px;
+        font-size: 14px;
+    }
+}
+
+.p-widget__news-item-meta-date {
+    //    margin-left: auto;
+    //margin-left: 8px;
+    //margin-right: 8px;
+    color: global.$color-key-gray;
+    text-align: left;
+}
+
+.p-widget__news-item-lead {
+    margin-top: 9px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.4em;
+    text-align: left;
+    color: $color-title;
+}
+
+//----------------------------------------
+//  サイドバー カテゴリ
+//----------------------------------------
+.p-widget__cats {
+    //margin-top: 80px;
+    width: 100%;
+    background-color: $color-widgetback;
+    @include global.mq('sp') {
+        //margin-top: 40px;
+    }
+}
+
+.p-widget__cats-items {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 100%;
+    .p-widget__cats-item {
+        &:first-child {
+            border-top: solid 1px $color-catseparate;
+        }
+    }
+}
+
+.p-widget__cats-item {
+    display: block;
+    //    width: 100%;
+    border-bottom: solid 1px $color-catseparate;
+    padding: 16px auto 16px 20px;
+    text-align: left;
+    transition: 0.3s;
+    &:hover {
+        .p-widget__cats-item-text {
+            color: lightgreen;
+        }
+    }
+}
+
+.p-widget__cats-item-text {
+    display: block;
+    font-size: 16px;
+    //font-weight: bold;
+    margin: 16px auto 16px 20px;
+    position: relative;
+    color: $color-title;
+    &:before {
+        position: absolute;
+        content: "";
+        top: 50%;
+        left: -20px;
+        width: 10px;
+        height: 16px;
+        //        background: url(../img/icon-chevron-right02.png ) no-repeat center center / cover;
+        transform: translateY(-50%);
+    }
+}
+
+//----------------------------------------
+//  サイドバー タグ
+//----------------------------------------
+.p-widget__tags {
+    width: 100%;
+    //background-color: $color-widgetback;
+    @include global.mq('sp') {}
+}
+
+.p-widget__tags-items {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 100%;
+    display: flex;
+    flex-direction: rows;
+    flex-wrap: wrap;
+}
+
+.p-widget__tags-item {
+    display: block;
+    //    width: 100%;
+    //background-color: lightgreen;
+    background-color: lightgray;
+    border-radius: 5px;
+    line-height: 1.3em; // 文字の高さ
+    //    border-bottom: solid 1px global.$color-key-gray;
+    padding: 2px 8px;
+    margin: 2px 8px;
+    //    text-align: left;
+    transition: 0.3s;
+    border: 1px solid rgba(0, 0, 0, 0.0);
+    &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        opacity: 0.8;
+        //transform: scale(1.01);
+        .p-widget__tags-item-text {
+            //            color: lightgreen;
+        }
+    }
+}
+
+.p-widget__tags-item-text {
+    font-size: 12px;
+    color: black; //white;
+}
+
+//----------------------------------------
+//  サイドバー 検索
+//----------------------------------------
+.p-widget__search {
+    width: 100%;
+    //background-color: $color-widgetback;
+    @include global.mq('sp') {}
+}
+
+.p-widget__search-form {
+    margin: 4px auto 20px auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.p-widget__search-field {
+    padding: 10px 8px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid rgba(200, 200, 200, 1);
+    &:hover {
+        border: 2px solid rgba(220, 220, 220, 1);
+    }
+    &:focus {
+        border: 2px solid rgba(144, 238, 144, 1);
+    }
+}
+
+.p-widget__search-submit {
+    width: 80px;
+    padding: 4px 8px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0); //lightgreen;
+    border-radius: 5px;
+    color: lightgreen; //white;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 2.5em;
+    height: 100%;
+    right: 0;
+    font-size: 20px;
+    transition: 0.3s;
+    opacity: 0.9;
+    border: 1px solid rgba(0, 0, 0, 0);
+    &:hover {
+        cursor: pointer;
+        //background-color: rgba(164, 250, 164);
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 1);
+        opacity: 1;
+        //border : 1px solid rgba(0,0,0, 0.2);
+    }
+}

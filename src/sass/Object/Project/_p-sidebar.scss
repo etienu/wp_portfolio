@@ -1,0 +1,13 @@
+@use "../../global" as global;
+//----------------------------------------
+//  サイドバー
+//----------------------------------------
+.p-sidebar {
+    width: 100%;
+    max-width: global.$layout-sidebar-width; //  左右並べる場合
+    margin-left: 3vw;
+    @include global.mq('sp-tab2') {
+        max-width: calc( 100%);
+        margin: auto;
+    }
+}

@@ -1,0 +1,142 @@
+@charset "UTF-8";
+/*============================================================
+#   variables
+#   変数
+============================================================*/
+/*============================================================
+#   色
+#   
+============================================================*/
+/*----------------------------------------
+        サイトの色指定
+----------------------------------------*/
+/*
+・variable - fontfamily
+・mixin - fontset
+・utility - u-font
+この三つまとめた方がいいかもしれない
+
+1.フォントの読み込み
+
+2.変数にフォント名設定して、カスタム指定できるようにする
+
+3.mixinでフォント名とweight、サイズなどのセット指定
+
+4.u-fontはどうしてもHTMLでフォント指定したい場合使う想定だが
+その内容はmixin includeでいい筈
+大体の場合タイトルやサブタイトル、ナンバーで使うフォントは決まっている。
+いちいち毎回外から指定するより、classでmixinをincludeする
+modifierを作ったほうがいい筈だ。
+またextendもあくまで同クラス内程度にとどめたい
+
+*/
+/*--------------------------------------------------
+    レスポンシブ計算
+--------------------------------------------------*/
+/*========================================
+        ブレイクポイント
+========================================*/
+/*========================================
+        レスポンシブ
+    ========================================*/
+/*========================================
+        メディア分岐関数
+========================================*/
+/*
+//sp版の時pc指定クラスを消す
+@include mq(sp) {
+    .is-pc {
+        display: none !important;
+    }
+}
+
+// pc版の時スマホ指定クラスを消す
+@include mq(pc) {
+    .is-sp {
+        display: none !important;
+    }
+}
+*/
+/*--------------------------------------------------
+    記事
+    431 matter.jsはweb制作に使えるのか試してサンプル作った
+    431.php
+--------------------------------------------------*/
+.test {
+  background-color: purple;
+  color: yellow;
+}
+
+.content-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+}
+.content-inner {
+  display: block;
+  position: relative;
+  min-width: 200px;
+  max-width: 640px;
+  max-height: 480px;
+  height: 100%;
+  background-color: transparent;
+  box-shadow: 1px 1px 8px black;
+  transition: 0.3s;
+}
+.canvas-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-image: url(../content/yoyocafe/img/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-height: 480px;
+}
+
+.canvas-infoframe {
+  display: none;
+  position: absolute;
+  width: 100px;
+  height: 28px;
+  right: 50%;
+  bottom: 5%;
+}
+@media screen and (max-width: 767px) {
+  .canvas-infoframe {
+    right: 37%;
+    bottom: 1%;
+  }
+}
+
+.canvas-info {
+  position: relative;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  text-align: center;
+}
+.canvas-info:after {
+  position: absolute;
+  content: " ";
+}
+@media screen and (min-width: 767px) {
+  .canvas-info:after {
+    left: 8px;
+    top: -16px;
+    border-left: 0px solid transparent;
+    border-bottom: 16px solid rgba(0, 0, 0, 0.5);
+    border-right: 10px solid transparent;
+  }
+}
+@media screen and (max-width: 767px) {
+  .canvas-info:after {
+    left: 8px;
+    top: -10px;
+    border-left: 2px solid transparent;
+    border-bottom: 10px solid rgba(0, 0, 0, 0.5);
+    border-right: 8px solid transparent;
+  }
+}

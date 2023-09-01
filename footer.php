@@ -1,0 +1,17 @@
+<?php
+/*------------------------------------------
+コピーライト
+------------------------------------------*/
+?>
+	<footer id="footer" class="l-footer u-color-bg__main">
+		<div class="l-footer__inner">
+			<div class="l-footer__items">
+				<div class="l-footer__copyright">
+					&copy;<?php echo date('Y');?>　<?php bloginfo('name')?>
+				</div>
+			</div>
+		</div>
+	</footer><!-- /footer -->
+
+
+    <?php wp_footer(); ?>

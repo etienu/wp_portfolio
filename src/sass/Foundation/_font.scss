@@ -1,0 +1,27 @@
+//  googlefonts
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("../webfonts/googlefonts/Roboto-Medium.ttf") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-display: block;
+    src: url("../webfonts/googlefonts/Roboto-Light.ttf") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-display: block;
+    src: url("../webfonts/googlefonts/Roboto-Bold.ttf") format("truetype");
+    font-display: swap;
+}

@@ -1,0 +1,27 @@
+//--------------------------------------------------
+//
+//    LPでのメイン部分
+//    
+//    ヘッダーとフッターの間
+//
+//--------------------------------------------------
+@use "../global" as global;
+.l-lpmain {
+    width: 100%;
+}
+
+.l-lpmain__inner {
+    width: 100%;
+    max-width: 100%; //1280px;
+    min-height: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 20px;
+    @include global.mq('sp-tab2') {
+        flex-direction: column;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+}

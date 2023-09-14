@@ -3,11 +3,18 @@
 ?>
 <section class="l-contact u-padding_ud60 u-color-bg__main">
   <div class="l-contact__inner">
+    <!--
     <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green">
       <div class="c-anchor__t-100" id="contact"></div>
       <span><b></b><i></i><u></u><p>CONTACT</p></span>
       <h2>お問い合わせ</h2>
     </div>
+  -->
+
+    <?php /* 見出し : お問い合わせ CONTACT  */ ?>
+    <div class="u-margin__t40"></div>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null, ['title' => 'お問い合わせ','lead'=>"CONTACT",'id'=>"contact",'color'=>'green'] ); ?>
+
 
     <div class="l-contact__cvwrapper u-margin__t100">
         <a href="contact" class="p-contactcv__button">

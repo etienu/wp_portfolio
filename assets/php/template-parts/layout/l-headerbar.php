@@ -22,13 +22,13 @@
 
       <nav class="p-header__nav">
         <ul>
-          <li><a href="<?php echo $homeurl; ?>#works"><i></i><span>制作実績</span><u></u></a></li>
-          <li><a href="<?php echo $homeurl; ?>#services"><i></i><span>サービス</span><u></u></a></li>
+          <li><a href="<?php echo $homeurl; ?>#works"><span data-parts="boxlt"></span><span data-parts="text">制作実績</span><span data-parts="boxrb"></span></a></li>
+          <li><a href="<?php echo $homeurl; ?>#services"><span data-parts="boxlt"></span><span data-parts="text">サービス</span><span data-parts="boxrb"></span></a></li>
           <?php /*
-          <li><a href="<?php echo $homeurl; ?>#flow"><i></i><span>制作の流れ</span><u></u></a></li>
-          <li><a href="<?php echo $homeurl; ?>#price"><i></i><span>料金</span><u></u></a></li>
+          <li><a href="<?php echo $homeurl; ?>#flow"><span data-parts="boxlt"></span><span data-parts="text">制作の流れ</span><span data-parts="boxrb"></span></a></li>
+          <li><a href="<?php echo $homeurl; ?>#price"><span data-parts="boxlt"></span><span data-parts="text">料金</span><span data-parts="boxrb"></span></a></li>
           */ ?>
-          <li><a href="<?php echo $homeurl; ?>#profile"><i></i><span>自己紹介</span><u></u></a></li>
+          <li><a href="<?php echo $homeurl; ?>#profile"><span data-parts="boxlt"></span><span data-parts="text">自己紹介</span><span data-parts="boxrb"></span></a></li>
           <!--
             <li><a href="<?php echo $homeurl; ?>#contact"><i></i><span>お問い合わせ</span><u></u></a></li>
           -->
@@ -62,13 +62,13 @@
 <div class="p-spmenu">
   <div class="p-spmenu__inner">
     <ul>
-      <li><a href="<?php echo $homeurl; ?>#works"><i></i><span>制作実績</span><u></u></a></li>
-      <li><a href="<?php echo $homeurl; ?>#services"><i></i><span>サービス</span><u></u></a></li>
+      <li><a href="<?php echo $homeurl; ?>#works"><span>制作実績</span></a></li>
+      <li><a href="<?php echo $homeurl; ?>#services"><span>可能な作業</span></a></li>
       <?php /*
       <li><a href="<?php echo $homeurl; ?>#flow"><i></i><span>制作の流れ</span><u></u></a></li>
       <li><a href="<?php echo $homeurl; ?>#price"><i></i><span>料金</span><u></u></a></li>
       */ ?>
-      <li><a href="<?php echo $homeurl; ?>#profile"><i></i><span>自己紹介</span><u></u></a></li>
+      <li><a href="<?php echo $homeurl; ?>#profile"><span>自己紹介</span></a></li>
     </ul>  
     <div class="l-header__buttonswrapper">
       <a href="<?php echo $homeurl; ?>#contact" class="p-header__button">

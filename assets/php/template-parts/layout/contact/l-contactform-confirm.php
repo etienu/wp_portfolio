@@ -8,11 +8,18 @@
 ?>
 <section class="l-contact u-padding_ud40 u-color-bg__main">
   <div class="l-contact__inner">
+    <!--
     <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green">
         <div class="c-anchor__t-100" id="confirm"></div>
         <span><b></b><i></i><u></u><p>CONFIRM</p></span>
         <h2>送信内容の確認</h2>
     </div>
+    -->
+    <?php /* 見出し : 送信内容の確認 CONFIRM  */ ?>
+    <div class="u-margin__t20"></div>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+        ['title' => '送信内容の確認','lead'=>"CONFIRM",'id'=>"confirm",'color'=>'green'] ); ?>
+
 
     <?php
         $fDisabled = "readonly";//"disabled"; // 送信内容に含まれなくなる

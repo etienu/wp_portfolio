@@ -17,12 +17,19 @@
         method="POST">
         <!-- bread-crumb -->
         <?php get_template_part('template-parts/object/project/p-breadcrumb' ); ?>
-
+        <!--
         <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green u-margin__t20">
             <div class="c-anchor__t-100" id="input"></div>
             <span><b></b><i></i><u></u><p>INPUT</p></span>
             <h2>内容入力</h2>
         </div>
+        -->
+        <?php /* 見出し : 内容入力 INPUT  */ ?>
+        <div class="u-margin__t20"></div>
+        <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+         ['title' => '内容入力','lead'=>"INPUT",'id'=>"input",'color'=>'green'] ); ?>
+
+
 
         <div class="c-lead__hard u-margin__t40">
             コーディング代行、お見積り等、お気軽にご相談下さい！

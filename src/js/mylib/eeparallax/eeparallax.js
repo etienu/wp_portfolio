@@ -13,11 +13,15 @@ class eeParallax {
         //        this.targetClass = document.querySelector(i_targetClass); //$("." + i_targetClass);
         this.speed = i_speed;
         this.beforerect = this.target.getBoundingClientRect(); //  初期の矩形を保存しておく
-        this.beforepos = { x: 0, y: 0, z: 0 };
-        this.adjust = { x: 0, y: 0, z: 0 };
-        this.scale = 1.0;
+        //  差を取得
+//        this.beforerect.bottom = Math.abs(this.beforerect.bottom) - Math.abs(this.beforerect.top);
+//        this.beforerect.top = 0;
+        this.beforepos= { x: 0, y: 0, z: 0 };
+        this.adjust   = { x: 0, y: 0, z: 0 };
+        this.scale    = 1.0;
         this.setBeforePos();
-        //console.log("[eParallax] new : ", this.targetClass);
+        //console.log("[eParallax] newt", this.targetClass);
+        //console.log("[eParallax] new : [beforerect]", this.beforerect );
     }
     getTarget() {
         return this.target;
@@ -79,19 +83,29 @@ export default class eeParallaxEngine {
         var windowCenter = (windowHeight / 2) + this.scroll;
         //  保存した矩形を利用( transformの影響を受ける為 )
         var rect = i_Item.beforerect; //getBoundingClientRect(); // レンダリングサイズなのでscaleを使う場合影響受ける
+        var rtop = 0; // rect.top;
+        //  マイナスだったとしても高さは高さなので絶対値化して↓方向とする
+        var rbottom = Math.abs(Math.abs(i_Item.beforerect.bottom) - Math.abs(i_Item.beforerect.top));
+        //console.log("[rtop]", rtop);
+        //console.log("[rbottom]", rbottom);
+
+
         // scaleで拡大された分の相殺倍率
         var sper = 1.0 / i_Item.scale;
         // 拡大率を兼ねたアイテムのセンター
-        var itemCenter = (rect.top * sper) + (((rect.bottom * sper) - (rect.top * sper)) / 2);
+        var itemCenter = (rtop * sper) + (((rbottom * sper) - (rtop * sper)) / 2);
         //var itemCenter = itm.offsetTop + ((itm.offsetHeight) / 2);
 
         // ウインドウの中心とアイテムの芯の差
         var parallaxY = windowCenter - itemCenter;
+        //console.log("[windowCenter]", windowCenter);
+        //console.log("[itemCenter]", itemCenter);
         // 実際に移動する量 : 差に対して速度倍率をかける
         parallaxY = Number(i_Item.adjust.y) + (parallaxY * i_Item.speed);
         //console.log(i_Item.adjust.y);
         //console.log(i_Item.speed);
         //console.log(parallaxY);
+        //console.log("--");
 
         //  ・移動量に対してfilterでblurかけてもいい
         //  ・画像が表示されたら

@@ -44,6 +44,7 @@ function insert_custom_fields($post)
   $work_txt_url = get_post_meta($post->ID, 'work_txt_url', true);
   $work_txt_user = get_post_meta($post->ID, 'work_txt_user', true);
   $work_txt_pass = get_post_meta($post->ID, 'work_txt_pass', true);
+  $work_txt_githuburl = get_post_meta($post->ID, 'work_txt_githuburl', true);
   $work_txt_imageurl = get_post_meta($post->ID, 'work_txt_imageurl', true);
   $work_txt_thumburl = get_post_meta($post->ID, 'work_txt_thumburl', true);
 
@@ -114,6 +115,9 @@ function insert_custom_fields($post)
             <br>
             <label for="work_txt_thumburl">サムネ画像ファイル名(例:thumb02.jpg)</label>
             <input id="work_txt_thumburl" type="text" name="work_txt_thumburl" value="<?php echo $work_txt_thumburl; ?>">
+            <br>
+            <label for="work_txt_githuburl">GitHubURL</label>
+            <input id="work_txt_githuburl" type="text" name="work_txt_githuburl" value="<?php echo $work_txt_githuburl; ?>">
         </div>
     </div>
   <br>
@@ -197,7 +201,10 @@ function save_custom_fields($post_id)
     $data = sanitize_text_field($_POST['work_txt_thumburl']);
     update_post_meta($post_id, 'work_txt_thumburl', $data);
   }
-
-
+  if (isset($_POST['work_txt_githuburl'])) {
+    $data = sanitize_text_field($_POST['work_txt_githuburl']);
+    update_post_meta($post_id, 'work_txt_githuburl', $data);
+  }
 }
+
 add_action('save_post', 'save_custom_fields');

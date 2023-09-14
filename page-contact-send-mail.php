@@ -97,10 +97,10 @@ function sendmail__PHPMailer( $i_POST ){
     // 送信設定
 try{
     $mail->isSMTP();
-    $mail->Host = 'sv2339.xserver.jp';
+    $mail->Host = 'sv****.xserver.jp';
     $mail->SMTPAuth = true;
     $mail->Username = 'contact@etienu.com';
-    $mail->Password = 'p5ie1sewo3t';
+    $mail->Password = '************';
     $mail->SMTPSecure = "ssl";
     $mail->Port = 465;//587;
 

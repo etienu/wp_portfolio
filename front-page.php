@@ -32,7 +32,8 @@
     <div>使いやすい</div>
     <div>■</div>
     <div>心地よい</div>
-    <div>サイト、作ります。</div>
+    <div>サイト、作ります</div>
+    <div>想像を、触れるカタチに</div>
     </h2>
     <div class="js-gsap__scrollbutton">
       <div class="icon">
@@ -50,12 +51,10 @@
 <?php /* 制作実績 */ ?>
 <section class="l-works u-padding_ud100 u-color-bg__white">
   <div class="l-works__inner">
-    <?php /* c-title__bg__modan--green*/ ?>
-    <div class="c-title__modan c-title__bg__modan">
-      <div class="c-anchor__t-100" id="works"></div>
-      <span><b></b><i></i><u></u><p>WORKS</p></span>
-      <h2>制作実績</h2>
-    </div>
+    <?php /* 見出し : 制作実績 */ ?>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+    ['title' => '制作実績','lead'=>"WORKS",'id'=>"works"] ); ?>
+
     <div class="l-works__content__wrapper">
       <div class="l-works__content__inner">
         <div class="l-works__items">
@@ -63,7 +62,7 @@
         <?php get_template_part(GET_PATH_R('template').'object/project/p-custompost-card-one', null, ['post_type' => 'work','name'=>'lp-03', 'effclass'=>'js-surface__up']); ?>
         <?php get_template_part(GET_PATH_R('template').'object/project/p-custompost-card-one', null, ['post_type' => 'work','name'=>'wp-01', 'effclass'=>'js-surface__rtol']); ?>
         </div>
-        <div class="l-works__button__wrapper u-margin__t40">
+        <div class="l-works__button__wrapper u-margin__t80">
           <a href="work" class="c-button__portfolio c-button__hover__goto p-button__pf">
             制作実績一覧はこちら
           </a>
@@ -81,35 +80,38 @@
   <div class="disp__userAgent"></div>
   */
   ?>
+   
+    <?php /* 見出し : 可能な作業 */ ?>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+    ['title' => '可能な作業','lead'=>"SERVICE",'id'=>"services",'color'=>"green"] ); ?>
 
-    <?php /* 背景に白い文字をスライドアニメーションさせる */ ?>
-    <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green">
-      <div class="c-anchor__t-100" id="services"></div>
-      <span><b></b><i></i><u></u><p>SERVICE</p></span>
-      <h2>可能な作業</h2>
-    </div>
     <div class="l-service__content__wrapper">
       <div class="l-service__content__inner">
         <div class="l-service__items">
 
           <div class="l-service__item js-surface__up">
             <div class="l-service__image">
-              <i class="far fa-file-code"></i>
-              
+              <picture>
+                <source srcset="<?php echo GET_PATH()?>service/cording.jpg"  media="(max-width: 768px)" type="image/jpg">
+                <img src="<?php echo GET_PATH()?>service/cording.jpg" alt="コーディング" width="400" height="400" loading="lazy">
+              </picture>
             </div>
             <div class="l-service__textwrapper">
               <div class="c-title__h3 size--mid">
                 <h3>コーディング</h3>
               </div>
               <div class="l-service__lead">
-                デザインカンプからコーディングを行います。FLOCSS/BEMによる再利用性の高いコーディングを心がけます。レスポンシブ表示、javascriptを用いたアニメーションも可能です。
+                頂いたデザインからコーディングを行います。FLOCSS/BEMによる再利用性の高い設計。レスポンシブ表示、jsを用いたアニメーションも可能です。
               </div>
             </div>
           </div>
 
           <div class="l-service__item js-surface__up">
           <div class="l-service__image">
-              <i class="fab fa-wordpress"></i>
+          <picture>
+                <source srcset="<?php echo GET_PATH()?>service/wp.jpg"  media="(max-width: 768px)" type="image/jpg">
+                <img src="<?php echo GET_PATH()?>service/wp.jpg" alt="WordPress" width="400" height="400" loading="lazy">
+              </picture>
           </div>
           <div class="l-service__textwrapper">
               <div class="c-title__h3 size--mid">
@@ -123,8 +125,10 @@
 
           <div class="l-service__item js-surface__up">
           <div class="l-service__image">
-            <i class="fas fa-laptop-code"></i>
-            <?php /*<i class="fas fa-mobile-android-alt"></i>*/ ?>
+            <picture>
+              <source srcset="<?php echo GET_PATH()?>service/mente.jpg"  media="(max-width: 768px)" type="image/jpg">
+              <img src="<?php echo GET_PATH()?>service/mente.jpg" alt="管理・修正" width="400" height="400" loading="lazy">
+            </picture>
           </div>
           <div class="l-service__textwrapper">
               <div class="c-title__h3 size--mid">
@@ -138,16 +142,18 @@
           </div>
         </div><!--service items -->
 
-        <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green u-margin__t100">
-          <span><b></b><i></i><u></u><p>SKILL</p></span>
-          <h2>できること</h2>
-        </div>
+        <?php /* 見出し : できること SKILL  */ ?>
+        <div class="u-margin__t80"></div>
+        <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+        ['title' => 'できること','lead'=>"SKILL",'id'=>"skills",'color'=>'green'] ); ?>
+
+
         <div class="l-service__skillwrapper">
           <div class="l-service__skill__head u-margin__b20">コーディング</div>
           <div class="l-service__skill__items js-surface__upgroup">
             <div class="l-service__skill__item">
               <div class="l-service__skill__title">HTML</div>
-              <div class="l-service__skill__lead">article/H1/H2などのタグ、alt等の属性を適切に指定する事を心がけ、divのみになる事を回避します。</div>
+              <div class="l-service__skill__lead">head内meta・favicon・OGP等の設定、画像のpicture・alt等の指定、h1、h2等構造を厳守</div>
             </div>
             <div class="l-service__skill__item">
             <div class="l-service__skill__title">CSS<br>Sass(SCSS)</div>
@@ -189,7 +195,7 @@
               <div class="l-service__skill__lead">コーディングする為に情報確認や画像の切り出しが可能です</div>
             </div>
             <div class="l-service__skill__item">
-              <div class="l-service__skill__title tool">Git(GitHub)<br>SourceTree</div>
+              <div class="l-service__skill__title tool">GitHub<br>SourceTree</div>
               <div class="l-service__skill__lead">アップロード/更新経験があります</div>
             </div>
             <div class="l-service__skill__item">
@@ -210,11 +216,11 @@
 <?php /*
 <section class="l-flow u-padding_ud100 u-color-bg__white">
   <div class="l-flow__inner">
-  <div class="c-title__modan c-title__bg__modan">
-    <div class="c-anchor__t-100" id="flow"></div>
-    <span><b></b><i></i><u></u><p>FLOW</p></span>
-    <h2>制作の流れ</h2>
-  </div>
+  <?php // 見出し : 制作の流れ FLOW  ?>
+  <div class="u-margin__t80"></div>
+  <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+  ['title' => '制作の流れ','lead'=>"FLOW",'id'=>"flow"] ); ?>
+
   <div class="l-flow__content__wrapper">
       <div class="l-flow__content__inner">
         <div class="l-flow__items">
@@ -285,11 +291,11 @@
 /*
 <section class="l-price u-padding_ud100 u-color-bg__main">
   <div class="l-price__inner">
-    <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green">
-      <div class="c-anchor__t-100" id="price"></div>
-      <span><b></b><i></i><u></u><p>PRICE</p></span>
-      <h2 class="js__title">料金</h2>
-    </div>
+    <?php // 見出し : 料金 PRICE ?>
+    <div class="u-margin__t80"></div>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+    ['title' => '料金','lead'=>"PRICE",'id'=>"price",'color'=>'green'] ); ?>
+
     <div class="l-price__content__wrapper">
       <div class="l-price__content__inner">
         <div class="l-price__items js-surface__upgroup">
@@ -341,22 +347,33 @@
   <div class="l-about__background"></div>
   <div class="l-about__fadewrapper">
     <div class="l-about__inner">
-      <div class="c-title__modan c-title__bg__modan">
-        <div class="c-anchor__t-100" id="profile"></div>
-        <span><b></b><i></i><u></u><p>PROFILE</p></span>
-        <h2>自己紹介</h2>
-      </div>
-      <p class="l-about__lead u-margin__t60 js-surface__gametext">
-        1982年生まれのWebコーダー、千葉県在住です。<br><br>
+      <?php /* 見出し : 自己紹介 */ ?>
+      <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+      ['title' => '自己紹介','lead'=>"PROFILE",'id'=>"profile"] ); ?>
 
-        前職では設備配管工として建築現場で働いており、<br>
-        施工の品質やコミュニケーションの大切さ、図面通りにはいかない問題への対応力を学びました。<br><br>
+      <p class="u-margin__t80">
+        <b>Webコーダー</b><br>
+        <b>HIROSHI NINOMIYA</b><br>
+        <b>二宮 裕志</b><br>
+      </p>
+      <p class="l-about__lead u-margin__t40 js-surface__gametext">
+        1982年生まれのWebコーダー<br>
+        千葉県在住。<br><br>
+
+        1年程前から独学でweb制作を学び続け、今も日々スキルを上げています。<br>
+        デザインを忠実に再現しつつ、保守しやすいコーディングを心がけています。<br><br>
+
+        前職では建築業界、消火設備配管工として建築現場で働いておりました。<br>
+        大手の現場に関わる事で厳しい施工品質のチェックや、コミュニケーションの大切さ、図面通りにはいかない問題への対応力を学びました。<br><br>
 
         web制作も同じと考え、相手の立場を想像し、ささいな事でも連絡相談してご要望に最大限応えていきます。<br><br>
 
-        1年程前から独学でweb制作を学び続け、今も日々スキルを上げています。<br><br>
+        デザインについては勉強中なのでご対応しかねますが<br>
+        「コーディングだけして欲しい！」「WordPressごと構築して欲しい！」といったお悩みがあれば<br>
+        休日祭日問わず対応可能ですので、ぜひお気軽にご相談ください。<br>
+        
+      
 
-        デザインを忠実に再現しつつ、保守しやすいコーディングを心がけています。
       </p>
       <!--
       <div class="l-about__SNSwrapper u-margin__t60">

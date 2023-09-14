@@ -3,6 +3,7 @@
     single-work.php
     制作実績 - 個別ページ
 -----------------------------------------------------------*/
+    $txt_githuburl = get_post_meta($post->ID, 'work_txt_githuburl', true);
     $txt_url = get_post_meta($post->ID, 'work_txt_url', true);
     $meta_user = get_post_meta($post->ID, 'work_txt_user', true);
     $meta_pass = get_post_meta($post->ID, 'work_txt_pass', true);
@@ -49,10 +50,9 @@
     }
   ?>
   <div class="l-works__inner">
-    <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green" id="works">
-      <span><b></b><i></i><u></u><p><?php echo $category_name;?></p></span>
-      <h2><?php echo get_the_title();?></h2>
-    </div>
+    <?php /* 見出し : サイト名 種別  */ ?>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null, ['title' => get_the_title(),'lead'=>$category_name,'id'=>"",'color'=>'green'] ); ?>
+
 
     <div class="l-works__content__wrapper">
       <div class="l-works__content__inner">
@@ -70,7 +70,8 @@
  
             <?php 
             //  パスありリンク
-            if( strcmp( $meta_user, "" ) != 0 ): ?>
+            if( strcmp( $meta_user, "" ) != 0 ):
+            ?>
             <div class="l-works__section u-flex__xcenter-sp">
                 <a href="<?php echo $txt_passurl;?>" class="c-button__portfolio c-button__hover__goto p-button__pf">
                 サイトに移動
@@ -96,6 +97,18 @@
                 </a>
             </div>
             <?php endif; ?>
+
+            <?php
+            //  GitHubリンク
+            if( !empty( $txt_githuburl ) ): ?>
+            <div class="l-works__section u-flex__xcenter-sp u-margin__t40">
+                <a href="<?php echo $txt_githuburl;?>" class="c-button__portfolio c-button__hover__goto p-button__pf">
+                GitHubでコードを見る
+                </a>
+            </div>
+            <?php endif; ?>
+
+            
 
             <div class="l-works__section u-margin__t40">
                 <dt class="c-title__h3 c-title__bg c-title__bg__grad2">作業範囲</dt>

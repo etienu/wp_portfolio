@@ -23,11 +23,11 @@
 <main>
     <section class="l-contact u-padding_ud40 u-color-bg__main">
     <div class="l-contact__inner">
-        <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green">
-            <div class="c-anchor__t-100" id="complete"></div>
-            <span><b></b><i></i><u></u><p>404NotFound</p></span>
-            <h2>404</h2>
-        </div>
+        <?php /* 見出し : 404 404NotFound  */ ?>
+        <div class="u-margin__t80"></div>
+        <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+        ['title' => '404','lead'=>"404NotFound",'id'=>"nf",'color'=>'green'] ); ?>
+
         <div class="p-contact__complete u-margin__t80">
             お探しのページは見つかりませんでした。<br>
             <div class="c-text u-color-font-dark u-margin__t40 u-margin__b40">

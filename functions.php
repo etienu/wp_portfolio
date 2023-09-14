@@ -310,7 +310,7 @@ add_action('admin_init', 'my_add_editor_style');
 function my_add_editor_style()
 {
   global $WP_CSS_PATH;
-  add_editor_style(str_replace('/' . get_stylesheet_directory_uri(), '', $WP_CSS_PATH) . 'style-editor.css');
+//  add_editor_style(str_replace('/' . get_stylesheet_directory_uri(), '', $WP_CSS_PATH) . 'style-editor.css');
 }
 
 //----------------------------------------------------
@@ -320,8 +320,15 @@ add_action('admin_enqueue_scripts', 'my_add_admin_js');
 function my_add_admin_js($hook)
 {
   global $WP_JS_PATH;
-  wp_enqueue_script('my_admin_script', $WP_JS_PATH . 'admin.js');
+//  wp_enqueue_script('my_admin_script', $WP_JS_PATH . 'admin.js');
 }
+//------------ 管理画面にjs追加 -------------
+function admin_func() {
+  global $WP_ROOT_PATH;
+  echo '<script type="text/javascript" src="'.$WP_ROOT_PATH.'/assets/controlpanel/js/wp-settings.js"></script>';
+}
+add_action('admin_head', 'admin_func');
+
 
 //----------------------------------------------------
 //   不要なメニューを非表示
@@ -367,7 +374,7 @@ add_filter('run_wptexturize', '__return_false');
 add_action('admin_menu', 'my_add_admin_setting_page');
 function my_add_admin_setting_page()
 {
-    add_menu_page('テーマ設定', 'テーマ設定', 'manage_options', 'custom-setting', 'my_setting_file_path', 'dashicons-admin-generic', 90);
+    add_menu_page('独自テーマ設定', '独自テーマ設定', 'manage_options', 'custom-setting', 'my_setting_file_path', 'dashicons-admin-generic', 90);
     add_action('admin_init', 'my_register_setting');
 }
 function my_setting_file_path()
@@ -535,6 +542,7 @@ function is_bot()
 }
 
 
+
 //============================================================================
 //
 //  Contact Form 7
@@ -590,24 +598,70 @@ include GET_PATH_R('php')."inc/customfield.php";
 
 //-----------------------------------------------------
 //    CSS読み込み
-//      headで行う
+//    何故かfooterで読まれてしまう。
+//    それだと一瞬でも適応されない時間が出るとまずい。
 //-----------------------------------------------------
+/*
 function my_enqueue_styles(){
 //    wp_enqueue_style( "my", get_template_directory_uri() . "/assets/css/style.css?".date('YmdHis'), array(), "1.0.0", "all" );
+wp_register_style ('swiper-bundle', GET_PATH('css'). 'lib/swiper/swiper-bundle.min.css', array(),'1.0','all' );
+wp_enqueue_style ('mystyle', GET_PATH('css'). 'style.css', array('swiper-bundle'),esc_html(date_i18n('Ymd_His')),'all' );
+//wp_enqueue_style ('style', GET_PATH('css'). 'style.css?v='.esc_html(date_i18n('Ymd_His')), array(),'1.0', false );
+
 }
-//add_action( "wp_enqueue_scripts", "my_enqueue_styles" );
+add_action( "wp_enqueue_scripts", "my_enqueue_styles" );
+*/
+//-----------------------------------------------------
+//    CSS読み込み 強制的にhead内で読み込む
+//-----------------------------------------------------
+function my_head_styles(){
+	echo '<link rel="stylesheet" href="'.GET_PATH('css').'lib/swiper/swiper-bundle.min.css">';
+	echo '<link rel="stylesheet" href="'.GET_PATH('css').'style.css?v='.esc_html(date_i18n('Ymd_His')).'">';
+}
+add_action('wp_head', 'my_head_styles');
 
 //-----------------------------------------------------
 //    JavaScript読み込み
 //-----------------------------------------------------
 function my_enqueue_scripts(){
-    if (!is_admin()) {
-        //デフォルトjquery削除
-        wp_deregister_script( 'jquery' );
-    }
+  if (!is_admin()) {
+    //デフォルトjquery削除
+    wp_deregister_script( 'jquery' );
+  
+    //  指定名は全て別にしないと最初の１つしか読み込まれない
+    wp_register_script( "headjs-gsap", GET_PATH('js') . "lib/gsap/gsap.min.js", array(),'1.0', false );
+    wp_register_script( "headjs-scrolltrigger", GET_PATH('js') . "lib/gsap/ScrollTrigger.min.js", array(),'1.0', false );
+    wp_register_script( "headjs-swiperbundle", GET_PATH('js') . "lib/swiper/swiper-bundle.min.js", array(),'1.0', false );
+    wp_enqueue_script( "headjs-bundle",
+      GET_PATH('js') . "bundle.js?v=".esc_html(date_i18n('Ymd_His')),
+      array('headjs-gsap', 'headjs-scrolltrigger', 'headjs-swiperbundle'),
+      '1.0', false );
+
+    //	コンタクトフォームのみ
+    global $reCAPTCHA_site_key;
+    if (is_page('contact')||is_page('contact-confirm') ) :
+      wp_enqueue_script( "headjs-recaptcha", GET_PATH('js') . "https://www.google.com/recaptcha/api.js?render=".$reCAPTCHA_site_key, false, false );
+    endif;
+  }
 }
 add_action( "wp_enqueue_scripts", "my_enqueue_scripts" );
 
+//  上記scriptの読み込み時に特定名称にdeferを付与
+add_filter('script_loader_tag', 'add_defer', 10, 2);
+function add_defer($tag, $handle) {
+  //if( $handle !== 'headjs' ) {   return $tag;  }
+  if( strpos( $handle, 'headjs' ) === false ) {   return $tag;  }
+  return str_replace(' src=', ' defer src=', $tag);
+}
+
+/*
+//  上記scriptの読み込み時に特定名称にasyncを付与
+add_filter('script_loader_tag', 'add_async', 10, 2);
+function add_async($tag, $handle) {
+  if($handle !== 'headjs') {   return $tag;  }
+  return str_replace(' src=', ' async src=', $tag);
+}
+*/
 
 //----------------------------------------------------
 //  メールの送信設定
@@ -661,56 +715,74 @@ register_block_style(
 //--------------------------------------------------------
 //  アクセスカウンター
 //include GET_PATH_R('php')+"inc/access-counter.php";
-// 閲覧数の保存する関数を定義
+// 閲覧数の保存する関数を定義、headerに導入
 function update_views() {
-    global $post;
-    if ( 'publish' === get_post_status( $post ) && is_single() ) {
-     $views = intval( get_post_meta( $post->ID, 'views', true ) );
-     update_post_meta( $post->ID, 'views', ( $views + 1 ) );
+  global $post;
+  //  投稿記事ページ( single )、かつ公開記事だった場合
+  if ( 'publish' === get_post_status( $post ) && is_single() ) {
+    //  ログイン中ではない、ボットではない = 外部の正式な訪問者
+    if( !is_user_logged_in() && !is_bot() ){
+      //  保存してある"views"を取得
+      $views = intval( get_post_meta( $post->ID, 'external_viewers', true ) );
+      //  "views"に1加算して保存
+      update_post_meta( $post->ID, 'external_viewers', ( $views + 1 ) );
+
+    //  何者かのアクセス
+    }else{
+      //  保存してある"views"を取得
+      $views = intval( get_post_meta( $post->ID, 'views', true ) );
+      //  "views"に1加算して保存
+      update_post_meta( $post->ID, 'views', ( $views + 1 ) );
     }
-   }
-   add_action( 'wp_head', 'update_views' );
-   
-   
-   // 管理画面の投稿一覧に閲覧数用のカラムを追加
-   function add_column( $defaults ) {
-    $defaults['view_column'] = '閲覧数';
-    return $defaults;
-   }
-   add_filter('manage_posts_columns', 'add_column');
-   
-   
-   // 閲覧数用のカラムに、実際の閲覧数を表示させる
-   function add_column_id($column_name, $id) {
-    global $post;
-    if ($column_name == 'view_column') {
-     $view_column = get_post_meta( $post->ID, 'views', true );
-     echo $view_column;
-    }
-   }
-   add_action('manage_posts_custom_column', 'add_column_id', 10, 2);
-   
-   
-   // 追加したカラムにソート（並び替え）機能を追加
-   function my_add_sort($columns){
-    $columns['view_column'] = 'my_sort';
+  }
+}
+add_action( 'wp_head', 'update_views' );
+
+
+// 管理画面の投稿一覧に閲覧数用のカラムを追加
+function add_column( $defaults ) {
+  $defaults['view_column'] = '閲覧数';
+  $defaults['external_viewers_column'] = '外部閲覧者数';
+  return $defaults;
+}
+add_filter('manage_posts_columns', 'add_column');
+
+
+// 閲覧数用のカラムに、実際の閲覧数を表示させる
+function add_column_id( $column_name, $id ) {
+  global $post;
+  if ($column_name == 'view_column') {
+    $view_column = get_post_meta( $post->ID, 'views', true );
+    echo $view_column;
+  }
+  if ($column_name == 'external_viewers_column') {
+    $ev_column = get_post_meta( $post->ID, 'external_viewers', true );
+    echo $ev_column;
+  }
+}
+add_action('manage_posts_custom_column', 'add_column_id', 10, 2);
+
+
+// 追加したカラムにソート（並び替え）機能を追加
+function my_add_sort($columns){
+  $columns['view_column'] = 'my_sort';
     return $columns;
-   }
-   add_filter( 'manage_edit-post_sortable_columns', 'my_add_sort');
-   
-   
-   // ソートに利用するキーに「閲覧数」を使用するように設定
-   function my_add_sort_by_meta( $query ) {
-    if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
-     switch( $orderby ) {
-      case 'my_sort':
-       $query->set( 'meta_key', 'views' );
-       $query->set( 'orderby', 'meta_value_num' );
-       break;
-     }
+}
+add_filter( 'manage_edit-post_sortable_columns', 'my_add_sort');
+
+
+// ソートに利用するキーに「閲覧数」を使用するように設定
+function my_add_sort_by_meta( $query ) {
+  if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
+    switch( $orderby ) {
+    case 'my_sort':
+      $query->set( 'meta_key', 'views' );
+      $query->set( 'orderby', 'meta_value_num' );
+      break;
     }
-   }
-   add_action( 'pre_get_posts', 'my_add_sort_by_meta', 1 );
+  }
+}
+add_action( 'pre_get_posts', 'my_add_sort_by_meta', 1 );
 
 
 //--------------------------------------------------------

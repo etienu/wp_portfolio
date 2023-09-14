@@ -54,11 +54,17 @@
 <main>
     <section class="l-contact u-padding_ud40 u-color-bg__main">
     <div class="l-contact__inner">
+        <!--
         <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green">
             <div class="c-anchor__t-100" id="complete"></div>
             <span><b></b><i></i><u></u><p>COMPLETE</p></span>
             <h2>送信が完了しました</h2>
         </div>
+        -->
+        <div class="u-margin__t20"></div>
+        <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+        ['title' => '送信が完了しました','lead'=>"COMPLETE",'id'=>"complete",'color'=>'green'] ); ?>
+
         <div class="p-contact__progress-flow__wrapper u-margin__t60">
             <div class="p-contact__progress-flow">
                 <div class="bar"></div>

@@ -25,10 +25,10 @@
 <?php /* 制作実績 */ ?>
 <section class="l-works u-padding_ud100 u-color-bg__main">
   <div class="l-works__inner">
-    <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green" id="works">
-      <span><b></b><i></i><u></u><p>LP/WordPress</p></span>
-      <h2>サイト制作</h2>
-    </div>
+    <?php /* 見出し : できること SKILL  */ ?>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+    ['title' =>'サイト制作','lead'=>"LP/WordPress",'id'=>"works",'color'=>'green'] ); ?>
+
 
     <div class="l-works__content__wrapper">
       <div class="l-works__content__inner">
@@ -88,10 +88,12 @@
             ?>
         </div>
 
-        <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green u-margin__t80" id="works">
-            <span><b></b><i></i><u></u><p>JavaScript</p></span>
-            <h2>JavaScript制作</h2>
-        </div>
+        <?php /* 見出し : JavaScript制作 JavaScript  */ ?>
+        <div class="u-margin__t80"></div>
+        <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+        ['title' =>'JavaScript','lead'=>"JavaScript",'id'=>"works",'color'=>'green'] ); ?>
+
+
         <?php /* JavaScript系 */ ?>
         <div class="l-works__items u-margin__t40">
             <?php

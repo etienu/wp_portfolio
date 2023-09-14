@@ -5,14 +5,21 @@
 	<script><?php global $template;?>const wp_template = "<?php echo basename( $template ); ?>";
 		const wp_imgpath = "<?php echo GET_PATH(); ?>";</script>
 
-	<?php //defer : 遅延読み込みの為、headに記述
+	<?php
+	//	CSS読み込み
+	//	静的コーディング : ここで記述
+	//	WP : function.phpで記述
 	/*
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js" defer></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js" defer></script>
 	<link rel="stylesheet" href="<?php echo GET_PATH('css'); ?>lib/swiper/swiper-bundle.min.css" media="print" onload="this.media='all'">
 	*/
-	 ?>
-
+	?>
+	<?php
+	/* // JavaScript 読み込み
+	//  静的コーディング : ここで記述
+	//  WP : function.phpで読みこむ
+	//	defer : 遅延読み込みの為、headに記述
 	<script src="<?php echo GET_PATH('js'); ?>lib/gsap/gsap.min.js" defer></script>
 	<script src="<?php echo GET_PATH('js'); ?>lib/gsap/ScrollTrigger.min.js" defer></script>
 	<script src="<?php echo GET_PATH('js'); ?>lib/swiper/swiper-bundle.min.js" defer></script>
@@ -26,7 +33,8 @@
 	?>
 	<script src="https://www.google.com/recaptcha/api.js?render=<?php echo $reCAPTCHA_site_key; ?>" defer></script>
 	<?php endif; ?>
-
+	*/
+	?>
 	<?php /* Base */ ?>
 	<?php wp_head(); ?>
 	<meta name="description" content="<?php bloginfo('description'); ?>">

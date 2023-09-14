@@ -31,6 +31,7 @@ const JsConfig = {
     // 出力の設定
     output: {
         // 出力するファイル名
+        //publicPath: 'auto',//'/js/',
         filename: 'js/bundle.js',
         path: path.resolve(dir.public, 'assets'),
         //clean : true, //  フォルダ内全部消す

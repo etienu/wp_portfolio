@@ -25,10 +25,10 @@
 <!-- 料金表 -->
 <section class="l-price u-padding_ud100 u-color-bg__main">
   <div class="l-price__inner">
-    <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green" id="price">
-      <span><b></b><i></i><u></u><p>PRICE</p></span>
-      <h2 class="js__title">料金</h2>
-    </div>
+    <?php /* 見出し : 料金 PRICE  */ ?>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+     ['title' => "料金",'lead'=>"PRICE",'id'=>"price",'color'=>'green'] ); ?>
+
     <div class="l-price__table__wrapper">
         <h3 class="c-title__h3 c-title__bg c-title__bg__drop u-margin__t40">コーディング</h3>
         <dl>

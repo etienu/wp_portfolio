@@ -1,7 +1,6 @@
 定義
 
 sass
-  lib / ( 外部ライブラリ )
   global / ( 全体共通で使用するもの )
   Foundation / ( 基本の設定 )
   Layout( レイアウト部分の管理 / section単位等 )
@@ -10,5 +9,3 @@ sass
     Project / ( 各ページのモジュール管理/ プロフィールやカード )
     Utility / ( 調整用 )
     javascript / ( JavaScriptによって操作するもの )
-
-  post / ( 記事別の固有 )

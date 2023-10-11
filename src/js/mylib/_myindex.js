@@ -13,6 +13,8 @@ import adjustViewport from './adjustviewport'; //  ビューポート調整
 import myExternalLinks from './myexternallinks'; //  外部リンク
 import Accordions from './content/accordion'; //  アコーディオン
 
+import consoleJoke from './content/consolejoke'; //  コンソールジョーク
+
 //  GSAPアニメーション
 import eeGSAP from './gsap/eegsap';
 //  ヒーローのアニメーション
@@ -47,6 +49,7 @@ const myexternallinks = new myExternalLinks();
 const eegsap = new eeGSAP();
 const swipergroup = new swiperGroup();
 const accordions = new Accordions();
+const consolejoke = new consoleJoke();
 
 
 //----------------------------------------------------
@@ -76,7 +79,7 @@ const init = function() {
     }
     //  コンタクトフォームのページのみ設定
     if (wp_template == "page-contact.php") {
-        contactform.eventRegistration();
+        contactform.eventRegistration( varcommon );
     }
     //  トップページ背景
     pbg.taskLoad();
@@ -92,6 +95,9 @@ const init = function() {
     myexternallinks.fixingExternalLinks();
     //  GSAPアニメ登録
     eegsap.eventRegistration( varcommon );
+
+    //
+    consolejoke.eventRegistration( varcommon );
 };
 
 //----------------------------------------------------

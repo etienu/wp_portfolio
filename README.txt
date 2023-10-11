@@ -1,4 +1,4 @@
-定義
+フォルダ構成
 
 assets
   controlpanel / 管理画面の独自ページに関するコード

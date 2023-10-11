@@ -1,0 +1,220 @@
+@use "../../global" as g;
+//------------------------------------------------
+//    
+//------------------------------------------------
+.p-faq {
+    width: 100%;
+    padding-top : 140px;
+    padding-bottom : 100px;
+    background-color : white;
+    border-top : 8px solid lightgreen;
+    border-bottom : 8px solid lightgreen;
+}
+
+
+.p-faq__inner {
+    margin: auto;
+    width: 100%;
+    max-width: calc( 1180px );
+    color: g.$color-font-dark;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    margin: auto;
+    margin-top : 2px;
+    margin-bottom:80px;
+}
+
+
+.p-faq__content {
+    margin-top: 80px;
+    width : 100%;
+    max-width :calc( 100% - 40px );
+}
+
+
+//  リスト ul
+.p-faq__grid {
+    width: 100%;
+    display: grid;
+    grid-template-rows : auto;   //  縦
+    grid-template-columns: 50% 50%;  //  横
+    grid-auto-flow: row;
+    grid-auto-rows:object-fit;
+    column-gap: 10px; // 横間隔
+    row-gap: 21px; // 縦間隔
+    //  アイテム li
+    .p-faq__griditem {
+        text-align:left;
+        width: calc( 100% - 10px );
+        position : relative;
+        height: auto;
+        .p-faq__q {
+            display: flex;
+            flex-direction : row;
+            position : relative;
+            font-size: 18px;
+            height: 100%;
+            width: 100%;
+            padding-left: 18px;
+            border-bottom : 1px solid g.$color-black;
+            // Q
+            &:before{
+                content : "Ｑ";
+                width: 16px;
+                height: 100%;
+                transform: translate( -4px , -2px );
+                color : g.$color-font-accent;
+                margin:auto;
+                margin-right: 20px;
+            }
+            .p-faq__q-inner {
+                display:flex;
+                flex-direction:row;
+                justify-content: space-between;
+                width: 100%;
+                font-size: 18px;
+                margin:auto;
+                margin-left: 1px;
+                margin-top: -2px;
+                padding-top: 20px;
+                padding-bottom: 21px;
+                .icon{
+                    margin-right: 26px;
+                }
+            }
+            //  下線
+            &:after{
+                position: absolute;
+                content : "";
+                left: 0;
+                top : 0;
+                width: 100%;
+                height: 100%;
+                border-bottom : 1px solid g.$color-black;
+            }
+        }
+
+        .p-faq__a {
+            display: flex;
+            flex-direction : row;
+            position : relative;
+            font-size: 18px;
+            height: 100%;
+            width: 100%;
+            .p-faq__a__inner {
+                display: flex;
+                flex-direction : row;
+                margin : auto;
+                margin-left: 0;
+                padding-top : 16px;
+                padding-left: 18px;
+                a{
+                    text-decoration: underline;
+                    transition : opacity 0.3s;
+                    &:hover{
+                        opacity: 0.8;
+                    }
+                }
+                // A
+                &:before{
+                    content : "Ａ";
+                    width: 16px;//g.rem(16);
+                    height: 100%;
+                    transform: translate( -4px , -2px );
+                    color : g.$color-font-accent;
+                    margin : auto;
+                    margin-right: 20px;
+                }
+            }
+        }
+    
+    }
+    
+    
+}
+
+//----------------------------------------
+//  レスポンシブ
+//----------------------------------------
+@include g.mq('sp-tab') {
+//}
+
+//@include g.mq('sp') {
+    .p-faq {
+    }
+    
+    .p-faq__inner {
+        margin: auto;
+        width: 100%;
+        max-width: min( calc( 100% - 24px ), 600px );
+        margin-top : 2px;
+        margin-bottom:32px;
+    }
+    
+    
+    .p-faq__content {
+        margin-top: 100px;
+        width : 100%;
+    }
+
+
+    //  リスト ul
+    .p-faq__grid {
+        width: 100%;
+        display: grid;
+        grid-template-rows : auto;   //  縦
+        grid-template-columns: 100%;  //  横
+        grid-auto-flow: row;
+        grid-auto-rows:object-fit;
+        column-gap: 10px; // 横間隔
+        row-gap: 22px; // 縦間隔
+        //  アイテム li
+        .p-faq__griditem {
+            text-align:left;
+            width: calc( 100% );
+            position : relative;
+            height: auto;
+            .p-faq__q {
+                font-size: 16px;
+                padding-left: 34px;
+                // Q
+                &:before{
+                    content : "Ｑ";
+                    width: 14px;//
+                    transform: translate( -4px , -12px );
+                    margin-right: 20px;
+                }
+                .p-faq__q-inner {
+                    font-size: 14px;
+                    padding-top: 1px;
+                    padding-bottom:19px;
+                    line-height: 20px;
+                    .icon{
+                        margin-right: 14px;
+                    }
+                }
+                //  下線
+                &:after{
+                }
+            }// Q END
+
+            .p-faq__a {
+                font-size: 14px;
+                .p-faq__a__inner {
+                    padding-top : 16px;
+                    padding-left: 34px;
+                    margin-left: 0;
+                    // A
+                    &:before{
+                        width: 16px;
+                        transform: translate( -4px , -2px );
+                        font-size: 18px;
+                        margin-right: 20px;
+                    }
+                }
+            }// A END
+        }//  p-faq__griditem
+    }//  p-faq__grid
+}// mq md END

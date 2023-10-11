@@ -17,7 +17,7 @@ src : 制作中に使うソースフォルダです。出力はassetsに行わ�
 
 404.php : 404ページ
 admin-theme-setting-page.php : 管理画面の独自管理ページ
-archive-work.php : カスタム投稿タイプ「work」のアーカイブ
+archive-work.php : カスタム投稿タイプ「work」の一覧ページ
 footer.php : フッター
 front-page.php : トップページ
 functions.php : WordPress設定

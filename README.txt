@@ -1,6 +1,6 @@
 フォルダ構成
 
-assets
+assets : 実際にサイトで使用されるデータフォルダです。
   controlpanel / 管理画面の独自ページに関するコード
   css / コンパイルして出力されたcss
     lib / 利用するライブラリのcss
@@ -11,7 +11,7 @@ assets
     inc / function.php内で必要に応じincludeして使用する機能付け外しコード
     template-parts / サイト内でget_template_partで呼び出すパーツ。引数に対応しコードをすっきりさせます。
 
-src
+src : 制作中に使うソースフォルダです。出力はassetsに行われ、完成時は外します。
   js / jsのソースコード
   sass / sassのソースコード
 

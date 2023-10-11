@@ -103,7 +103,10 @@ export default class contactForm {
     //  「に同意して送信」と連動するチェックボックス反応
     //--------------------------------------------------
     //  イベント登録
-    eventRegistration = () => {
+    eventRegistration = ( i_common ) => {
+        //  共有変数クラスの確保
+        this.common = i_common;
+
         if (!this.pfcf_form) return;
         this.pfcf_form.addEventListener('submit', (e) => {
             let ret = this.check_cfi_all(this);
@@ -189,7 +192,20 @@ export default class contactForm {
                 this.judge_cfi_checkbox();
             });
 
-    }
+        //--------------------------------
+        //作成したrecaptha関数をフォームデータ送信時に実行されるように設定
+        var form_id_contact = document.getElementById("id_contact");
+        if (form_id_contact) {
+            form_id_contact.addEventListener('submit', (e) => {
+                this.grc_sendFormData(this.common, e);
+            });
+        }
+
+    }// eventRegistration END
+
+    //--------------------------------
+    //  モーダルを閉じる
+    //--------------------------------
     close_modalpp = () => {
         //        console.log("モーダルクローズ");
         this.mdlpp.classList.remove("p-mdlpp__open"); // overlayクラスからopenクラスを外す
@@ -340,46 +356,32 @@ export default class contactForm {
 
         return ret;
     };
-}
 
-
-//--------------------------------------------------
-//      google reCAPTCHA
-//--------------------------------------------------
-//reCAPTCHA認証APIを実行して返ってきたトークンをフォームに設置する関数
-function grc_sendFormData(e) {
-    //  PHPから渡していたが、キーがHTML内に出力されてしまうのはよくないので
-    //  とりあえず直接書いておく
-    //  PHPからjsの受け渡しはどうしてもHTML出力になってしまうのでは？
-    //  解決策求む。
-    //  ※しかしjsもブラウザ開発者機能を辿ると見れてしまう恐れ
-    const reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
-    //元のsubmitをいったんキャンセル
-    if (e) e.preventDefault();
-    //  recaptcha実行 actionは任意の文字指定(管理画面で反映される)
-    grecaptcha.ready(function() {
+    //--------------------------------------------------
+    //      google reCAPTCHA
+    //--------------------------------------------------
+    //reCAPTCHA認証APIを実行して返ってきたトークンをフォームに設置する関数
+    grc_sendFormData(i_common, e) {
+        const reCAPTCHA_site_key = i_common.reCAPTCHA_site_key;
+        //元のsubmitをいったんキャンセル
+        if (e) e.preventDefault();
         //  recaptcha実行 actionは任意の文字指定(管理画面で反映される)
-        grecaptcha.execute(reCAPTCHA_site_key, { action: 'submit' })
-            .then(function(token) {
-                //  Add your logic to submit to your backend server here.
-                //console.log('grecaptcha.execute token=' + token);
-                //   recaptcha認証後のトークンをフォームで送信するために設定
-                document.getElementById('grc_token').value = token;
-                //console.log('フォームデータを送信');
-                document.getElementById("id_contact").submit();
-            })
-            .catch(function(e) {
-                console.error(e);
-                alert('reCAPTCHAでのエラーが発生したためフォームデータを送信できません');
-                return false;
-            });
-    });
-}
-
-//上で作成した関数をフォームデータ送信時に実行されるように設定
-var form_id_contact = document.getElementById("id_contact");
-if (form_id_contact) {
-    form_id_contact.addEventListener('submit', (e) => {
-        grc_sendFormData(e);
-    });
+        grecaptcha.ready(function() {
+            //  recaptcha実行 actionは任意の文字指定(管理画面で反映される)
+            grecaptcha.execute(reCAPTCHA_site_key, { action: 'submit' })
+                .then(function(token) {
+                    //  Add your logic to submit to your backend server here.
+                    //console.log('grecaptcha.execute token=' + token);
+                    //   recaptcha認証後のトークンをフォームで送信するために設定
+                    document.getElementById('grc_token').value = token;
+                    //console.log('フォームデータを送信');
+                    document.getElementById("id_contact").submit();
+                })
+                .catch(function(e) {
+                    console.error(e);
+                    alert('reCAPTCHAでのエラーが発生したためフォームデータを送信できません');
+                    return false;
+                });
+        });
+    }
 }

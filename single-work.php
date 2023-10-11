@@ -4,11 +4,13 @@
     制作実績 - 個別ページ
 -----------------------------------------------------------*/
     $txt_githuburl = get_post_meta($post->ID, 'work_txt_githuburl', true);
+    $txt_when = get_post_meta($post->ID, 'work_txt_when', true);
     $txt_url = get_post_meta($post->ID, 'work_txt_url', true);
     $meta_user = get_post_meta($post->ID, 'work_txt_user', true);
     $meta_pass = get_post_meta($post->ID, 'work_txt_pass', true);
     $txt_passurl = "";
     //  リンク先のドメイン以降を取得
+    //  httpだとエラーになるが、全部httpsの方がよいのでそのままとする
     $address = explode("https://", $txt_url )[1];
     //  BASIC認証がある
     if( strcmp( $meta_user, "" ) != 0 ):
@@ -115,13 +117,16 @@
                 <dd><?php echo get_post_meta($post->ID, 'work_txt_mypart', true);?></dd>
             </div>
             <div class="l-works__section u-margin__t40">
-                <!--
-                <dt class="c-title__h3 c-title__bg__grad">カテゴリ</dt>
-                <dd><?php echo get_post_meta($post->ID, 'work_txt_category', true);?></dd>
-                -->
-
-                <dt class="c-title__h3 c-title__bg c-title__bg__grad2">日数</dt>
-                <dd><?php echo get_post_meta($post->ID, 'work_txt_days', true);?></dd>
+                <div class="rows">
+                    <div class="row">
+                        <dt class="c-title__h3 c-title__bg c-title__bg__grad2">時期</dt>
+                        <dd><?php echo get_post_meta($post->ID, 'work_txt_when', true);?></dd>
+                    </div>
+                    <div class="row">
+                        <dt class="c-title__h3 c-title__bg c-title__bg__grad2">日数</dt>
+                        <dd><?php echo get_post_meta($post->ID, 'work_txt_days', true);?></dd>
+                    </div>
+                </div>
             </div>
             <div class="l-works__section u-margin__t40">
                 <dt class="c-title__h3 c-title__bg c-title__bg__grad2">使用技術</dt>

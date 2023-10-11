@@ -1,10 +1,8 @@
 <head>
 	<meta charset="UTF-8">
-
 	<?php /* CSS and JavaScript */ ?>
 	<script><?php global $template;?>const wp_template = "<?php echo basename( $template ); ?>";
-		const wp_imgpath = "<?php echo GET_PATH(); ?>";</script>
-
+	const wp_imgpath = "<?php echo GET_PATH(); ?>";</script>
 	<?php
 	//	CSS読み込み
 	//	静的コーディング : ここで記述
@@ -45,29 +43,24 @@
     <link rel="icon" type="image/png" href="<?php echo GET_PATH();?>common/favicon/android-touch-icon.png" sizes="192x192">
 
 
-	<?php /* Other */ ?>
+	<?php /* 他 */ ?>
 	<link rel="canonical" href="<?php echo get_pagenum_link(1); ?>">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="format-detection" content="telephone=no">
 
-	<?php /* noindex */ ?>
+	<?php /* robots : noindex 設定 */ ?>
 	<?php if (is_page('contact-thanks')) : ?>
 	<meta name="robots" content="noindex,nofollow">
 	<?php endif; ?>
 
-	<!-- preconnect : 事前接続 -->
-	<link rel="preconnect" href="https://google-analytics.com">
 
 	<?php
 	/*
-	<!-- google adsense
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8093422876321215"
-     crossorigin="anonymous"></script>
--->
-	 <!--google search console
-	 <meta name="google-site-verification" content="BuoqrzhS3DF5II6XLgiPxHLmX87OHcOo-BEyNLSTWi4" />
-	-->*/
+		<!-- preconnect : 事前接続 -->
+		<link rel="preconnect" href="https://google-analytics.com">
+		<!-- google adsense -->
+		<!-- google search console -->*/
 	?>
 
 

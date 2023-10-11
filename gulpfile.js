@@ -8,8 +8,6 @@
 //  モジュール読み込み
 //----------------------------------------------------------------------
 const gulp = require("gulp");
-const webp = require('gulp-webp');
-const rename = require('gulp-rename');
 const { src, dest, series, parallel, watch } = require("gulp");
 //  画像圧縮
 const imageMin = require("gulp-imagemin");
@@ -67,34 +65,11 @@ function imagemin(done) {
 
     done();
 }
-//----------------------------------------------------------------------
-//  webp変換
-//  dist側のimagesフォルダ内で変換
-//  元ファイル名に.webpを付与したものを作成する
-//  image.jpg -> image.jpg.webp
-//  > npx gulp imagewebp
-//----------------------------------------------------------------------
-function imagewebp(done) {
-    src(path.resolve(dir.dist, "assets/images/**"))
-        // rename処理を追加
-        .pipe(rename(function(path) {
-            path.basename += path.extname;
-        }))
-        .pipe(webp({
-            // オプションを追加
-            quality: 70, //default : 75
-            method: 6, //  default : 4
-        }))
-        .pipe(dest(path.resolve(dir.dist, "assets/images/")));
-    done();
-}
-
 
 //----------------------------------------------------------------------
 //  タスク定義
 //----------------------------------------------------------------------
 exports.imagemin = imagemin;
-exports.imagewebp = imagewebp;
 /************************************************************************/
 /*  END OF FILE                                                         */
 /************************************************************************/

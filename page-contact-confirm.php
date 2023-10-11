@@ -97,12 +97,13 @@
 <main>
     <?php /* コンタクトフォーム */ ?>
     <?php
-        //  送信データの処理に全て成功した時のページ
+        //  入力→送信データの処理に全て成功した時の確認ページ
         if(isset($_POST) && count($_POST) > 0 && count($errors) == 0){
             get_template_part(GET_PATH_R('template').'layout/contact/l-contactform-confirm', null, ['reCAPTCHA_score' => $reCAPTCHA_score] );
             //echo '<p>[スコア]'.$debugs["recaptcha-score"].'</p>';
         }else{
             /*
+            ※多くの場合はRecaptchaコンソールにてドメインの登録ミス
             echo "[失敗検証]<br>";
             var_dump( $_POST);
             echo "<br>";
@@ -115,13 +116,6 @@
     ?>
       <section class="l-contact u-padding_ud40 u-color-bg__main">
     <div class="l-contact__inner">
-        <!--
-        <div class="c-title__modan c-title__bg__modan c-title__bg__modan--green">
-            <div class="c-anchor__t-100" id="complete"></div>
-            <span><b></b><i></i><u></u><p>ERROR</p></span>
-            <h2>エラーが発生しました。</h2>
-        </div>
-        -->
         <?php /* 見出し : 送信内容の確認 CONFIRM  */ ?>
         <div class="u-margin__t20"></div>
         <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
@@ -134,7 +128,7 @@
                 自動返信メールが送信されている場合、お問い合わせは成功しています。<br>
                 <br>
                 そうでない場合、お手数ですが再度お問い合わせを入力するか、<br>
-                twitter等他の方法でのご連絡をお願い致します！<br>
+                他の方法でのご連絡をお願い致します！<br>
 
             <?php /* トップに戻る */ ?>
             <div class="l-works__button__wrapper u-margin__t80">
@@ -149,7 +143,7 @@
     <?php
         }
     ?>
-    <?php   //エラーメッセージ
+    <?php   //エラーメッセージを表示する場合使用
     /*
         if(count($errors) > 0){
         echo '<div class="my-message-error">';

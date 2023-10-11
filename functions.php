@@ -1,4 +1,8 @@
 <?php
+//  リンク移動で謎の404が発生した時の
+//  保存されているリンクの初期化
+//global $wp_rewrite;
+//$wp_rewrite->flush_rules();
 //-----------------------------------------------------
 //  グローバル変数
 //-----------------------------------------------------
@@ -65,14 +69,14 @@ $TWITTER_ACCOUNT_ID = '';
 
 //  reCAPTCHAv3
 //  js受け渡しでheadに書いてしまうぐらいなら直接javascriptに置いといた方がいいのでは
-$reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
-$reCAPTCHA_secret_key = "6Ld-v70lAAAAAJP86aWA7VQMzv8cIdRu069802Ur";
+$reCAPTCHA_site_key = "";
+$reCAPTCHA_secret_key = "";
 
 //  wpmail()メール設定
 define( 'SMTP_HOST', 'sv2339.xserver.jp' );       //メールサーバーのホスト名
 define( 'SMTP_PORT', '465' );       //SMTPポート番号(ssl:465 tls:587)
-define( 'SMTP_USERNAME', 'contact@etienu.com' );   //ユーザー名
-define( 'SMTP_PASSWORD', 'p5ie1sewo3t' );   //パスワード
+define( 'SMTP_USERNAME', '******' );   //ユーザー名
+define( 'SMTP_PASSWORD', '******' );   //パスワード
 
 
 //----------------------------------------------------
@@ -269,7 +273,7 @@ function my_add_meta_ogp()
         $ps_thumb = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');
         $ogp_img = $ps_thumb[0];
     } else {
-        $ogp_img = $WP_IMG_PATH . '/ogp.jpg';
+        $ogp_img = $WP_IMG_PATH. 'common/twittercard.jpg';
     }
 
     // タグ出力
@@ -281,8 +285,13 @@ function my_add_meta_ogp()
     $insert .= '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . '">' . "\n";
     $insert .= '<meta name="twitter:card" content="summary_large_image">' . "\n";
     $insert .= '<meta name="twitter:site" content="' . $TWITTER_ACCOUNT_ID . '">' . "\n";
+    $insert .= '<meta name="twitter:image" content="'.esc_url($ogp_img).'">' . "\n";
+//  $insert .= '<meta name="twitter:domain" content="'.$og_site_domain.'">';
+
     $insert .= '<meta property="og:locale" content="ja_JP">' . "\n";
     $insert .= '<meta property="fb:app_id" content="' . $FACEBOOK_APP_ID . '">' . "\n";
+//  $insert .= '<meta property="og:publisher" content="'.$og_publisher.'">';     //  facebookURL用
+
     echo $insert;
   }
 }
@@ -640,7 +649,7 @@ function my_enqueue_scripts(){
     //	コンタクトフォームのみ
     global $reCAPTCHA_site_key;
     if (is_page('contact')||is_page('contact-confirm') ) :
-      wp_enqueue_script( "headjs-recaptcha", GET_PATH('js') . "https://www.google.com/recaptcha/api.js?render=".$reCAPTCHA_site_key, false, false );
+      wp_enqueue_script( "headjs-recaptcha", "https://www.google.com/recaptcha/api.js?render=".$reCAPTCHA_site_key, false, false );
     endif;
   }
 }
@@ -802,20 +811,6 @@ include GET_PATH_R('php')."inc/archive-title-rename.php";
 //  検索結果から固定ページを除外
 include GET_PATH_R('php')."inc/search-ignore.php";
 
-
-
-//--------------------------------------------------------
-//  独自関数
-//--------------------------------------------------------
-//  設定系関数
-//include GET_PATH_R('php')."function/custom-function.php";
-//  記事中の関数
-//include GET_PATH_R('php')."function/single-functions.php";
-
-//--------------------------------------------------------
-//  ショートコード : 自分で作った物
-//--------------------------------------------------------
-//include GET_PATH_R('php')."function/post-shortcode.php";
 
 //  PHP END
 ?>

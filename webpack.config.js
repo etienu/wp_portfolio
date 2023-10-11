@@ -1,6 +1,3 @@
-//const webpack = require('webpack');
-//const globule = require('globule');
-
 const path = require('path');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');

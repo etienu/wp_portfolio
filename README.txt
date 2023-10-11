@@ -23,7 +23,7 @@ front-page.php : トップページ
 functions.php : WordPress設定
 gulpfile.js : gulpの設定
 header.php : ヘッダー
-index.php : 
+index.php : 必須ファイル
 page-about.php : 固定ページ「自己紹介」
 page-contact-complete.php : 固定ページ「お問い合わせ:完了」
 page-contact-confirm.php : 固定ページ「お問い合わせ:確認」

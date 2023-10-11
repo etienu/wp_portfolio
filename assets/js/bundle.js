@@ -512,6 +512,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var Common = /*#__PURE__*/function () {
   function Common() {
     _classCallCheck(this, Common);
+    //header.phpで受け渡しているワードプレス画像のパス
+    this.wp_imagePath = wp_imgpath;
+    //header.phpで受け渡しているワードプレスのテンプレートファイル名
+    this.wp_template = wp_template;
+    //  recaptchaのキー
+    this.reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
   }
 
   //----------------------------------------
@@ -522,6 +528,118 @@ var Common = /*#__PURE__*/function () {
     value: function eventRegistration() {}
   }]);
   return Common;
+}();
+
+
+/***/ }),
+
+/***/ "./src/js/mylib/content/consolejoke.js":
+/*!*********************************************!*\
+  !*** ./src/js/mylib/content/consolejoke.js ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ consolejoke; }
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+//========================================================
+//
+//  consoleログに出力する ネタ
+//
+//========================================================
+var consolejoke = /*#__PURE__*/function () {
+  function consolejoke() {
+    _classCallCheck(this, consolejoke);
+    this.common = null;
+  }
+  _createClass(consolejoke, [{
+    key: "task",
+    value: function task() {}
+  }, {
+    key: "toDataURL",
+    value: function toDataURL(src, callback) {
+      var image = new Image();
+      image.crossOrigin = 'Anonymous';
+      image.onload = function () {
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        canvas.height = this.naturalHeight;
+        canvas.width = this.naturalWidth;
+        context.drawImage(this, 0, 0);
+        var dataURL = canvas.toDataURL('image/png');
+        callback(dataURL);
+      };
+      image.src = src;
+    }
+
+    /*
+        JavaScript Consoleに面白い出力をしているサービス
+        https://qiita.com/oohira/items/6c30bdf3636a134cf119
+    
+        consoleで画像表示は2022年には使えなくなっていた？
+        https://shigurezuki.jp/articles/console.log-img
+        ・urlが使用不可になり、data64変換すれば使用可能
+    
+        画像をdata64に変換する方法
+        https://www.delftstack.com/ja/howto/javascript/convert-an-image-into-base64-string-using-javascript/
+    */
+    //  イベント登録
+  }, {
+    key: "eventRegistration",
+    value: function eventRegistration(i_common) {
+      //  共有変数クラスの確保
+      this.common = i_common;
+      //  画像のURL
+      var imgurl = this.common.wp_imagePath;
+      var sizew = 400;
+      var sizeh = 256;
+
+      //  送信完了ページ
+      if (this.common.wp_template == "page-contact-complete.php") {
+        imgurl += 'console/ari.png';
+        sizew = 300;
+        sizeh = 534;
+      }
+      //  通常時
+      else {
+        var random = Math.floor(Math.random() * 2);
+        //  ランダム画像
+        switch (random) {
+          case 0:
+            imgurl += 'console/otu.png';
+            break;
+          case 1:
+            imgurl += 'console/kyuukei.png';
+            sizew = 200;
+            sizeh = 250;
+            break;
+          default:
+            imgurl += 'console/otu.png';
+            break;
+        }
+      }
+      var imgdataurl = "";
+      //  画像のbase64変換
+      this.toDataURL(imgurl, function (dataURL) {
+        imgdataurl = dataURL;
+        var txt_css = 'background-image: ';
+        txt_css += 'url("' + imgdataurl + '");';
+        txt_css += ' background-size: contain; background-repeat : no-repeat; background-position : bottom; ';
+        txt_css += 'padding: calc(' + sizeh + 'px / 2) calc(' + sizew + 'px / 2); color : transparent;  border-bottom: solid 8px lightgreen;';
+        //  画像をconsoleに出力
+        console.log('%c ', txt_css);
+      });
+    }
+  }]);
+  return consolejoke;
 }();
 
 
@@ -561,7 +679,9 @@ var contactForm = /*#__PURE__*/function () {
     //  「に同意して送信」と連動するチェックボックス反応
     //--------------------------------------------------
     //  イベント登録
-    _defineProperty(this, "eventRegistration", function () {
+    _defineProperty(this, "eventRegistration", function (i_common) {
+      //  共有変数クラスの確保
+      _this.common = i_common;
       if (!_this.pfcf_form) return;
       _this.pfcf_form.addEventListener('submit', function (e) {
         var ret = _this.check_cfi_all(_this);
@@ -641,7 +761,20 @@ var contactForm = /*#__PURE__*/function () {
       if (_this.in_yourcheck) _this.in_yourcheck.addEventListener('change', function () {
         _this.judge_cfi_checkbox();
       });
+
+      //--------------------------------
+      //作成したrecaptha関数をフォームデータ送信時に実行されるように設定
+      var form_id_contact = document.getElementById("id_contact");
+      if (form_id_contact) {
+        form_id_contact.addEventListener('submit', function (e) {
+          _this.grc_sendFormData(_this.common, e);
+        });
+      }
     });
+    // eventRegistration END
+    //--------------------------------
+    //  モーダルを閉じる
+    //--------------------------------
     _defineProperty(this, "close_modalpp", function () {
       //        console.log("モーダルクローズ");
       _this.mdlpp.classList.remove("p-mdlpp__open"); // overlayクラスからopenクラスを外す
@@ -927,49 +1060,40 @@ var contactForm = /*#__PURE__*/function () {
       if (!this.judge_cfi_message()) ret = false;
       return ret;
     }
+  }, {
+    key: "grc_sendFormData",
+    value:
+    //--------------------------------------------------
+    //      google reCAPTCHA
+    //--------------------------------------------------
+    //reCAPTCHA認証APIを実行して返ってきたトークンをフォームに設置する関数
+    function grc_sendFormData(i_common, e) {
+      var reCAPTCHA_site_key = i_common.reCAPTCHA_site_key;
+      //元のsubmitをいったんキャンセル
+      if (e) e.preventDefault();
+      //  recaptcha実行 actionは任意の文字指定(管理画面で反映される)
+      grecaptcha.ready(function () {
+        //  recaptcha実行 actionは任意の文字指定(管理画面で反映される)
+        grecaptcha.execute(reCAPTCHA_site_key, {
+          action: 'submit'
+        }).then(function (token) {
+          //  Add your logic to submit to your backend server here.
+          //console.log('grecaptcha.execute token=' + token);
+          //   recaptcha認証後のトークンをフォームで送信するために設定
+          document.getElementById('grc_token').value = token;
+          //console.log('フォームデータを送信');
+          document.getElementById("id_contact").submit();
+        }).catch(function (e) {
+          console.error(e);
+          alert('reCAPTCHAでのエラーが発生したためフォームデータを送信できません');
+          return false;
+        });
+      });
+    }
   }]);
   return contactForm;
-}(); //--------------------------------------------------
-//      google reCAPTCHA
-//--------------------------------------------------
-//reCAPTCHA認証APIを実行して返ってきたトークンをフォームに設置する関数
+}();
 
-function grc_sendFormData(e) {
-  //  PHPから渡していたが、キーがHTML内に出力されてしまうのはよくないので
-  //  とりあえず直接書いておく
-  //  PHPからjsの受け渡しはどうしてもHTML出力になってしまうのでは？
-  //  解決策求む。
-  //  ※しかしjsもブラウザ開発者機能を辿ると見れてしまう恐れ
-  var reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
-  //元のsubmitをいったんキャンセル
-  if (e) e.preventDefault();
-  //  recaptcha実行 actionは任意の文字指定(管理画面で反映される)
-  grecaptcha.ready(function () {
-    //  recaptcha実行 actionは任意の文字指定(管理画面で反映される)
-    grecaptcha.execute(reCAPTCHA_site_key, {
-      action: 'submit'
-    }).then(function (token) {
-      //  Add your logic to submit to your backend server here.
-      //console.log('grecaptcha.execute token=' + token);
-      //   recaptcha認証後のトークンをフォームで送信するために設定
-      document.getElementById('grc_token').value = token;
-      //console.log('フォームデータを送信');
-      document.getElementById("id_contact").submit();
-    }).catch(function (e) {
-      console.error(e);
-      alert('reCAPTCHAでのエラーが発生したためフォームデータを送信できません');
-      return false;
-    });
-  });
-}
-
-//上で作成した関数をフォームデータ送信時に実行されるように設定
-var form_id_contact = document.getElementById("id_contact");
-if (form_id_contact) {
-  form_id_contact.addEventListener('submit', function (e) {
-    grc_sendFormData(e);
-  });
-}
 
 /***/ }),
 
@@ -2689,12 +2813,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _adjustviewport__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./adjustviewport */ "./src/js/mylib/adjustviewport.js");
 /* harmony import */ var _myexternallinks__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./myexternallinks */ "./src/js/mylib/myexternallinks.js");
 /* harmony import */ var _content_accordion__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./content/accordion */ "./src/js/mylib/content/accordion.js");
-/* harmony import */ var _gsap_eegsap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./gsap/eegsap */ "./src/js/mylib/gsap/eegsap.js");
-/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./gsap/eegsap_surface */ "./src/js/mylib/gsap/eegsap_surface.js");
-/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./gsap/eegsap_scrollbutton */ "./src/js/mylib/gsap/eegsap_scrollbutton.js");
-/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _swiper_setting__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./swiper-setting */ "./src/js/mylib/swiper-setting.js");
+/* harmony import */ var _content_consolejoke__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./content/consolejoke */ "./src/js/mylib/content/consolejoke.js");
+/* harmony import */ var _gsap_eegsap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./gsap/eegsap */ "./src/js/mylib/gsap/eegsap.js");
+/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./gsap/eegsap_surface */ "./src/js/mylib/gsap/eegsap_surface.js");
+/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./gsap/eegsap_scrollbutton */ "./src/js/mylib/gsap/eegsap_scrollbutton.js");
+/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _swiper_setting__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./swiper-setting */ "./src/js/mylib/swiper-setting.js");
  //  jQueryのtoggle再現
  //  スムーススクロール
  //  共有変数の入れ物
@@ -2709,6 +2834,8 @@ __webpack_require__.r(__webpack_exports__);
  //  ビューポート調整
  //  外部リンク
  //  アコーディオン
+
+ //  コンソールジョーク
 
 //  GSAPアニメーション
 
@@ -2738,9 +2865,10 @@ var pbg = new _content_pagebackground__WEBPACK_IMPORTED_MODULE_9__["default"]();
 var oscheck = new _content_oscheck__WEBPACK_IMPORTED_MODULE_10__["default"]();
 var adjustviewport = new _adjustviewport__WEBPACK_IMPORTED_MODULE_11__["default"]();
 var myexternallinks = new _myexternallinks__WEBPACK_IMPORTED_MODULE_12__["default"]();
-var eegsap = new _gsap_eegsap__WEBPACK_IMPORTED_MODULE_14__["default"]();
-var swipergroup = new _swiper_setting__WEBPACK_IMPORTED_MODULE_17__["default"]();
+var eegsap = new _gsap_eegsap__WEBPACK_IMPORTED_MODULE_15__["default"]();
+var swipergroup = new _swiper_setting__WEBPACK_IMPORTED_MODULE_18__["default"]();
 var accordions = new _content_accordion__WEBPACK_IMPORTED_MODULE_13__["default"]();
+var consolejoke = new _content_consolejoke__WEBPACK_IMPORTED_MODULE_14__["default"]();
 
 //----------------------------------------------------
 //  ロード時初期化
@@ -2768,7 +2896,7 @@ var init = function init() {
   }
   //  コンタクトフォームのページのみ設定
   if (wp_template == "page-contact.php") {
-    contactform.eventRegistration();
+    contactform.eventRegistration(varcommon);
   }
   //  トップページ背景
   pbg.taskLoad();
@@ -2784,6 +2912,9 @@ var init = function init() {
   myexternallinks.fixingExternalLinks();
   //  GSAPアニメ登録
   eegsap.eventRegistration(varcommon);
+
+  //
+  consolejoke.eventRegistration(varcommon);
 };
 
 //----------------------------------------------------

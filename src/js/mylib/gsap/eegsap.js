@@ -21,6 +21,9 @@ export default class eegsap {
         this.registanim__works_bg_box_right2();
         this.registanim__works_bg_box_right3();
         this.registanim__parallax_simple();
+        this.registanim__intro__svg();
+        this.registanim__intro__txtmarker();
+        this.registanim__mv__particle();
     }
 
     //----------------------------------------
@@ -90,7 +93,6 @@ export default class eegsap {
                     duration: 2,
                     scrollTrigger: {
                         trigger: lead, //アニメーションが始まるトリガーとなる要素
-                        //start: 'top center+=20%'//, //アニメーションが始まる位置を指定
                         toggleActions: str_tglaction, 
                         start: 'top center+=50%'//, //アニメーションが始まる位置を指定
                         //end: "+=500"
@@ -141,8 +143,6 @@ export default class eegsap {
                 li_a_u, {
                     rotate: 180,
                     duration: 0.3, // 0.3秒かけてアニメーション
-                    //delay: 0.3, // 0.3秒後に起動
-                    //x: '100%', //右に100%移動させて画面の外に出す
                     opacity: 1
                 },
                 //'+=0.1'
@@ -329,4 +329,245 @@ export default class eegsap {
         });
     }
 
-}
+    //----------------------------------------
+    //  ポートフォリオ : intro : SVG
+    //----------------------------------------
+    registanim__intro__svg() {
+        let eff_classs = document.querySelectorAll('[data-eff="gsapintro_svg"]');
+        if( eff_classs.length <= 0 ) return;
+        //  svg機能をセットした大枠グループ
+        eff_classs.forEach((tar) => {
+            let objs =tar.querySelectorAll('.l-intro__idealp');
+            //  大枠内のグループアイテム1個
+            objs.forEach((tar) => {
+                //  グループ内spanの文字列を全て分割
+                this.common.splitTarget_span( tar, "", false  );
+                let objctrl =tar;
+                let objp1span = tar.querySelectorAll('span');
+                let path_txt = "";
+                let tl_delay = 0.1;
+                gsap.set(objp1span, { opacity: 0 });
+                const tl = gsap.timeline();
+                //  指定data-indexによってパスを作成
+                switch( objctrl.dataset["index"] )
+                {
+                case "1" : path_txt = [{ x: 0, y: 0 },{ x: -100, y: 0 },{ x: -200, y:0 },{ x: -300, y: -100 }];  tl_delay = 0; break; //  上から
+                case "2" : path_txt = [{ x: 0, y: 0 },{ x: -100, y: 0 },{ x: -200, y:0 },{ x: -300, y:  100 }];  tl_delay = 0.5;  break; //  下から
+                default: break;
+                }
+                tl.
+                to( objp1span,
+                    {
+                    scrollTrigger: {
+                        trigger: tar,
+                        start: 'top bottom', //スクロールイベントの開始地点
+                        end: 'bottom top', //スクロールイベントの終了地点
+                        // 以下、onイベント
+                        onEnter: () => {  tl.play()  },
+                        onEnterBack: () => { tl.play()  },
+                        onLeaveBack: () => { tl.pause() },
+                        onLeave: () => { tl.pause() }
+                        }
+                    }
+                ).
+                to(
+                    objp1span, {
+                        duration: 2,
+                        opacity: 1,
+                        delay: tl_delay,
+                        stagger: {
+                            each : 0.1,
+                            from : "end",
+                        },
+                        motionPath:{
+                            path: path_txt,
+                            autoRotate: true,
+                            curviness:1,
+                            start: 1,
+                            end: 0
+                        },
+                        ease: "power1.easeOut"
+                    }
+                );
+                //  範囲に入るまでタイムライン全体を停止
+                tl.pause();
+            });// objs.forEach((tar)
+        });// eff_classs.forEach((tar)
+    }
+
+
+    //----------------------------------------
+    //  ポートフォリオ : intro : マーカー
+    //----------------------------------------
+    registanim__intro__txtmarker() {
+        let eff_classs = document.querySelectorAll('[data-eff="gsapintro_txtmarker"]');
+        if( eff_classs.length <= 0 ) return;
+        //  svg機能をセットした大枠グループ
+        eff_classs.forEach((target) => {
+            let tar = target;
+            gsap.set(tar, { opacity: 1 });
+            const tl = gsap.timeline();
+            tl.
+            to( tar,
+                {
+                    scrollTrigger: {
+                        trigger: tar,
+                        start: 'top bottom-=35%', //スクロールイベントの開始地点
+                        end: 'bottom top', //スクロールイベントの終了地点
+                        once : true,
+                        // 以下、onイベント
+                        onEnter: () => {  tl.play();
+                            tar.dataset["disp"] = "true";
+                        },
+                        onEnterBack: () => { tl.play()
+                            tar.dataset["disp"] = "true";
+                        },
+                    }
+                }
+            );
+            //  範囲に入るまでタイムライン全体を停止
+            tl.pause();
+        });// eff_classs.forEach((tar)
+    }// registanim__intro__txtmarker()
+
+
+    //================================================
+    //  パーティクル作成 PC
+    //----------------------------------------
+    registanim__mv__particle_maketl_pc( i_ang, i_vx, i_vy, i_target ) {
+        const tar = i_target;
+        const tl = gsap.timeline()
+        .fromTo( tar,
+            {
+                x:(i_vx*20)+"vw", y:(i_vy*0)+"vw", transformOrigin:'50% 50%', scale: 1,
+                duration: 0,
+            },
+            {
+                duration: 0.5 + Math.random() *0.5,
+                ease: "Power1.easeOut",
+                x: (i_vx*40)+"vw",
+                y: (i_vy*200)+"px",
+                scale : 0,
+                opacity : 1,
+            }
+        );
+
+        return tl;
+    }
+    //----------------------------------------
+    //  パーティクル作成 SP
+    //----------------------------------------
+    registanim__mv__particle_maketl_sp( i_ang, i_vx, i_vy, i_target ) {
+        const tar = i_target;
+        const tl = gsap.timeline()
+        .fromTo( tar,
+            {
+                x:(i_vx*20)+"vw", y:(i_vy*0)+"px", transformOrigin:'50% 50%', scale: 1,
+                duration: 0,
+            },
+            {
+                duration: 0.5 + Math.random() *0.5,
+                ease: "Power1.easeOut",
+                x: (i_vx*70)+"vw",
+                y: (i_vy*100)+"px",
+                scale : 0,
+                opacity : 1,
+            }
+        );
+
+        return tl;
+    }
+
+    //----------------------------------------
+    //  ポートフォリオ : mv : パーティクル
+    //----------------------------------------
+    registanim__mv__particle() {
+        let eff_classs = document.querySelectorAll('[data-eff="mv_particle"]');
+        if( eff_classs.length <= 0 ) return;
+        let parstl = [];
+        let parstlsp= [];
+        let btntl = null;
+        const maxcount = 20;
+        const angleone = 360/20;
+        //  svg機能をセットした大枠グループ
+        eff_classs.forEach((tar) => {
+            // たくさんの矩形を配置
+            for (let i = 0; i < maxcount; i++ ) {
+                const par = document.createElement("div");
+                par.classList.add("particle");
+                tar.appendChild(par);
+            }
+            let pars = tar.querySelectorAll('.particle');
+            let cnt = 0;
+            pars.forEach((tar) => {
+                cnt ++;
+                let ang = (cnt*angleone) + Math.floor(Math.random() * angleone);
+                if( ang < 0 ) ang += 360;
+                if( 360<= ang ) ang -= 360;
+                //  角度からベクトル計算
+                let vx = Math.sin( ang * Math.PI / 180 );
+                let vy = Math.cos( ang * Math.PI / 180 );
+                const tl = gsap.timeline();
+                const tlsp = gsap.timeline();
+                parstl[parstl.length] = tl;
+                parstlsp[parstlsp.length] = tlsp;
+                tl.add( this.registanim__mv__particle_maketl_pc( ang, vx, vy, tar ) );
+                tlsp.add( this.registanim__mv__particle_maketl_sp( ang, vx, vy, tar ) );
+                //  終わらせておく事で非表示
+                tl.progress(1);
+                tlsp.progress(1);
+            });
+        });// eff_classs.forEach((tar)
+        //  タイトル取得
+        let obj_btn = [...document.querySelectorAll('.l-hero__heading')];
+        let obj_btndivs= null;
+        let obj_btndiv = null;
+        if( 0 < obj_btn.length ){
+            obj_btndivs = [...obj_btn[0].querySelectorAll('div')];
+        }
+        if( 0 < obj_btndivs.length  ){
+            obj_btndiv = obj_btndivs[0];
+            //  タイトルのホバー : CSSで設定してもGSAPの設定の方が強く残ってしまうため
+            obj_btndiv.addEventListener("mouseover", () => {           
+                if(btntl&&btntl.isActive()){ return; }
+                gsap.set(obj_btndiv, {
+                    scale : 1.00,
+                });
+
+            });
+            obj_btndiv.addEventListener("mouseleave", () => {           
+                if(btntl&&btntl.isActive()){ return; }
+                gsap.set(obj_btndiv, {
+                    scale : 1.00,
+                });
+            });
+            //  タイトルのクリック
+            obj_btndiv.addEventListener("click", () => {
+                //  アニメーション群をcommonで管理して、タイムラインが終わっているのかを確認したい
+                //  タイトルアニメが終わっていればクリック可能にする
+                //  自分のアニメが実行中ならクリック処理しない
+                if(parstl[0].isActive() ||
+                 parstlsp[0].isActive()){
+                    return;
+                }
+                const ww = window.outerWidth;
+                //  SP以下
+                if( ww < 768 ){
+                    for( var i = 0 ; i < parstlsp.length ; i ++ ){ parstlsp[i].play(0); }
+                //  タブ以上
+                }else{
+                    // パーティクル全て実行
+                    for( var i = 0 ; i < parstl.length ; i ++ ){ parstl[i].play(0); }
+                }
+                //  ボタン本体に対するアニメーション
+                gsap.set(obj_btndiv, { scale : 1 });
+                const tl = gsap.timeline();
+                btntl = tl;
+                tl
+                .to( obj_btndiv,{ duration : 0.05, ease: "power1.inOut", scale : 0.9 })
+                .to( obj_btndiv,{ duration : 0.2 , ease: "power1.inOut", scale : 1.0 });
+            });
+        }
+    }// registanim__intro__txtmarker()
+    
+}//class eegsap

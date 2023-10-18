@@ -69,7 +69,6 @@
         let divs = target.querySelectorAll('div');
         gsap.fromTo(divs, { rotate: 0, scale: 0.9, x: -1000 }, {
             x: 0,
-            //autoAlpha: 1,
             rotate: 0,
             scale: 1,
             duration: 1,
@@ -134,13 +133,9 @@
     //文字列（テキスト）を分割しspanで囲む
     eff_classs.forEach(target => {
         let newText = '';
-        //        const text = target.textContent;  //  文字列のみ
-        //const text = target.innerText;    //  改行のみ
         const text = target.innerHTML; //  タグあり
-        //console.log(text);
         const result_br = text.split('<br>');
         for (let j = 0; j < result_br.length; j++) {
-            //console.log("[j]" + j + " [text]" + result_br[j]);
             const result = result_br[j].split('');
             for (let i = 0; i < result.length; i++) {
                 newText += '<b>' + result[i] + '</b>';
@@ -174,59 +169,6 @@
 
 
 //----------------------------------------
-//  surface : ヒーローセクション専用
-//----------------------------------------
-/*
-{
-    let eff_classs = document.querySelectorAll('.js-surface__heroheading');
-    eff_classs.forEach((target) => {
-        let divs = target.querySelectorAll('div');
-        console.log(divs);
-
-        gsap.set([divs[0], divs[1], divs[2], divs[3]], { opacity: 0 });
-        gsap.set(divs[0], { y: 160 });
-        gsap.set(divs[1], { y: 120 });
-        gsap.set(divs[2], { y: 80 });
-        gsap.set(divs[3], { y: 40 });
-        const tl = gsap.timeline();
-        tl.to(
-            divs[0], {
-                rotate: 0,
-                duration: 0.5,
-                opacity: 1,
-            }
-        ).to(
-            divs[0], { y: 0 },
-        ).to(
-            divs[1], {
-                duration: 0.5,
-                opacity: 1
-            },
-            '+=0.5'
-        ).to(
-            divs[1], { y: 0 },
-        ).to(
-            divs[2], {
-                duration: 0.5,
-                opacity: 1
-            },
-            '+=0.5'
-        ).to(
-            divs[2], { y: 0 },
-        ).to(
-            divs[3], {
-                duration: 0.5,
-                opacity: 1
-            },
-            '+=0.5'
-        ).to(
-            divs[3], { y: 0 },
-            '+=0.5'
-        );
-    });
-}
-*/
-//----------------------------------------
 //  surface : ヒーローセクション専用 : 2 演出含む
 //----------------------------------------
 {
@@ -237,13 +179,18 @@
         //  要素内文字をspanで分割
         let newText = "";
         let spanText = divs[0].innerHTML;
+        //  文字列からタグ(要素付き)を取り除く
         spanText.split('').forEach((char)=>{
             newText += '<span>' + char + '</span>';
+            //  、があったら強引にSP用<br?導入
+            if( char =="、"){
+                newText += '<br class="u-display__sp">';
+            }
         });
         divs[0].innerHTML = newText;
 
         divs.forEach((item) => {
-            gsap.set(item, { opacity: 0, marginTop: "-40px" });
+            gsap.set(item, { opacity: 0, marginTop: "10px" });
         });
         let spans = divs[0].querySelectorAll('span');
         gsap.to(spans,{duration:0.5,autoAlpha:1,rotateY:'0deg',
@@ -255,12 +202,12 @@
                 start:'bottom bottom',
             }    
         });
-        gsap.set(divs[0], { opacity: 0, marginTop: "-40px", rotate: 0 }); //  想像をカタチに
+        gsap.set(divs[0], { opacity: 0, marginTop: "10px", rotate: 0 }); //  想像をカタチに
         const tl = gsap.timeline();
         tl.to(
-            divs[0], { marginTop: "-40px", duration: 1, opacity: 1 },
+            divs[0], { marginTop: "10px", duration: 1, opacity: 1 },
         ).to(
-            divs[0], { marginTop: "-50px", backgroundColor: "rgba(144,238,144,0.8)",padding :"0px 40px", duration: 1 },
+            divs[0], { marginTop: "0px", backgroundColor: "rgba(144,238,144,1)",padding :"0px 40px", duration: 1 },
         );
     });
 }

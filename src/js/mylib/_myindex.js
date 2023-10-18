@@ -12,8 +12,10 @@ import osCheck from './content/oscheck'; //  OSの判別
 import adjustViewport from './adjustviewport'; //  ビューポート調整
 import myExternalLinks from './myexternallinks'; //  外部リンク
 import Accordions from './content/accordion'; //  アコーディオン
+import delayLoader from './content/delayloader'; //  遅延読み込み
 
 import consoleJoke from './content/consolejoke'; //  コンソールジョーク
+
 
 //  GSAPアニメーション
 import eeGSAP from './gsap/eegsap';
@@ -49,6 +51,7 @@ const myexternallinks = new myExternalLinks();
 const eegsap = new eeGSAP();
 const swipergroup = new swiperGroup();
 const accordions = new Accordions();
+const delayloader = new delayLoader();
 const consolejoke = new consoleJoke();
 
 
@@ -98,6 +101,9 @@ const init = function() {
 
     //
     consolejoke.eventRegistration( varcommon );
+
+    //
+    delayloader.eventRegistration( varcommon );
 };
 
 //----------------------------------------------------
@@ -122,4 +128,6 @@ window.addEventListener('scroll', () => {
 window.addEventListener("resize", () => {
     //  ビューポートの調整
     adjustviewport.task();
+    //  SP→TAB・PCに切り替わった際
+    btnHumburger.isPC_close();
 });

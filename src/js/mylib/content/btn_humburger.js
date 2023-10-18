@@ -51,13 +51,30 @@ export default class buttonHumburger {
     //  ハンバーガー閉じる( 主にメニュークリック時 )
     //----------------------------------------
     close() {
-        this.btn.classList.remove("open");
-        this.spmenu.classList.remove("open");
-        this.header.classList.remove("open");
-        gsap.fromTo('.p-spmenu__background .stripe',{x:"0%"},{x:"100%",stagger:{each:0.1,from:"end"}});
-        gsap.fromTo('.p-spmenu__inner',{opacity:1},{opacity:0});
-        // スクロール解除
-        this.removeScrollStop();
+        //  開いている場合
+        if (this.btn.classList.contains("open")) {
+            //console.log("SP→タブなので強制的に閉じます");
+            this.btn.classList.remove("open");
+            this.spmenu.classList.remove("open");
+            this.header.classList.remove("open");
+            gsap.fromTo('.p-spmenu__background .stripe',{x:"0%"},{x:"100%",stagger:{each:0.1,from:"end"}});
+            gsap.fromTo('.p-spmenu__inner',{opacity:1},{opacity:0});
+            // スクロール解除
+            this.removeScrollStop();
+        }
+    }
+
+    //----------------------------------------
+    //  PC時強制的に閉じる
+    //----------------------------------------
+    isPC_close() {
+        //  ブラウザのリアル幅( リアル幅なのでリアルタイム変更に対応できる )
+        const ww = window.outerWidth;
+        //  commonを使ってサイトの分岐幅を設定しておくこと
+        //  タブレット以上なら強制的に閉じる処理
+        if( 768 <= ww ){
+            this.close();
+        }
     }
 
     //----------------------------------------

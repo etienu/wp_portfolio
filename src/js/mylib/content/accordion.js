@@ -77,6 +77,7 @@ export default class accordion {
                 if( element.dataset["open"]=="true"){
                     // アイコン操作用フラグを倒す
                     element.dataset["open"]="false";
+                    content.dataset["open"]="false";
                     // アニメーション実行
                     closingAnim(content, element).restart();
 
@@ -86,6 +87,7 @@ export default class accordion {
 
                     // アイコン操作用フラグを立てる
                     element.dataset["open"]="true";
+                    content.dataset["open"]="true";
                     // 属性"open"を付与
                     element.setAttribute("open", "true");
 

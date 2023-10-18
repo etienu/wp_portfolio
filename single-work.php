@@ -69,74 +69,78 @@
         </div>
         <div class="l-works__infomation">
             <dl>
- 
-            <?php 
-            //  パスありリンク
-            if( strcmp( $meta_user, "" ) != 0 ):
-            ?>
-            <div class="l-works__section u-flex__xcenter-sp">
-                <a href="<?php echo $txt_passurl;?>" class="c-button__portfolio c-button__hover__goto p-button__pf">
-                サイトに移動
-                </a>
-            </div>
-            <div class="l-works__section u-margin__t20">
-                <dt class="c-lead">上記リンクはURLにBASIC認証を含めていますので、そのまま移動できます。<br>
-                もしパスワードを要求された場合は以下を入力して下さい。</dt>
-                <dt class="c-lead__hard">BASIC認証</dt>
-                <dd class="c-lead">USER : <b><?php echo get_post_meta($post->ID, 'work_txt_user', true);?></b></dd>
-            </div>
-            <div class="l-works__section">
-                <dd class="c-lead">PASS : <b><?php echo get_post_meta($post->ID, 'work_txt_pass', true);?></b></dd>
-            </div>
-            <?php endif; ?>
-
-            <?php
-            //  パスなしリンク
-            if( strcmp( $meta_user, "" ) == 0 ): ?>
-            <div class="l-works__section u-flex__xcenter-sp">
-                <a href="<?php echo $txt_url;?>" class="c-button__portfolio c-button__hover__goto p-button__pf">
-                サイトに移動
-                </a>
-            </div>
-            <?php endif; ?>
-
-            <?php
-            //  GitHubリンク
-            if( !empty( $txt_githuburl ) ): ?>
-            <div class="l-works__section u-flex__xcenter-sp u-margin__t40">
-                <a href="<?php echo $txt_githuburl;?>" class="c-button__portfolio c-button__hover__goto p-button__pf">
-                GitHubでコードを見る
-                </a>
-            </div>
-            <?php endif; ?>
-
-            
-
-            <div class="l-works__section u-margin__t40">
-                <dt class="c-title__h3 c-title__bg c-title__bg__grad2">作業範囲</dt>
-                <dd><?php echo get_post_meta($post->ID, 'work_txt_mypart', true);?></dd>
-            </div>
-            <div class="l-works__section u-margin__t40">
-                <div class="rows">
-                    <div class="row">
-                        <dt class="c-title__h3 c-title__bg c-title__bg__grad2">時期</dt>
-                        <dd><?php echo get_post_meta($post->ID, 'work_txt_when', true);?></dd>
-                    </div>
-                    <div class="row">
-                        <dt class="c-title__h3 c-title__bg c-title__bg__grad2">日数</dt>
-                        <dd><?php echo get_post_meta($post->ID, 'work_txt_days', true);?></dd>
-                    </div>
+                <?php 
+                //  パスありリンク
+                if( strcmp( $meta_user, "" ) != 0 ):
+                ?>
+                <div class="l-works__section u-flex__xcenter-sp">
+                    <dt class="dt__flex">
+                        <a href="<?php echo $txt_passurl;?>" class="c-button__portfolio c-button__hover__goto p-button__pf">
+                        サイトに移動
+                        </a>
+                    </dt>
                 </div>
-            </div>
-            <div class="l-works__section u-margin__t40">
-                <dt class="c-title__h3 c-title__bg c-title__bg__grad2">使用技術</dt>
-                <dd><?php echo get_post_meta($post->ID, 'work_txt_skill', true);?></dd>
-            </div>
-            <div class="l-works__section u-margin__t40">
-                <dt class="c-title__h3 c-title__bg c-title__bg__drop">概要</dt>
-                <dd><pre><?php echo get_post_meta($post->ID, 'work_txt_summary', true);?></pre></dd>
-            </div>
+                <div class="l-works__section u-margin__t20">
+                    <dt class="c-lead">上記リンクはURLにBASIC認証を含めていますので、そのまま移動できます。<br>
+                    もしパスワードを要求された場合は以下を入力して下さい。</dt>
+                    <dt class="c-lead__hard">BASIC認証</dt>
+                    <dd class="c-lead">USER : <b><?php echo get_post_meta($post->ID, 'work_txt_user', true);?></b></dd>
+                </div>
+                <div class="l-works__section">
+                    <dd class="c-lead">PASS : <b><?php echo get_post_meta($post->ID, 'work_txt_pass', true);?></b></dd>
+                </div>
+                <?php endif; ?>
 
+                <?php
+                //  パスなしリンク
+                if( strcmp( $meta_user, "" ) == 0 ): ?>
+                <div class="l-works__section u-flex__xcenter-sp">
+                    <dt class="dt__flex">
+                        <a href="<?php echo $txt_url;?>" class="c-button__portfolio c-button__hover__goto p-button__pf">
+                        サイトに移動
+                        </a>
+                    </dt>
+                </div>
+                <?php endif; ?>
+
+                <?php
+                //  GitHubリンク
+                if( !empty( $txt_githuburl ) ): ?>
+                <div class="l-works__section u-flex__xcenter-sp u-margin__t40">
+                    <dt class="dt__flex">
+                        <a href="<?php echo $txt_githuburl;?>" class="c-button__portfolio c-button__hover__goto p-button__pf">
+                        GitHubでコードを見る
+                        </a>
+                    </dt>
+                </div>
+                <?php endif; ?>
+
+                <div class="l-works__section u-margin__t40">
+                    <dt class="c-title__h3 c-title__bg c-title__bg__grad2">作業範囲</dt>
+                    <dd><?php echo get_post_meta($post->ID, 'work_txt_mypart', true);?></dd>
+                </div>
+                <div class="l-works__section u-margin__t40">
+                    <dt>
+                        <dl class="rows">
+                            <div class="row">
+                                <dt class="c-title__h3 c-title__bg c-title__bg__grad2">時期</dt>
+                                <dd><?php echo get_post_meta($post->ID, 'work_txt_when', true);?></dd>
+                            </div>
+                            <div class="row">
+                                <dt class="c-title__h3 c-title__bg c-title__bg__grad2">日数</dt>
+                                <dd><?php echo get_post_meta($post->ID, 'work_txt_days', true);?></dd>
+                            </div>
+                        </dl>
+                    </dt>
+                </div>
+                <div class="l-works__section u-margin__t40">
+                    <dt class="c-title__h3 c-title__bg c-title__bg__grad2">使用技術</dt>
+                    <dd><?php echo get_post_meta($post->ID, 'work_txt_skill', true);?></dd>
+                </div>
+                <div class="l-works__section u-margin__t40">
+                    <dt class="c-title__h3 c-title__bg c-title__bg__drop">概要</dt>
+                    <dd><pre><?php echo get_post_meta($post->ID, 'work_txt_summary', true);?></pre></dd>
+                </div>
             </dl>
         </div>
         <?php endif; ?>

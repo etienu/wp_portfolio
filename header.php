@@ -1,8 +1,10 @@
 <head>
 	<meta charset="UTF-8">
 	<?php /* CSS and JavaScript */ ?>
-	<script><?php global $template;?>const wp_template = "<?php echo basename( $template ); ?>";
-	const wp_imgpath = "<?php echo GET_PATH(); ?>";</script>
+	<script><?php global $template;?>
+	const wp_template = "<?php echo basename( $template ); ?>";
+	const wp_imgpath = "<?php echo GET_PATH(); ?>";
+	const wp_rootpath = "<?php echo GET_PATH('root'); ?>";</script>
 	<?php
 	//	CSS読み込み
 	//	静的コーディング : ここで記述
@@ -35,23 +37,29 @@
 	?>
 	<?php /* Base */ ?>
 	<?php wp_head(); ?>
+	<?php //	functions.php・プラグインから出力する場合は不要	 ?>
 	<meta name="description" content="<?php bloginfo('description'); ?>">
+	<?php /* 2023年現在keywordは検索エンジンが機能を廃止しているので無意味 */	 ?>
+	<meta name="keyword" content="">
 
 	<?php /* Favicon */ ?>
 	<link rel="shortcut icon" href="<?php echo GET_PATH();?>common/favicon/favicon.ico">
     <link rel="apple-touch-icon" href="<?php echo GET_PATH();?>common/favicon/apple-touch-icon.png" sizes="180x180">
     <link rel="icon" type="image/png" href="<?php echo GET_PATH();?>common/favicon/android-touch-icon.png" sizes="192x192">
 
-
 	<?php /* 他 */ ?>
 	<link rel="canonical" href="<?php echo get_pagenum_link(1); ?>">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<?php /*
+		IE終了の現在不要
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		*/
+	 ?>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="format-detection" content="telephone=no">
 
-	<?php /* robots : noindex 設定 */ ?>
+	<?php /* robots : noindex 設定 : 間違いなく検索不要なページ */ ?>
 	<?php if (is_page('contact-thanks')) : ?>
-	<meta name="robots" content="noindex,nofollow">
+		<meta name="robots" content="noindex,nofollow">
 	<?php endif; ?>
 
 
@@ -62,6 +70,16 @@
 		<!-- google adsense -->
 		<!-- google search console -->*/
 	?>
+	<!-- Google tag (gtag.js)
+	 -->
+	 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMDCTD1P1Z"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-BMDCTD1P1Z');
+	</script>
 
 
 </head>

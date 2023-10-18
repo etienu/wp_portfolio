@@ -16,12 +16,14 @@ $WP_IMG_PATH_R= esc_html( 'assets/images/' );
 $WP_CSS_PATH_R= esc_html( 'assets/css/' );
 $WP_JS_PATH_R = esc_html( 'assets/js/' );
 $WP_PHP_PATH_R= esc_html( 'assets/php/' );
+$WP_FONT_PATH_R= esc_html( 'assets/webfonts/' );
 
 //  img/cssは絶対パス
 $WP_IMG_PATH= esc_html( $WP_ROOT_PATH . '/'. $WP_IMG_PATH_R );
 $WP_CSS_PATH= esc_html( $WP_ROOT_PATH . '/'. $WP_CSS_PATH_R );
 $WP_JS_PATH = esc_html( $WP_ROOT_PATH . '/'. $WP_JS_PATH_R );
 $WP_PHP_PATH= esc_html( $WP_ROOT_PATH . '/'. $WP_PHP_PATH_R );
+$WP_FONT_PATH= esc_html( $WP_ROOT_PATH . '/'. $WP_FONT_PATH_R );
 function GET_PATH(string $_type = 'img')
 {
     global $WP_ROOT_PATH;
@@ -29,12 +31,15 @@ function GET_PATH(string $_type = 'img')
     global $WP_CSS_PATH;
     global $WP_JS_PATH;
     global $WP_PHP_PATH;
+    global $WP_FONT_PATH;    
     switch ($_type) {
+        case 'root': return $WP_ROOT_PATH;  break;
         case 'img': return $WP_IMG_PATH;  break;
         case 'css': return $WP_CSS_PATH;  break;
         case 'js':  return $WP_JS_PATH;   break;
         case 'php': return $WP_PHP_PATH;  break;
         case 'template': return $WP_PHP_PATH."template-parts/";  break;
+        case 'font': return $WP_FONT_PATH;  break;
         default:  return '';      break;
     }
 }
@@ -47,12 +52,14 @@ function GET_PATH_R(string $_type = 'img')
     global $WP_CSS_PATH_R;
     global $WP_JS_PATH_R;
     global $WP_PHP_PATH_R;
+    global $WP_FONT_PATH_R;
     switch ($_type) {
         case 'img': return $WP_IMG_PATH_R;  break;
         case 'css': return $WP_CSS_PATH_R;  break;
         case 'js':  return $WP_JS_PATH_R;   break;
         case 'php': return $WP_PHP_PATH_R;  break;
         case 'template': return $WP_PHP_PATH_R."template-parts/";  break;
+        case 'font': return $WP_FONT_PATH_R;  break;
         default:  return '';      break;
     }
 }
@@ -69,14 +76,14 @@ $TWITTER_ACCOUNT_ID = '';
 
 //  reCAPTCHAv3
 //  js受け渡しでheadに書いてしまうぐらいなら直接javascriptに置いといた方がいいのでは
-$reCAPTCHA_site_key = "";
-$reCAPTCHA_secret_key = "";
+$reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
+$reCAPTCHA_secret_key = "6Ld-v70lAAAAAJP86aWA7VQMzv8cIdRu069802Ur";
 
 //  wpmail()メール設定
 define( 'SMTP_HOST', 'sv2339.xserver.jp' );       //メールサーバーのホスト名
 define( 'SMTP_PORT', '465' );       //SMTPポート番号(ssl:465 tls:587)
-define( 'SMTP_USERNAME', '******' );   //ユーザー名
-define( 'SMTP_PASSWORD', '******' );   //パスワード
+define( 'SMTP_USERNAME', 'contact@nino-code.com' );   //ユーザー名
+define( 'SMTP_PASSWORD', 'p5ie1sewo3t' );   //パスワード
 
 
 //----------------------------------------------------
@@ -309,7 +316,7 @@ add_action('admin_enqueue_scripts', 'my_add_admin_style');
 function my_add_admin_style()
 {
   global $WP_CSS_PATH;
-  wp_enqueue_style('my_add_admin_style', $WP_CSS_PATH . 'style-admin.css');
+  //wp_enqueue_style('my_add_admin_style', $WP_CSS_PATH . 'style-admin.css');
 }
 
 //----------------------------------------------------
@@ -624,8 +631,28 @@ add_action( "wp_enqueue_scripts", "my_enqueue_styles" );
 //    CSS読み込み 強制的にhead内で読み込む
 //-----------------------------------------------------
 function my_head_styles(){
+  //echo '<link rel="preconnect" href="https://fonts.gstatic.com/">';
+  //echo '<link rel="preconnect" href="https://fonts.googleapis.com/">';
+  //  <!-- font : preload を指定する -->
+  //echo '<link rel="preload" href="'.GET_PATH('font').'googlefonts/NotoSansJP/NotoSansJP-Medium.woff2" as="font" type="font/woff2" crossorigin>';
+  $fonturl = GET_PATH('font')."googlefonts/NotoSansJP/NotoSansJP-Medium_subset.woff2";
+  $fonturl2 = GET_PATH('font')."googlefonts/NotoSansJP/NotoSansJP-Regular_subset.woff2";
+  $fonturl3 = GET_PATH('font')."googlefonts/NotoSansJP/NotoSansJP-Light_subset.woff2";
+  $txtmedia = 'all';
+
+  //  swiper
 	echo '<link rel="stylesheet" href="'.GET_PATH('css').'lib/swiper/swiper-bundle.min.css">';
+
+  //echo '<link href="'.$fonturl.' rel="stylesheet" media="print" onload="this.media='.$txtmedia.'" crossorigin>';
+  //  フォント
+  echo '<link rel="preload" href="'.$fonturl.'" as="font" type="font/woff2" crossorigin>';
+  echo '<link rel="preload" href="'.$fonturl2.'" as="font" type="font/woff2" crossorigin>';
+  echo '<link rel="preload" href="'.$fonturl3.'" as="font" type="font/woff2" crossorigin>';
+  //echo '<link rel="stylesheet" href="'.GET_PATH('css').'font.css?v='.esc_html(date_i18n('Ymd_His')).'">';
+
+  //  css本体
 	echo '<link rel="stylesheet" href="'.GET_PATH('css').'style.css?v='.esc_html(date_i18n('Ymd_His')).'">';
+
 }
 add_action('wp_head', 'my_head_styles');
 
@@ -639,12 +666,18 @@ function my_enqueue_scripts(){
   
     //  指定名は全て別にしないと最初の１つしか読み込まれない
     wp_register_script( "headjs-gsap", GET_PATH('js') . "lib/gsap/gsap.min.js", array(),'1.0', false );
+    wp_register_script( "headjs-motionpath", GET_PATH('js') . "lib/gsap/MotionPathPlugin.min.js", array(),'1.0', false );
+    wp_register_script( "headjs-customease", GET_PATH('js') . "lib/gsap/CustomEase.min.js", array(),'1.0', false );
     wp_register_script( "headjs-scrolltrigger", GET_PATH('js') . "lib/gsap/ScrollTrigger.min.js", array(),'1.0', false );
-    wp_register_script( "headjs-swiperbundle", GET_PATH('js') . "lib/swiper/swiper-bundle.min.js", array(),'1.0', false );
+    wp_register_script( "headjs-swiperbundle", GET_PATH('js') . "lib/swiper/swiper-bundle.min.js", array(),'1.0',  false );
     wp_enqueue_script( "headjs-bundle",
       GET_PATH('js') . "bundle.js?v=".esc_html(date_i18n('Ymd_His')),
-      array('headjs-gsap', 'headjs-scrolltrigger', 'headjs-swiperbundle'),
-      '1.0', false );
+      array('headjs-gsap',
+          'headjs-motionpath',
+          'headjs-customease',
+          'headjs-scrolltrigger',
+          'headjs-swiperbundle' ),
+      '1.0',  false );
 
     //	コンタクトフォームのみ
     global $reCAPTCHA_site_key;

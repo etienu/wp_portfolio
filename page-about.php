@@ -196,7 +196,11 @@
 
         <div class="l-about__leadblock" data-side="center">
             <b class=" u-margin__t40">最後に、動画でご挨拶させてください。</b>
-            <video src='<?php echo GET_PATH()?>about/selfintro.webm' controls></video>
+            <video controls>
+                <source src='<?php echo GET_PATH()?>about/selfintro.webm?=2' type="video/webm" />
+                <source src='<?php echo GET_PATH()?>about/selfintro.mp4?=2' type="video/mp4" />
+            </video>
+
             <b class=" u-margin__t40">「コーディングだけして欲しい！」</b>
             <b>「WordPressごと構築して欲しい！」</b>
             <br>

@@ -144,7 +144,7 @@
         </div>
 
         <?php /* トップに戻る */ ?>
-        <div class="l-works__button__wrapper u-margin__t40">
+        <div class="l-works__button__wrapper">
             <a href="/" class="c-button__portfolio c-button__hover__back p-button__pf">
             トップに戻る
             </a>

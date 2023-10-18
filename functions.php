@@ -76,14 +76,14 @@ $TWITTER_ACCOUNT_ID = '';
 
 //  reCAPTCHAv3
 //  js受け渡しでheadに書いてしまうぐらいなら直接javascriptに置いといた方がいいのでは
-$reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
-$reCAPTCHA_secret_key = "6Ld-v70lAAAAAJP86aWA7VQMzv8cIdRu069802Ur";
+$reCAPTCHA_site_key = "********";
+$reCAPTCHA_secret_key = "********";
 
 //  wpmail()メール設定
 define( 'SMTP_HOST', 'sv2339.xserver.jp' );       //メールサーバーのホスト名
 define( 'SMTP_PORT', '465' );       //SMTPポート番号(ssl:465 tls:587)
-define( 'SMTP_USERNAME', 'contact@nino-code.com' );   //ユーザー名
-define( 'SMTP_PASSWORD', 'p5ie1sewo3t' );   //パスワード
+define( 'SMTP_USERNAME', '********' );   //ユーザー名
+define( 'SMTP_PASSWORD', '********' );   //パスワード
 
 
 //----------------------------------------------------

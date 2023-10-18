@@ -194,6 +194,7 @@ var accordion = /*#__PURE__*/function () {
           if (element.dataset["open"] == "true") {
             // アイコン操作用フラグを倒す
             element.dataset["open"] = "false";
+            content.dataset["open"] = "false";
             // アニメーション実行
             closingAnim(content, element).restart();
 
@@ -203,6 +204,7 @@ var accordion = /*#__PURE__*/function () {
 
             // アイコン操作用フラグを立てる
             element.dataset["open"] = "true";
+            content.dataset["open"] = "true";
             // 属性"open"を付与
             element.setAttribute("open", "true");
 
@@ -431,25 +433,44 @@ var buttonHumburger = /*#__PURE__*/function () {
   }, {
     key: "close",
     value: function close() {
-      this.btn.classList.remove("open");
-      this.spmenu.classList.remove("open");
-      this.header.classList.remove("open");
-      gsap.fromTo('.p-spmenu__background .stripe', {
-        x: "0%"
-      }, {
-        x: "100%",
-        stagger: {
-          each: 0.1,
-          from: "end"
-        }
-      });
-      gsap.fromTo('.p-spmenu__inner', {
-        opacity: 1
-      }, {
-        opacity: 0
-      });
-      // スクロール解除
-      this.removeScrollStop();
+      //  開いている場合
+      if (this.btn.classList.contains("open")) {
+        //console.log("SP→タブなので強制的に閉じます");
+        this.btn.classList.remove("open");
+        this.spmenu.classList.remove("open");
+        this.header.classList.remove("open");
+        gsap.fromTo('.p-spmenu__background .stripe', {
+          x: "0%"
+        }, {
+          x: "100%",
+          stagger: {
+            each: 0.1,
+            from: "end"
+          }
+        });
+        gsap.fromTo('.p-spmenu__inner', {
+          opacity: 1
+        }, {
+          opacity: 0
+        });
+        // スクロール解除
+        this.removeScrollStop();
+      }
+    }
+
+    //----------------------------------------
+    //  PC時強制的に閉じる
+    //----------------------------------------
+  }, {
+    key: "isPC_close",
+    value: function isPC_close() {
+      //  ブラウザのリアル幅( リアル幅なのでリアルタイム変更に対応できる )
+      var ww = window.outerWidth;
+      //  commonを使ってサイトの分岐幅を設定しておくこと
+      //  タブレット以上なら強制的に閉じる処理
+      if (768 <= ww) {
+        this.close();
+      }
     }
 
     //----------------------------------------
@@ -512,18 +533,58 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var Common = /*#__PURE__*/function () {
   function Common() {
     _classCallCheck(this, Common);
-    //header.phpで受け渡しているワードプレス画像のパス
+    //  header.phpで受け渡しているワードプレス画像のパス
     this.wp_imagePath = wp_imgpath;
-    //header.phpで受け渡しているワードプレスのテンプレートファイル名
+    //  ルートパス
+    this.wp_rootpath = wp_rootpath;
+    this.wp_csspath = this.wp_rootpath + "/assets/css/";
+    this.wp_fontpath = this.wp_rootpath + "/assets/webfonts/";
+
+    //  header.phpで受け渡しているワードプレスのテンプレートファイル名
     this.wp_template = wp_template;
     //  recaptchaのキー
     this.reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
   }
 
-  //----------------------------------------
-  //  各種イベントの登録
-  //----------------------------------------
+  //------------------------------------------------
+  //  指定要素内の指定タグをspanで分割する
+  //------------------------------------------------
   _createClass(Common, [{
+    key: "splitTarget_span",
+    value: function splitTarget_span(i_target, i_tag, i_reverse) {
+      var divs = i_target;
+      var spanText = null;
+      //  タグが指定されていない場合
+      if (i_tag == "" || i_tag == null) {
+        //console.log("タグ指定なし : " );
+        //console.log(i_target );
+        divs = i_target;
+        //  指定されている場合は取得
+        spanText = divs.innerHTML;
+      } else {
+        //console.log("タグ指定あり : " + i_tag );
+        divs = i_target.querySelector(i_tag);
+        console.log(i_target);
+        spanText = divs.innerHTML;
+      }
+      //  要素内文字をspanで分割
+      var newText = "";
+      spanText.split('').forEach(function (char) {
+        //  反転 :全て頭に入れ込む
+        if (i_reverse) {
+          newText = '<span>' + char + '</span>' + newText;
+        } else {
+          newText += '<span>' + char + '</span>';
+        }
+      });
+      divs.innerHTML = newText;
+      return divs;
+    }
+
+    //----------------------------------------
+    //  各種イベントの登録
+    //----------------------------------------
+  }, {
     key: "eventRegistration",
     value: function eventRegistration() {}
   }]);
@@ -1097,6 +1158,68 @@ var contactForm = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./src/js/mylib/content/delayloader.js":
+/*!*********************************************!*\
+  !*** ./src/js/mylib/content/delayloader.js ***!
+  \*********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ DelayLoader; }
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+//----------------------------------------
+//
+//  Google Speed Insight 対策
+//  遅延読み込み処理
+//
+//----------------------------------------
+var DelayLoader = /*#__PURE__*/function () {
+  function DelayLoader() {
+    _classCallCheck(this, DelayLoader);
+  }
+
+  //----------------------------------------
+  //  フォント
+  //----------------------------------------
+  _createClass(DelayLoader, [{
+    key: "delayloadFont",
+    value: function delayloadFont() {
+      var fontUrl = this.wp_csspath + 'font.css';
+      var fontcss_notosansjp = '<link href="' + this.wp_fontpath + 'googlefonts/NotoSansJP/NotoSansJP-Medium.woff2" as="font" type="font/woff2" crossorigin>';
+      var fontcss_fontface = '<link href="' + this.wp_csspath + 'font.css">';
+      var elmhead = document.querySelector("head");
+      elmhead.insertAdjacentHTML("beforeend", fontcss_notosansjp);
+      elmhead.insertAdjacentHTML("beforeend", fontcss_fontface);
+      //console.log("fontよみこみ");
+      //console.log(fontcss);
+    }
+
+    //----------------------------------------
+    //  各種イベントの登録
+    //----------------------------------------
+  }, {
+    key: "eventRegistration",
+    value: function eventRegistration(i_common) {
+      this.common = i_common;
+      this.wp_csspath = this.common.wp_csspath;
+      this.wp_fontpath = this.common.wp_fontpath;
+      //this.delayloadFont();
+    }
+  }]);
+  return DelayLoader;
+}();
+
+
+/***/ }),
+
 /***/ "./src/js/mylib/content/disp_loader.js":
 /*!*********************************************!*\
   !*** ./src/js/mylib/content/disp_loader.js ***!
@@ -1535,6 +1658,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": function() { return /* binding */ tabGroup; }
 /* harmony export */ });
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -1574,27 +1703,138 @@ var tabGroup = /*#__PURE__*/function () {
     value: function tabactive(i_tab) {
       i_tab.dataset['state'] = "open";
     }
-
+  }, {
+    key: "activeTab",
+    value: function activeTab(i_tab) {
+      //  親(グループ)を取得する
+      var parent = i_tab.parentNode;
+      //  グループの全てを非アクティブにする
+      this.tabdisableall(parent);
+      //  グループの自分のタブをアクティブにする
+      this.tabactive(i_tab);
+      return parent;
+    }
     //----------------------------------------
-    //  タブの設定
+    //  タブの設定 : WORKS
     //----------------------------------------
   }, {
-    key: "registTab",
-    value: function registTab(i_tab) {
+    key: "registTab_works",
+    value: function registTab_works(i_tab, i_group) {
       var _this = this;
-      //  タブのクリック設定
-      i_tab.addEventListener("click", function () {
-        //  親(グループ)を取得する
-        var parent = i_tab.parentNode;
-        //  グループの全てを非アクティブにする
-        _this.tabdisableall(parent);
-        //  グループの自分のタブをアクティブにする
-        _this.tabactive(i_tab);
+      //  タブのホバー設定
+      i_tab.addEventListener("mouseover", function () {
+        //console.log( i_tab );
+        _this.activeTab(i_tab);
         //--------------------------------
         //  タブごとの固有処理( data-key指定 )
         var key = i_tab.dataset['key'];
         //  swiperの取得
-        var swi = _this.common.swipers['skill'];
+        var swi = null;
+        swi = _this.common.swipers['works'];
+        var bg = document.querySelector('.l-works__content__background .swiper');
+        //  配列に変換
+        var bgs = _toConsumableArray(bg.querySelectorAll('.swiper-slide'));
+        bg.dataset['disp'] = "true";
+        //if( i_tab.dataset['state'] ) 
+        var ci = 0; // changeindex
+        switch (key) {
+          case 'worksswiper1':
+            ci = 1;
+            break;
+          case 'worksswiper2':
+            ci = 2;
+            break;
+          case 'worksswiper3':
+            ci = 3;
+            break;
+          default:
+            ci = 0;
+            break;
+        }
+        //  変更したい番号と現在の番号が違っている場合は変更演出
+        if (swi.activeIndex != ci) {
+          var bgsi = _toConsumableArray(bgs[ci].querySelectorAll('.l-works__slideinfo__wrapper')); //  スライドの下のinfo取得
+          var bgsp = _toConsumableArray(bgs[ci].querySelectorAll('picture')); //  スライドの下のpictureを取得して配列にする
+          swi.slideTo(ci);
+          //  配列があれば実行 ( pictureがない空スライドもある )
+          if (0 < bgsp.length) {
+            gsap.fromTo(bgsp[0], {
+              scale: 1
+            }, {
+              scale: 1.05,
+              duration: 5
+            });
+          }
+          //  [INFO] info以下のdivを全て取得
+          if (0 < bgsi.length) {
+            var bgsii = bgsi[0].querySelectorAll('div');
+            var cnt = 0;
+            bgsii.forEach(function (tar) {
+              var rect = _toConsumableArray(tar.querySelectorAll('.rect'))[0];
+              var tl = gsap.timeline();
+              gsap.set(tar, {
+                opacity: 0,
+                y: 10,
+                filter: "blur(0px)"
+              });
+              gsap.set(rect, {
+                x: "0%"
+              });
+              tl.to(tar, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: "power1.out",
+                delay: cnt * 0.2
+              }).to(rect, {
+                x: "105%"
+              });
+              //.to( tar,{ filter : "blur(0px)"} );
+              cnt++;
+              //tl.add( gsap.timeline.fromTo(tar,{width: 0},{width: 1, duration :1} ) );
+            });
+            //console.log( "infoきてます" );
+          }
+        }
+      });
+      //  タブから離れたら
+      //i_tab.addEventListener("mouseleave", () => {
+      //});
+      //  一覧ボタンにホバーしたら背景白に
+      var btn = document.querySelector('.l-works__imagebutton__wrapper a');
+      btn.addEventListener("mouseover", function () {
+        var bg = document.querySelector('.l-works__content__background .swiper');
+        var bgs = _toConsumableArray(bg.querySelectorAll('.swiper-slide'));
+        var swi = _this.common.swipers['works'];
+        var ci = 0;
+        if (swi.activeIndex != ci) {
+          var bgsp = _toConsumableArray(bgs[ci].querySelectorAll('p'));
+          bg.dataset['disp'] = "false";
+          swi.slideTo(ci);
+          //  映像スライドとは違って逆に止まっている方がよい感じ
+          if (0 < bgsp.length) {
+            // gsap.fromTo(bgsp[ci],{scale:1},{scale:1.05, duration :5} );
+          }
+        }
+      });
+    }
+
+    //----------------------------------------
+    //  タブの設定 : SKILL
+    //----------------------------------------
+  }, {
+    key: "registTab_skill",
+    value: function registTab_skill(i_tab) {
+      var _this2 = this;
+      //  タブのクリック設定
+      i_tab.addEventListener("click", function () {
+        _this2.activeTab(i_tab);
+        //--------------------------------
+        //  タブごとの固有処理( data-key指定 )
+        var key = i_tab.dataset['key'];
+        //  swiperの取得
+        var swi = null;
+        swi = _this2.common.swipers['skill'];
         switch (key) {
           case 'skillswiper1':
             swi.slideTo(0);
@@ -1615,15 +1855,25 @@ var tabGroup = /*#__PURE__*/function () {
   }, {
     key: "registGroup",
     value: function registGroup(i_group) {
-      var _this2 = this;
+      var _this3 = this;
       //  開いているタブ番号を設定
       i_group.dataset['tabindex'] = 0;
 
       //  タブの取得
       var tabs = i_group.querySelectorAll('[data-js="tabitem"]');
-      tabs.forEach(function (tab) {
-        _this2.registTab(tab);
-      });
+      var groupkey = i_group.dataset['key'];
+      switch (groupkey) {
+        case "works":
+          tabs.forEach(function (tab) {
+            _this3.registTab_works(tab, i_group);
+          });
+          break;
+        case "skill":
+          tabs.forEach(function (tab) {
+            _this3.registTab_skill(tab);
+          });
+          break;
+      }
     }
 
     //----------------------------------------
@@ -1632,14 +1882,14 @@ var tabGroup = /*#__PURE__*/function () {
   }, {
     key: "eventRegistration",
     value: function eventRegistration(i_common) {
-      var _this3 = this;
+      var _this4 = this;
       //  共有変数クラスの確保
       this.common = i_common;
       //  data-js : タブグループの取得
       var tabgroup = document.querySelectorAll('[data-js="tabgroup"]');
       //  タブグループの数だけループ
       tabgroup.forEach(function (tgroup) {
-        _this3.registGroup(tgroup);
+        _this4.registGroup(tgroup);
       });
     }
   }]);
@@ -1661,6 +1911,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": function() { return /* binding */ eegsap; }
 /* harmony export */ });
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -1692,6 +1948,9 @@ var eegsap = /*#__PURE__*/function () {
       this.registanim__works_bg_box_right2();
       this.registanim__works_bg_box_right3();
       this.registanim__parallax_simple();
+      this.registanim__intro__svg();
+      this.registanim__intro__txtmarker();
+      this.registanim__mv__particle();
     }
 
     //----------------------------------------
@@ -2023,9 +2282,321 @@ var eegsap = /*#__PURE__*/function () {
         });
       });
     }
+
+    //----------------------------------------
+    //  ポートフォリオ : intro : SVG
+    //----------------------------------------
+  }, {
+    key: "registanim__intro__svg",
+    value: function registanim__intro__svg() {
+      var _this = this;
+      var eff_classs = document.querySelectorAll('[data-eff="gsapintro_svg"]');
+      if (eff_classs.length <= 0) return;
+      //  svg機能をセットした大枠グループ
+      eff_classs.forEach(function (tar) {
+        var objs = tar.querySelectorAll('.l-intro__idealp');
+        //  大枠内のグループアイテム1個
+        objs.forEach(function (tar) {
+          //  グループ内spanの文字列を全て分割
+          _this.common.splitTarget_span(tar, "", false);
+          var objctrl = tar;
+          var objp1span = tar.querySelectorAll('span');
+          var path_txt = "";
+          var tl_delay = 0.1;
+          gsap.set(objp1span, {
+            opacity: 0
+          });
+          var tl = gsap.timeline();
+          //  指定data-indexによってパスを作成
+          switch (objctrl.dataset["index"]) {
+            case "1":
+              path_txt = [{
+                x: 0,
+                y: 0
+              }, {
+                x: -100,
+                y: 0
+              }, {
+                x: -200,
+                y: 0
+              }, {
+                x: -300,
+                y: -100
+              }];
+              tl_delay = 0;
+              break;
+            //  上から
+            case "2":
+              path_txt = [{
+                x: 0,
+                y: 0
+              }, {
+                x: -100,
+                y: 0
+              }, {
+                x: -200,
+                y: 0
+              }, {
+                x: -300,
+                y: 100
+              }];
+              tl_delay = 0.5;
+              break;
+            //  下から
+            default:
+              break;
+          }
+          tl.to(objp1span, {
+            scrollTrigger: {
+              trigger: tar,
+              start: 'top bottom',
+              //スクロールイベントの開始地点
+              end: 'bottom top',
+              //スクロールイベントの終了地点
+              // 以下、onイベント
+              onEnter: function onEnter() {
+                tl.play();
+              },
+              onEnterBack: function onEnterBack() {
+                tl.play();
+              },
+              onLeaveBack: function onLeaveBack() {
+                tl.pause();
+              },
+              onLeave: function onLeave() {
+                tl.pause();
+              }
+            }
+          }).to(objp1span, {
+            duration: 2,
+            opacity: 1,
+            delay: tl_delay,
+            stagger: {
+              each: 0.1,
+              from: "end"
+            },
+            motionPath: {
+              path: path_txt,
+              autoRotate: true,
+              curviness: 1,
+              start: 1,
+              end: 0
+            },
+            ease: "power1.easeOut"
+          });
+          //  範囲に入るまでタイムライン全体を停止
+          tl.pause();
+        }); // objs.forEach((tar)
+      }); // eff_classs.forEach((tar)
+    }
+
+    //----------------------------------------
+    //  ポートフォリオ : intro : マーカー
+    //----------------------------------------
+  }, {
+    key: "registanim__intro__txtmarker",
+    value: function registanim__intro__txtmarker() {
+      var eff_classs = document.querySelectorAll('[data-eff="gsapintro_txtmarker"]');
+      if (eff_classs.length <= 0) return;
+      //  svg機能をセットした大枠グループ
+      eff_classs.forEach(function (target) {
+        var tar = target;
+        gsap.set(tar, {
+          opacity: 1
+        });
+        var tl = gsap.timeline();
+        tl.to(tar, {
+          scrollTrigger: {
+            trigger: tar,
+            start: 'top bottom-=35%',
+            //スクロールイベントの開始地点
+            end: 'bottom top',
+            //スクロールイベントの終了地点
+            once: true,
+            // 以下、onイベント
+            onEnter: function onEnter() {
+              tl.play();
+              tar.dataset["disp"] = "true";
+            },
+            onEnterBack: function onEnterBack() {
+              tl.play();
+              tar.dataset["disp"] = "true";
+            }
+          }
+        });
+        //  範囲に入るまでタイムライン全体を停止
+        tl.pause();
+      }); // eff_classs.forEach((tar)
+    } // registanim__intro__txtmarker()
+
+    //================================================
+    //  パーティクル作成 PC
+    //----------------------------------------
+  }, {
+    key: "registanim__mv__particle_maketl_pc",
+    value: function registanim__mv__particle_maketl_pc(i_ang, i_vx, i_vy, i_target) {
+      var tar = i_target;
+      var tl = gsap.timeline().fromTo(tar, {
+        x: i_vx * 20 + "vw",
+        y: i_vy * 0 + "vw",
+        transformOrigin: '50% 50%',
+        scale: 1,
+        //backgroundColor: "lightgreen",
+        duration: 0
+      }, {
+        duration: 0.5 + Math.random() * 0.5,
+        ease: "Power1.easeOut",
+        x: i_vx * 40 + "vw",
+        //y: (vy*8)+"vw",
+        y: i_vy * 200 + "px",
+        scale: 0,
+        //backgroundColor: "gold",
+        opacity: 1
+      });
+      return tl;
+    }
+    //----------------------------------------
+    //  パーティクル作成 SP
+    //----------------------------------------
+  }, {
+    key: "registanim__mv__particle_maketl_sp",
+    value: function registanim__mv__particle_maketl_sp(i_ang, i_vx, i_vy, i_target) {
+      var tar = i_target;
+      var tl = gsap.timeline().fromTo(tar, {
+        x: i_vx * 20 + "vw",
+        y: i_vy * 0 + "px",
+        transformOrigin: '50% 50%',
+        scale: 1,
+        duration: 0
+      }, {
+        duration: 0.5 + Math.random() * 0.5,
+        ease: "Power1.easeOut",
+        x: i_vx * 70 + "vw",
+        y: i_vy * 100 + "px",
+        scale: 0,
+        opacity: 1
+        //backgroundColor: "gold",
+      });
+
+      return tl;
+    }
+
+    //----------------------------------------
+    //  ポートフォリオ : mv : パーティクル
+    //----------------------------------------
+  }, {
+    key: "registanim__mv__particle",
+    value: function registanim__mv__particle() {
+      var _this2 = this;
+      var eff_classs = document.querySelectorAll('[data-eff="mv_particle"]');
+      if (eff_classs.length <= 0) return;
+      var parstl = [];
+      var parstlsp = [];
+      var btntl = null;
+      var maxcount = 20;
+      var angleone = 360 / 20;
+      //  svg機能をセットした大枠グループ
+      eff_classs.forEach(function (tar) {
+        // たくさんの矩形を配置
+        for (var i = 0; i < maxcount; i++) {
+          var par = document.createElement("div");
+          par.classList.add("particle");
+          tar.appendChild(par);
+        }
+        var pars = tar.querySelectorAll('.particle');
+        var cnt = 0;
+        pars.forEach(function (tar) {
+          cnt++;
+          var ang = cnt * angleone + Math.floor(Math.random() * angleone);
+          if (ang < 0) ang += 360;
+          if (360 <= ang) ang -= 360;
+          //  角度からベクトル計算
+          var vx = Math.sin(ang * Math.PI / 180);
+          var vy = Math.cos(ang * Math.PI / 180);
+          //let rdm = (Math.random()*0.5+0.5);
+          //                gsap.set(tar, { x:(vx*20)+"vw", y:(vy*0)+"vw", transformOrigin:'50% 50%', scale: 1, });
+          var tl = gsap.timeline();
+          var tlsp = gsap.timeline();
+          parstl[parstl.length] = tl;
+          parstlsp[parstlsp.length] = tlsp;
+          tl.add(_this2.registanim__mv__particle_maketl_pc(ang, vx, vy, tar));
+          tlsp.add(_this2.registanim__mv__particle_maketl_sp(ang, vx, vy, tar));
+          //  終わらせておく事で非表示
+          tl.progress(1);
+          tlsp.progress(1);
+        });
+      }); // eff_classs.forEach((tar)
+      //  タイトル取得
+      var obj_btn = _toConsumableArray(document.querySelectorAll('.l-hero__heading'));
+      var obj_btndivs = null;
+      var obj_btndiv = null;
+      if (0 < obj_btn.length) {
+        obj_btndivs = _toConsumableArray(obj_btn[0].querySelectorAll('div'));
+        //console.log( obj_btndivs );
+        //console.log( obj_btndivs.length );
+      }
+
+      if (0 < obj_btndivs.length) {
+        obj_btndiv = obj_btndivs[0];
+        //  タイトルのホバー : CSSで設定してもGSAPの設定の方が強く残ってしまうため
+        obj_btndiv.addEventListener("mouseover", function () {
+          if (btntl && btntl.isActive()) {
+            return;
+          }
+          gsap.set(obj_btndiv, {
+            scale: 1.00
+          });
+        });
+        obj_btndiv.addEventListener("mouseleave", function () {
+          if (btntl && btntl.isActive()) {
+            return;
+          }
+          gsap.set(obj_btndiv, {
+            scale: 1.00
+          });
+        });
+        //  タイトルのクリック
+        obj_btndiv.addEventListener("click", function () {
+          //  アニメーション群をcommonで管理して、タイムラインが終わっているのかを確認したい
+          //  タイトルアニメが終わっていればクリック可能にする
+          //  自分のアニメが実行中ならクリック処理しない
+          if (parstl[0].isActive() || parstlsp[0].isActive()) {
+            return;
+          }
+          var ww = window.outerWidth;
+          //  SP以下
+          if (ww < 768) {
+            for (var i = 0; i < parstlsp.length; i++) {
+              parstlsp[i].play(0);
+            }
+            //  タブ以上
+          } else {
+            // パーティクル全て実行
+            for (var i = 0; i < parstl.length; i++) {
+              parstl[i].play(0);
+            }
+          }
+          //  ボタン本体に対するアニメーション
+          gsap.set(obj_btndiv, {
+            scale: 1
+          });
+          var tl = gsap.timeline();
+          btntl = tl;
+          tl.to(obj_btndiv, {
+            duration: 0.05,
+            ease: "power1.inOut",
+            scale: 0.9
+          }).to(obj_btndiv, {
+            duration: 0.2,
+            ease: "power1.inOut",
+            scale: 1.0
+          });
+        });
+      }
+    } // registanim__intro__txtmarker()
   }]);
   return eegsap;
-}();
+}(); //class eegsap
 
 
 /***/ }),
@@ -2341,14 +2912,21 @@ var eegsap = /*#__PURE__*/function () {
     //  要素内文字をspanで分割
     var newText = "";
     var spanText = divs[0].innerHTML;
+    //  文字列からタグ(要素付き)を取り除く
+    //const stripTags = text => text.replace(/<([^'">]|"[^"]*"|'[^']*')*>/g,'');
+    //spanText = stripTags( spanText );
     spanText.split('').forEach(function (char) {
       newText += '<span>' + char + '</span>';
+      //  、があったら強引にSP用<br?導入
+      if (char == "、") {
+        newText += '<br class="u-display__sp">';
+      }
     });
     divs[0].innerHTML = newText;
     divs.forEach(function (item) {
       gsap.set(item, {
         opacity: 0,
-        marginTop: "-40px"
+        marginTop: "10px"
       });
     });
     var spans = divs[0].querySelectorAll('span');
@@ -2366,17 +2944,17 @@ var eegsap = /*#__PURE__*/function () {
     });
     gsap.set(divs[0], {
       opacity: 0,
-      marginTop: "-40px",
+      marginTop: "10px",
       rotate: 0
     }); //  想像をカタチに
     var tl = gsap.timeline();
     tl.to(divs[0], {
-      marginTop: "-40px",
+      marginTop: "10px",
       duration: 1,
       opacity: 1
     }).to(divs[0], {
-      marginTop: "-50px",
-      backgroundColor: "rgba(144,238,144,0.8)",
+      marginTop: "0px",
+      backgroundColor: "rgba(144,238,144,1)",
       padding: "0px 40px",
       duration: 1
     });
@@ -2621,9 +3199,68 @@ var swiperGroup = /*#__PURE__*/function () {
   }
 
   //----------------------------------------
-  //  個別 : SKILL
+  //  個別 : WORKS
   //----------------------------------------
   _createClass(swiperGroup, [{
+    key: "make_works",
+    value: function make_works(i_swiper, i_name) {
+      this.swipers[i_name] = new Swiper(i_swiper, {
+        initialSlide: 2,
+        loop: false,
+        allowTouchMove: false,
+        //  ドラッグ無効
+        //  ページネーション
+        centeredSlides: false,
+        //アクティブなスライドを中央に表示
+        speed: 500,
+        //effect: "slide",
+        effect: "fade",
+        fadeEffect: {
+          //    crossFade: true,
+        },
+        spaceBetween: 0,
+        //スライド間の距離
+        slidesPerView: 1,
+        //スライダーのコンテナ上に同時表示する枚数
+        breakpoints: {
+          //小さい順に設定する
+          599: {
+            slidesPerView: 1
+          },
+          1024: {
+            slidesPerView: 1
+          }
+        },
+        //direction: 'vertical' ,
+        updateOnWindowResize: true,
+        //  ウインドウサイズ変更時自動再計算
+        /*
+        on: {
+            slideChange: function () {
+                var prevSlide = this.previousIndex;
+                var currentSlide = this.activeIndex;
+                // アクティブでなくなったスライドにスタイルを指定
+                var prevSlideEl = this.slides[prevSlide];
+                var curSlideEl = this.slides[currentSlide];
+                curSlideEl.style.width = '100%';
+                //curSlideEl.style.transform = 'translate3d(0px, 0px, 0px )';
+                prevSlideEl.style.transform = 'translate3d(0px, 0px, 0px )';
+                //console.log( curSlideEl.style.transform );
+            }
+        }
+        ,*/
+        autoplay: false
+        //            autoplay: {
+        //                delay: 3000,
+        //                disableOnInteraction: false,
+        //            }
+      });
+    }
+
+    //----------------------------------------
+    //  個別 : SKILL
+    //----------------------------------------
+  }, {
     key: "make_skill",
     value: function make_skill(i_swiper, i_name) {
       // swiperslider
@@ -2694,6 +3331,10 @@ var swiperGroup = /*#__PURE__*/function () {
       switch (i_name) {
         case "skill":
           this.make_skill(i_swiper, i_name);
+          break;
+        case "works":
+          this.make_works(i_swiper, i_name);
+          break;
       }
     }
 
@@ -2813,13 +3454,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _adjustviewport__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./adjustviewport */ "./src/js/mylib/adjustviewport.js");
 /* harmony import */ var _myexternallinks__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./myexternallinks */ "./src/js/mylib/myexternallinks.js");
 /* harmony import */ var _content_accordion__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./content/accordion */ "./src/js/mylib/content/accordion.js");
-/* harmony import */ var _content_consolejoke__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./content/consolejoke */ "./src/js/mylib/content/consolejoke.js");
-/* harmony import */ var _gsap_eegsap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./gsap/eegsap */ "./src/js/mylib/gsap/eegsap.js");
-/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./gsap/eegsap_surface */ "./src/js/mylib/gsap/eegsap_surface.js");
-/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./gsap/eegsap_scrollbutton */ "./src/js/mylib/gsap/eegsap_scrollbutton.js");
-/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _swiper_setting__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./swiper-setting */ "./src/js/mylib/swiper-setting.js");
+/* harmony import */ var _content_delayloader__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./content/delayloader */ "./src/js/mylib/content/delayloader.js");
+/* harmony import */ var _content_consolejoke__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./content/consolejoke */ "./src/js/mylib/content/consolejoke.js");
+/* harmony import */ var _gsap_eegsap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./gsap/eegsap */ "./src/js/mylib/gsap/eegsap.js");
+/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./gsap/eegsap_surface */ "./src/js/mylib/gsap/eegsap_surface.js");
+/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./gsap/eegsap_scrollbutton */ "./src/js/mylib/gsap/eegsap_scrollbutton.js");
+/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _swiper_setting__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./swiper-setting */ "./src/js/mylib/swiper-setting.js");
  //  jQueryのtoggle再現
  //  スムーススクロール
  //  共有変数の入れ物
@@ -2834,6 +3476,7 @@ __webpack_require__.r(__webpack_exports__);
  //  ビューポート調整
  //  外部リンク
  //  アコーディオン
+ //  遅延読み込み
 
  //  コンソールジョーク
 
@@ -2865,10 +3508,11 @@ var pbg = new _content_pagebackground__WEBPACK_IMPORTED_MODULE_9__["default"]();
 var oscheck = new _content_oscheck__WEBPACK_IMPORTED_MODULE_10__["default"]();
 var adjustviewport = new _adjustviewport__WEBPACK_IMPORTED_MODULE_11__["default"]();
 var myexternallinks = new _myexternallinks__WEBPACK_IMPORTED_MODULE_12__["default"]();
-var eegsap = new _gsap_eegsap__WEBPACK_IMPORTED_MODULE_15__["default"]();
-var swipergroup = new _swiper_setting__WEBPACK_IMPORTED_MODULE_18__["default"]();
+var eegsap = new _gsap_eegsap__WEBPACK_IMPORTED_MODULE_16__["default"]();
+var swipergroup = new _swiper_setting__WEBPACK_IMPORTED_MODULE_19__["default"]();
 var accordions = new _content_accordion__WEBPACK_IMPORTED_MODULE_13__["default"]();
-var consolejoke = new _content_consolejoke__WEBPACK_IMPORTED_MODULE_14__["default"]();
+var delayloader = new _content_delayloader__WEBPACK_IMPORTED_MODULE_14__["default"]();
+var consolejoke = new _content_consolejoke__WEBPACK_IMPORTED_MODULE_15__["default"]();
 
 //----------------------------------------------------
 //  ロード時初期化
@@ -2915,6 +3559,9 @@ var init = function init() {
 
   //
   consolejoke.eventRegistration(varcommon);
+
+  //
+  delayloader.eventRegistration(varcommon);
 };
 
 //----------------------------------------------------
@@ -2939,6 +3586,8 @@ window.addEventListener('scroll', function () {
 window.addEventListener("resize", function () {
   //  ビューポートの調整
   adjustviewport.task();
+  //  SP→TAB・PCに切り替わった際
+  btnHumburger.isPC_close();
 });
 }();
 /******/ })()

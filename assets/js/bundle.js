@@ -533,15 +533,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 var Common = /*#__PURE__*/function () {
   function Common() {
     _classCallCheck(this, Common);
-    //  header.phpで受け渡しているワードプレス画像のパス
-    this.wp_imagePath = wp_imgpath;
-    //  ルートパス
-    this.wp_rootpath = wp_rootpath;
+    //  ワードプレス : function.phpで請け渡しているワードプレスの配列
+    this.wp_imagePath = wp_var.imgpath; //  画像パス
+    this.wp_rootpath = wp_var.rootpath; //  ルートパス
+    this.wp_template = wp_var.templatepath;
+
+    //  静的サイト : header.phpで受け渡しているワードプレス画像のパス
+    //this.wp_imagePath = wp_imgpath;     //  画像パス
+    //this.wp_rootpath = wp_rootpath;    //  ルートパス
     this.wp_csspath = this.wp_rootpath + "/assets/css/";
     this.wp_fontpath = this.wp_rootpath + "/assets/webfonts/";
 
     //  header.phpで受け渡しているワードプレスのテンプレートファイル名
-    this.wp_template = wp_template;
+    //this.wp_template = wp_template;
     //  recaptchaのキー
     this.reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
   }
@@ -1187,7 +1191,8 @@ var DelayLoader = /*#__PURE__*/function () {
   }
 
   //----------------------------------------
-  //  フォント
+  //  フォント CSS 読み込み
+  //  本体と分けて読み込む場合
   //----------------------------------------
   _createClass(DelayLoader, [{
     key: "delayloadFont",
@@ -1198,8 +1203,6 @@ var DelayLoader = /*#__PURE__*/function () {
       var elmhead = document.querySelector("head");
       elmhead.insertAdjacentHTML("beforeend", fontcss_notosansjp);
       elmhead.insertAdjacentHTML("beforeend", fontcss_fontface);
-      //console.log("fontよみこみ");
-      //console.log(fontcss);
     }
 
     //----------------------------------------
@@ -1424,6 +1427,119 @@ var partsHeader = /*#__PURE__*/function () {
     }
   }]);
   return partsHeader;
+}();
+
+
+/***/ }),
+
+/***/ "./src/js/mylib/content/itemCounters.js":
+/*!**********************************************!*\
+  !*** ./src/js/mylib/content/itemCounters.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ itemcounters; }
+/* harmony export */ });
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+//------------------------------------------------------------
+//  
+//  サイトのあらゆる要素に対応できるアイテムカウンター
+//
+//------------------------------------------------------------
+var itemcounters = /*#__PURE__*/function () {
+  function itemcounters() {
+    var _this = this;
+    _classCallCheck(this, itemcounters);
+    //----------------------------------------
+    //  PHPを実行
+    //----------------------------------------
+    _defineProperty(this, "runPHP", function (i_fileName, i_id) {
+      //    runPHP( i_fileName, i_id ){
+      var fname = _this.wptaskdir + i_fileName; //assets/task/以下のファイルを実行
+      var xhr = new XMLHttpRequest(); // (1)XMLHttpRequestオブジェクトを作成
+      // (2)onreadystatechangeイベントで処理の状況変化を監視
+      xhr.onreadystatechange = function (data) {
+        //  失敗
+        if (this.readyState == 4 && this.status == 200) {
+          //    console.log( this.responseText );
+        }
+        if (this.readyState == 4 && this.status == 500) {
+          //    console.log( this.responseText );
+        }
+        //  成功
+        //console.log("成功しとる");
+      };
+      //console.log("runPHP : " + fname);
+      //xhr.open('GET', fname, true );     // (3)HTTPのGETメソッドとアクセスする場所を指定
+      xhr.open('POST', fname, true); // (3)HTTPのPOSTメソッドとアクセスする場所を指定
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); // (3)送信する内容の形式を設定
+      var send_txt = 'id=' + i_id;
+      //let fd = new FormData();
+      //fd.append('id', i_id );
+      //console.log( "[send_txt] : " + send_txt );
+      //console.log( fd );
+      xhr.send(send_txt); // (4)HTTPリクエストを送信
+    });
+  }
+  _createClass(itemcounters, [{
+    key: "set_itemcounters",
+    value:
+    //----------------------------------------
+    //  要素によって処理を分類
+    //----------------------------------------
+    function set_itemcounters() {
+      var ics = document.querySelectorAll('[data-jsitemcounter]');
+      var runphp = this.runPHP;
+      //  全に対して処理
+      ics.forEach(function (el) {
+        //  id取得
+        var el_id = el.dataset['jsitemcounter']; //  "about_myvideo"など
+        var el_id_play = el_id + "_play";
+        var el_id_end = el_id + "_end";
+        //  この要素が何タグが判別
+        switch (el.tagName) {
+          //  videoタグ
+          case 'VIDEO':
+            //console.log( "itemcounter : video :[ID] " + el_id );
+            //  両方ともスマホで発火しない？
+            //  再生時に発火
+            el.addEventListener('playing', function () {
+              //  el.playbackRate = 0.75;
+              //  phpの実行、IDを渡す
+              runphp("task_itemcounter.php", el_id_play);
+            });
+            //  再生終了時に発火
+            el.addEventListener('ended', function () {
+              runphp("task_itemcounter.php", el_id_end);
+            });
+            break;
+        }
+      });
+    }
+
+    //----------------------------------------
+    //  各種イベントの登録
+    //----------------------------------------
+  }, {
+    key: "eventRegistration",
+    value: function eventRegistration(i_common) {
+      this.common = i_common;
+      this.wptaskdir = this.common.wp_rootpath + "/assets/php/task/";
+
+      //  全アイテムカウンター取得して設定
+      this.set_itemcounters();
+    }
+  }]);
+  return itemcounters;
 }();
 
 
@@ -1679,6 +1795,8 @@ var tabGroup = /*#__PURE__*/function () {
     _classCallCheck(this, tabGroup);
     this.tabgroup = [];
     this.common = null;
+    //  スライドの情報アニメ制御用
+    this.tl_slideinfo_rect = [];
   }
 
   //----------------------------------------
@@ -1723,7 +1841,6 @@ var tabGroup = /*#__PURE__*/function () {
       var _this = this;
       //  タブのホバー設定
       i_tab.addEventListener("mouseover", function () {
-        //console.log( i_tab );
         _this.activeTab(i_tab);
         //--------------------------------
         //  タブごとの固有処理( data-key指定 )
@@ -1735,7 +1852,6 @@ var tabGroup = /*#__PURE__*/function () {
         //  配列に変換
         var bgs = _toConsumableArray(bg.querySelectorAll('.swiper-slide'));
         bg.dataset['disp'] = "true";
-        //if( i_tab.dataset['state'] ) 
         var ci = 0; // changeindex
         switch (key) {
           case 'worksswiper1':
@@ -1756,7 +1872,7 @@ var tabGroup = /*#__PURE__*/function () {
           var bgsi = _toConsumableArray(bgs[ci].querySelectorAll('.l-works__slideinfo__wrapper')); //  スライドの下のinfo取得
           var bgsp = _toConsumableArray(bgs[ci].querySelectorAll('picture')); //  スライドの下のpictureを取得して配列にする
           swi.slideTo(ci);
-          //  配列があれば実行 ( pictureがない空スライドもある )
+          //  [背景] 配列があれば実行 ( pictureがない空スライドもある )
           if (0 < bgsp.length) {
             gsap.fromTo(bgsp[0], {
               scale: 1
@@ -1769,31 +1885,37 @@ var tabGroup = /*#__PURE__*/function () {
           if (0 < bgsi.length) {
             var bgsii = bgsi[0].querySelectorAll('div');
             var cnt = 0;
+            //  タイトル・時期・日数・一言
             bgsii.forEach(function (tar) {
-              var rect = _toConsumableArray(tar.querySelectorAll('.rect'))[0];
-              var tl = gsap.timeline();
-              gsap.set(tar, {
-                opacity: 0,
-                y: 10,
-                filter: "blur(0px)"
-              });
-              gsap.set(rect, {
-                x: "0%"
-              });
-              tl.to(tar, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                ease: "power1.out",
-                delay: cnt * 0.2
-              }).to(rect, {
-                x: "105%"
-              });
-              //.to( tar,{ filter : "blur(0px)"} );
-              cnt++;
-              //tl.add( gsap.timeline.fromTo(tar,{width: 0},{width: 1, duration :1} ) );
+              var rects = _toConsumableArray(tar.querySelectorAll('.rect')); //  rectはdiv１つにつき1つなので1回のみ
+              if (0 < rects.length) {
+                var rect = rects[0];
+                var tl = gsap.timeline();
+                //  ※直接要素に変数を保存してしまうことで個別対応する
+                //  ※gsapも直接要素に追加しているようなので真似する
+                if (rect.tl_slide_info) rect.tl_slide_info.progress(1); // すでに前回のtlがあれば終了させる
+                rect.tl_slide_info = tl; //  新しくセットする
+
+                gsap.set(tar, {
+                  opacity: 0,
+                  y: 10
+                });
+                gsap.set(rect, {
+                  x: "0%"
+                });
+                tl.to(tar, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.5,
+                  ease: "power1.out",
+                  delay: cnt * 0.2
+                }).to(rect, {
+                  x: "105%"
+                });
+                //console.log( cnt );
+                cnt++;
+              }
             });
-            //console.log( "infoきてます" );
           }
         }
       });
@@ -2033,7 +2155,6 @@ var eegsap = /*#__PURE__*/function () {
             scrollTrigger: {
               trigger: lead,
               //アニメーションが始まるトリガーとなる要素
-              //start: 'top center+=20%'//, //アニメーションが始まる位置を指定
               toggleActions: str_tglaction,
               start: 'top center+=50%' //, //アニメーションが始まる位置を指定
               //end: "+=500"
@@ -2086,8 +2207,6 @@ var eegsap = /*#__PURE__*/function () {
           rotate: 180,
           duration: 0.3,
           // 0.3秒かけてアニメーション
-          //delay: 0.3, // 0.3秒後に起動
-          //x: '100%', //右に100%移動させて画面の外に出す
           opacity: 1
         }
         //'+=0.1'
@@ -2441,16 +2560,13 @@ var eegsap = /*#__PURE__*/function () {
         y: i_vy * 0 + "vw",
         transformOrigin: '50% 50%',
         scale: 1,
-        //backgroundColor: "lightgreen",
         duration: 0
       }, {
         duration: 0.5 + Math.random() * 0.5,
         ease: "Power1.easeOut",
         x: i_vx * 40 + "vw",
-        //y: (vy*8)+"vw",
         y: i_vy * 200 + "px",
         scale: 0,
-        //backgroundColor: "gold",
         opacity: 1
       });
       return tl;
@@ -2475,9 +2591,7 @@ var eegsap = /*#__PURE__*/function () {
         y: i_vy * 100 + "px",
         scale: 0,
         opacity: 1
-        //backgroundColor: "gold",
       });
-
       return tl;
     }
 
@@ -2513,8 +2627,6 @@ var eegsap = /*#__PURE__*/function () {
           //  角度からベクトル計算
           var vx = Math.sin(ang * Math.PI / 180);
           var vy = Math.cos(ang * Math.PI / 180);
-          //let rdm = (Math.random()*0.5+0.5);
-          //                gsap.set(tar, { x:(vx*20)+"vw", y:(vy*0)+"vw", transformOrigin:'50% 50%', scale: 1, });
           var tl = gsap.timeline();
           var tlsp = gsap.timeline();
           parstl[parstl.length] = tl;
@@ -2532,10 +2644,7 @@ var eegsap = /*#__PURE__*/function () {
       var obj_btndiv = null;
       if (0 < obj_btn.length) {
         obj_btndivs = _toConsumableArray(obj_btn[0].querySelectorAll('div'));
-        //console.log( obj_btndivs );
-        //console.log( obj_btndivs.length );
       }
-
       if (0 < obj_btndivs.length) {
         obj_btndiv = obj_btndivs[0];
         //  タイトルのホバー : CSSで設定してもGSAPの設定の方が強く残ってしまうため
@@ -2736,7 +2845,6 @@ var eegsap = /*#__PURE__*/function () {
       x: -1000
     }, {
       x: 0,
-      //autoAlpha: 1,
       rotate: 0,
       scale: 1,
       duration: 1,
@@ -2806,13 +2914,9 @@ var eegsap = /*#__PURE__*/function () {
   //文字列（テキスト）を分割しspanで囲む
   _eff_classs5.forEach(function (target) {
     var newText = '';
-    //        const text = target.textContent;  //  文字列のみ
-    //const text = target.innerText;    //  改行のみ
     var text = target.innerHTML; //  タグあり
-    //console.log(text);
     var result_br = text.split('<br>');
     for (var j = 0; j < result_br.length; j++) {
-      //console.log("[j]" + j + " [text]" + result_br[j]);
       var result = result_br[j].split('');
       for (var i = 0; i < result.length; i++) {
         newText += '<b>' + result[i] + '</b>';
@@ -2850,59 +2954,6 @@ var eegsap = /*#__PURE__*/function () {
 }
 
 //----------------------------------------
-//  surface : ヒーローセクション専用
-//----------------------------------------
-/*
-{
-    let eff_classs = document.querySelectorAll('.js-surface__heroheading');
-    eff_classs.forEach((target) => {
-        let divs = target.querySelectorAll('div');
-        console.log(divs);
-
-        gsap.set([divs[0], divs[1], divs[2], divs[3]], { opacity: 0 });
-        gsap.set(divs[0], { y: 160 });
-        gsap.set(divs[1], { y: 120 });
-        gsap.set(divs[2], { y: 80 });
-        gsap.set(divs[3], { y: 40 });
-        const tl = gsap.timeline();
-        tl.to(
-            divs[0], {
-                rotate: 0,
-                duration: 0.5,
-                opacity: 1,
-            }
-        ).to(
-            divs[0], { y: 0 },
-        ).to(
-            divs[1], {
-                duration: 0.5,
-                opacity: 1
-            },
-            '+=0.5'
-        ).to(
-            divs[1], { y: 0 },
-        ).to(
-            divs[2], {
-                duration: 0.5,
-                opacity: 1
-            },
-            '+=0.5'
-        ).to(
-            divs[2], { y: 0 },
-        ).to(
-            divs[3], {
-                duration: 0.5,
-                opacity: 1
-            },
-            '+=0.5'
-        ).to(
-            divs[3], { y: 0 },
-            '+=0.5'
-        );
-    });
-}
-*/
-//----------------------------------------
 //  surface : ヒーローセクション専用 : 2 演出含む
 //----------------------------------------
 {
@@ -2913,8 +2964,6 @@ var eegsap = /*#__PURE__*/function () {
     var newText = "";
     var spanText = divs[0].innerHTML;
     //  文字列からタグ(要素付き)を取り除く
-    //const stripTags = text => text.replace(/<([^'">]|"[^"]*"|'[^']*')*>/g,'');
-    //spanText = stripTags( spanText );
     spanText.split('').forEach(function (char) {
       newText += '<span>' + char + '</span>';
       //  、があったら強引にSP用<br?導入
@@ -3213,11 +3262,7 @@ var swiperGroup = /*#__PURE__*/function () {
         centeredSlides: false,
         //アクティブなスライドを中央に表示
         speed: 500,
-        //effect: "slide",
         effect: "fade",
-        fadeEffect: {
-          //    crossFade: true,
-        },
         spaceBetween: 0,
         //スライド間の距離
         slidesPerView: 1,
@@ -3231,29 +3276,9 @@ var swiperGroup = /*#__PURE__*/function () {
             slidesPerView: 1
           }
         },
-        //direction: 'vertical' ,
         updateOnWindowResize: true,
         //  ウインドウサイズ変更時自動再計算
-        /*
-        on: {
-            slideChange: function () {
-                var prevSlide = this.previousIndex;
-                var currentSlide = this.activeIndex;
-                // アクティブでなくなったスライドにスタイルを指定
-                var prevSlideEl = this.slides[prevSlide];
-                var curSlideEl = this.slides[currentSlide];
-                curSlideEl.style.width = '100%';
-                //curSlideEl.style.transform = 'translate3d(0px, 0px, 0px )';
-                prevSlideEl.style.transform = 'translate3d(0px, 0px, 0px )';
-                //console.log( curSlideEl.style.transform );
-            }
-        }
-        ,*/
         autoplay: false
-        //            autoplay: {
-        //                delay: 3000,
-        //                disableOnInteraction: false,
-        //            }
       });
     }
 
@@ -3264,23 +3289,10 @@ var swiperGroup = /*#__PURE__*/function () {
     key: "make_skill",
     value: function make_skill(i_swiper, i_name) {
       // swiperslider
-      //        this.swipers[this.swipers.length] = new Swiper( i_swiper, {
       this.swipers[i_name] = new Swiper(i_swiper, {
         loop: false,
         allowTouchMove: false,
         //  ドラッグ無効
-        /*    
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev"
-            },
-            //  スクロールバー
-            scrollbar: {
-                el: ".swiper-scrollbar",
-                hide: true,
-                draggable: false
-            },
-        */
         //  ページネーション
         pagination: {
           el: ".swiper-pagination",
@@ -3289,15 +3301,6 @@ var swiperGroup = /*#__PURE__*/function () {
         },
         centeredSlides: true,
         //アクティブなスライドを中央に表示
-        //speed: 2000,
-        //effect: "slide",
-        //effect: "fade",
-        //effect: "cube",
-        //effect: "coverflow",
-        //effect: "flip",
-        //effect: "cards",
-        //effect: "creative",
-
         spaceBetween: 16,
         //スライド間の距離を16pxに
         slidesPerView: 1,
@@ -3315,10 +3318,6 @@ var swiperGroup = /*#__PURE__*/function () {
             slidesPerView: 1 //スライドを3枚表示
           }
         }
-        //    autoplay: {
-        //        delay: 3000,
-        //        disableOnInteraction: false,
-        //    }
       });
     }
 
@@ -3350,7 +3349,6 @@ var swiperGroup = /*#__PURE__*/function () {
       //  swiperの数だけループ
       swipergroup.forEach(function (swiper) {
         var name = swiper.dataset.name;
-        //console.log( "[swiper]" + swiper + " : " + name );
         //  swiperの識別名称を取得
         if (name) _this.registSwiper(swiper, name);
       });
@@ -3455,13 +3453,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _myexternallinks__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./myexternallinks */ "./src/js/mylib/myexternallinks.js");
 /* harmony import */ var _content_accordion__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./content/accordion */ "./src/js/mylib/content/accordion.js");
 /* harmony import */ var _content_delayloader__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./content/delayloader */ "./src/js/mylib/content/delayloader.js");
-/* harmony import */ var _content_consolejoke__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./content/consolejoke */ "./src/js/mylib/content/consolejoke.js");
-/* harmony import */ var _gsap_eegsap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./gsap/eegsap */ "./src/js/mylib/gsap/eegsap.js");
-/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./gsap/eegsap_surface */ "./src/js/mylib/gsap/eegsap_surface.js");
-/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./gsap/eegsap_scrollbutton */ "./src/js/mylib/gsap/eegsap_scrollbutton.js");
-/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var _swiper_setting__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./swiper-setting */ "./src/js/mylib/swiper-setting.js");
+/* harmony import */ var _content_itemCounters__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./content/itemCounters */ "./src/js/mylib/content/itemCounters.js");
+/* harmony import */ var _content_consolejoke__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./content/consolejoke */ "./src/js/mylib/content/consolejoke.js");
+/* harmony import */ var _gsap_eegsap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./gsap/eegsap */ "./src/js/mylib/gsap/eegsap.js");
+/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./gsap/eegsap_surface */ "./src/js/mylib/gsap/eegsap_surface.js");
+/* harmony import */ var _gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_surface__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./gsap/eegsap_scrollbutton */ "./src/js/mylib/gsap/eegsap_scrollbutton.js");
+/* harmony import */ var _gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_gsap_eegsap_scrollbutton__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var _swiper_setting__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./swiper-setting */ "./src/js/mylib/swiper-setting.js");
  //  jQueryのtoggle再現
  //  スムーススクロール
  //  共有変数の入れ物
@@ -3478,6 +3477,7 @@ __webpack_require__.r(__webpack_exports__);
  //  アコーディオン
  //  遅延読み込み
 
+ //  WordPress アイテムカウンター
  //  コンソールジョーク
 
 //  GSAPアニメーション
@@ -3508,11 +3508,12 @@ var pbg = new _content_pagebackground__WEBPACK_IMPORTED_MODULE_9__["default"]();
 var oscheck = new _content_oscheck__WEBPACK_IMPORTED_MODULE_10__["default"]();
 var adjustviewport = new _adjustviewport__WEBPACK_IMPORTED_MODULE_11__["default"]();
 var myexternallinks = new _myexternallinks__WEBPACK_IMPORTED_MODULE_12__["default"]();
-var eegsap = new _gsap_eegsap__WEBPACK_IMPORTED_MODULE_16__["default"]();
-var swipergroup = new _swiper_setting__WEBPACK_IMPORTED_MODULE_19__["default"]();
+var eegsap = new _gsap_eegsap__WEBPACK_IMPORTED_MODULE_17__["default"]();
+var swipergroup = new _swiper_setting__WEBPACK_IMPORTED_MODULE_20__["default"]();
 var accordions = new _content_accordion__WEBPACK_IMPORTED_MODULE_13__["default"]();
 var delayloader = new _content_delayloader__WEBPACK_IMPORTED_MODULE_14__["default"]();
-var consolejoke = new _content_consolejoke__WEBPACK_IMPORTED_MODULE_15__["default"]();
+var consolejoke = new _content_consolejoke__WEBPACK_IMPORTED_MODULE_16__["default"]();
+var itemcounters = new _content_itemCounters__WEBPACK_IMPORTED_MODULE_15__["default"]();
 
 //----------------------------------------------------
 //  ロード時初期化
@@ -3535,11 +3536,11 @@ var init = function init() {
 
   //  トップページのみローディング画面設定
   dispLoader.init();
-  if (wp_template == "front-page.php" || wp_template == "home.php") {
+  if (varcommon.wp_template == "front-page.php" || varcommon.wp_template == "home.php") {
     dispLoader.eventRegistration();
   }
   //  コンタクトフォームのページのみ設定
-  if (wp_template == "page-contact.php") {
+  if (varcommon.wp_template == "page-contact.php") {
     contactform.eventRegistration(varcommon);
   }
   //  トップページ背景
@@ -3556,6 +3557,8 @@ var init = function init() {
   myexternallinks.fixingExternalLinks();
   //  GSAPアニメ登録
   eegsap.eventRegistration(varcommon);
+  //  WordPress用 アイテムカウンター
+  itemcounters.eventRegistration(varcommon);
 
   //
   consolejoke.eventRegistration(varcommon);

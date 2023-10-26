@@ -3,17 +3,21 @@
 //----------------------------------------
 export default class Common {
     constructor() {
-        //  header.phpで受け渡しているワードプレス画像のパス
-        this.wp_imagePath = wp_imgpath;
-        //  ルートパス
-        this.wp_rootpath = wp_rootpath;
+        //  ワードプレス : function.phpで請け渡しているワードプレスの配列
+        this.wp_imagePath = wp_var.imgpath;     //  画像パス
+        this.wp_rootpath = wp_var.rootpath;    //  ルートパス
+        this.wp_template = wp_var.templatepath;
+
+        //  静的サイト : header.phpで受け渡しているワードプレス画像のパス
+        //this.wp_imagePath = wp_imgpath;     //  画像パス
+        //this.wp_rootpath = wp_rootpath;    //  ルートパス
         this.wp_csspath = this.wp_rootpath + "/assets/css/";
         this.wp_fontpath = this.wp_rootpath + "/assets/webfonts/";
 
         //  header.phpで受け渡しているワードプレスのテンプレートファイル名
-        this.wp_template = wp_template;
+        //this.wp_template = wp_template;
         //  recaptchaのキー
-        this.reCAPTCHA_site_key = "*********";
+        this.reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
     }
 
     //------------------------------------------------

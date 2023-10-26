@@ -7,6 +7,9 @@ export default class tabGroup {
     constructor() {
         this.tabgroup = [];
         this.common = null;
+        //  スライドの情報アニメ制御用
+        this.tl_slideinfo_rect = [];
+
     }
 
     //----------------------------------------
@@ -67,7 +70,7 @@ export default class tabGroup {
                 let bgsi = [...bgs[ci].querySelectorAll('.l-works__slideinfo__wrapper')];    //  スライドの下のinfo取得
                 let bgsp = [...bgs[ci].querySelectorAll('picture')];    //  スライドの下のpictureを取得して配列にする
                 swi.slideTo(ci);
-                //  配列があれば実行 ( pictureがない空スライドもある )
+                //  [背景] 配列があれば実行 ( pictureがない空スライドもある )
                 if( 0 < bgsp.length ){
                     gsap.fromTo(bgsp[0],{scale:1},{scale:1.05, duration :5} );
                 }
@@ -75,14 +78,25 @@ export default class tabGroup {
                 if( 0 < bgsi.length ){
                     let bgsii =bgsi[0].querySelectorAll('div');
                     let cnt = 0;
+                    //  タイトル・時期・日数・一言
                     bgsii.forEach((tar) => {
-                        let rect = [...tar.querySelectorAll('.rect')][0];
-                        const tl = gsap.timeline();
-                        gsap.set(tar,{ opacity : 0, y: 10, filter : "blur(0px)"});
-                        gsap.set(rect,{ x: "0%"});
-                        tl.to( tar,{ opacity: 1, y:0, duration :0.5,ease: "power1.out", delay : cnt*0.2} )
-                        .to( rect,{ x: "105%"} );
-                        cnt ++;
+                        let rects= [...tar.querySelectorAll('.rect')];  //  rectはdiv１つにつき1つなので1回のみ
+                        if( 0 < rects.length ){
+                            let rect = rects[0];
+                            const tl = gsap.timeline();
+                            //  ※直接要素に変数を保存してしまうことで個別対応する
+                            //  ※gsapも直接要素に追加しているようなので真似する
+                            if( rect.tl_slide_info )
+                                rect.tl_slide_info.progress( 1 ); // すでに前回のtlがあれば終了させる
+                            rect.tl_slide_info = tl;   //  新しくセットする
+
+                            gsap.set(tar,{ opacity : 0, y: 10});
+                            gsap.set(rect,{ x: "0%"});
+                            tl.to( tar,{ opacity: 1, y:0, duration :0.5,ease: "power1.out", delay : cnt*0.2} )
+                            .to( rect,{ x: "105%"} );
+                            //console.log( cnt );
+                            cnt ++;
+                        }
                     });
                 }
             }

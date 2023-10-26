@@ -14,6 +14,7 @@ import myExternalLinks from './myexternallinks'; //  外部リンク
 import Accordions from './content/accordion'; //  アコーディオン
 import delayLoader from './content/delayloader'; //  遅延読み込み
 
+import itemCounters from './content/itemCounters'; //  WordPress アイテムカウンター
 import consoleJoke from './content/consolejoke'; //  コンソールジョーク
 
 
@@ -53,6 +54,7 @@ const swipergroup = new swiperGroup();
 const accordions = new Accordions();
 const delayloader = new delayLoader();
 const consolejoke = new consoleJoke();
+const itemcounters = new itemCounters();
 
 
 //----------------------------------------------------
@@ -76,12 +78,12 @@ const init = function() {
 
     //  トップページのみローディング画面設定
     dispLoader.init();
-    if (wp_template == "front-page.php" ||
-        wp_template == "home.php") {
+    if (varcommon.wp_template == "front-page.php" ||
+        varcommon.wp_template == "home.php") {
         dispLoader.eventRegistration();
     }
     //  コンタクトフォームのページのみ設定
-    if (wp_template == "page-contact.php") {
+    if (varcommon.wp_template == "page-contact.php") {
         contactform.eventRegistration( varcommon );
     }
     //  トップページ背景
@@ -98,6 +100,8 @@ const init = function() {
     myexternallinks.fixingExternalLinks();
     //  GSAPアニメ登録
     eegsap.eventRegistration( varcommon );
+    //  WordPress用 アイテムカウンター
+    itemcounters.eventRegistration( varcommon );
 
     //
     consolejoke.eventRegistration( varcommon );

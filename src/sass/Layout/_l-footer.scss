@@ -7,27 +7,48 @@
 .l-footer {
     position: relative;
     color: global.$color-font-w;
-    padding: 24px 0;
+    width: 100%;
+    //background-color : white;
     @include global.mq('sp') {
         width: 100%;
     }
 }
 
 .l-footer__background {
+    //position: absolute;
     position: fixed;
     width: 100%;
     height: 100%;
-    background-image: url(../images/contact/contact.jpg);
+    background-image: url(../images/contact/contact2.jpg);
+    //background-image: url(../images/contact/contact.jpg);
     opacity: 1;
-    top: 0;
-    background-size: cover;
-    background-position: center;
+    //top: 0;
+    bottom : 0;
+    background-size:cover;
+    background-position: top;//center;
+    //background-origin: 0% 0%;
+    //background-repeat: no-repeat;
     z-index: -1;
-    filter:brightness(0.3) sepia(1);
+    //filter:brightness(0.3) sepia(1);
+    filter:brightness(1) sepia(0.5);
 }
 
+.l-footer__topspace {
+    width: 100%;
+    height: 224px;
+}
 
 .l-footer__inner {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    padding: 20px 0px;
+
+    //background-color : white;
+}
+
+.l-footer__contents {
     display: flex;
     justify-content: center;
     margin: auto;
@@ -35,6 +56,8 @@
     border-radius: 20px;
 
     background-color : global.$color-main-background;
+    //background-color : lightgreen;//global.$color-main-background;
+    //background-color : white;
 }
 
 .l-footer__items {
@@ -64,7 +87,7 @@
 }
 
 .l-footer__copyright {
-    color: global.$color-font;
+    color: global.$color-font-w;
     font-weight: bold;
     font-family: global.$font-NotoSansJP;
     @extend .l-footer__item;
@@ -88,7 +111,13 @@
 //    レスポンシブ
 //--------------------------------------------------
 @include global.mq('tab-pc') {
+    .l-footer__topspace {
+    }
+    
     .l-footer__inner {
+        width: 100%;
+    }
+    .l-footer__contents {
         width: 100%;
         max-width: min( calc(100% - 40px), 800px );
     }
@@ -96,15 +125,15 @@
 
 
 @include global.mq('sp') {
-    .l-footer__inner {
+    .l-footer__contents {
         width: calc(100% - 40px );
         padding: 40px 0px;
         flex-wrap: wrap;
     }
     .l-footer__background {
-        background-position-x: left;
-        background-position-y: top;
-        background-size: 200%;
+        //background-position-x: left;
+        //background-position-y: top;
+        //background-size: 200%;
         
     }    
 

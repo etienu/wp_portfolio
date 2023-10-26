@@ -44,7 +44,8 @@
     grid-template-rows: 1fr 1fr 1fr 1fr;    
     .stripe{
         width: 100vw;
-        height: 25svh;
+        height: 25vh;
+        height: 25dvh;
         background-color: global.$color-main-background;
         transform: translateX(100%);
     }
@@ -133,4 +134,7 @@
     .p-spmenu {
         display:none;
     }    
+    .p-spmenu__background {
+        display:none;
+    }
 }

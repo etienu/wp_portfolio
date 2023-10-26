@@ -43,11 +43,14 @@
 
 .p-contactcv__button__bg {
     $bgcol: global.$color-main-background-dark;
+    //$bgcol: lightgreen;
     position: absolute;
     left: 0;
     width: 0%;
     height: 100%;
-    background: linear-gradient( to right, lightgreen 0%, $bgcol 80%, $bgcol 100%);
+    $bgcolb : lightgreen;
+    //$bgcolb : gold;
+    background: linear-gradient( to right, $bgcolb 0%, $bgcol 80%, $bgcol 100%);
     border-radius : 10px;
     transition: 0.3s;
 }
@@ -98,6 +101,7 @@
     border-radius: 20px;
     color: white;
     font-size: clamp( 16px, 3vw, 20px);
+    font-weight: 300;
     p {
         text-align: left;
     }

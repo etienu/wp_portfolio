@@ -25,7 +25,36 @@
     align-items: center;
     color: white;
     z-index: 10;
+    //  div : パーティクル用
+    [data-eff="mv_particle"]{
+        position : absolute;
+        //  wh 10vw
+        //margin-left: -12vw;
+        //margin-top : -13vw;
+        //  wh 1vw
+        margin-left: 0vw;
+        margin-top : -5vw;
+
+        .particle{
+            //transition : background-color 0.3s;
+            //border:1px solid red;
+            width: 2vw;
+            height:2vw;
+            position: absolute;
+            //background-color: gold;//lightgreen;
+            background-color:lightgreen;
+            //background-color:white;
+            transform-origin: 50% 50%;
+            //margin-left: -50%;
+            //margin-top: -50%;
+            //top: 0;
+            //left: 0;
+            //mix-blend-mode: screen;
+            border-radius: 50%;
+        }
+    }
 }
+
 
 .l-hero__background-boader {
     position: absolute;
@@ -79,12 +108,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: clamp( 2rem, 6vw, 5rem);
+    font-size: clamp( 32px, 6vw, 80px );
     font-family : global.$font-NotoSansJP;
     font-weight: 700;
     //margin-bottom: 20px;
     text-shadow: -1px 0px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000, 0px 0px 8px #000;
     position: relative;
+    cursor : pointer;
+    transition : transform 0.3s, filter 0.3s;
+    user-select: none;
+    //&:hover{
+    //    transform : scale( 1.05 );
+    //}
     //  [考え方] 全ての以下div要素に対して
     //  画面中央を中心に文章を表示したい。
     //  アニメーションで上下の動きがあるが、他の要素には影響を及ぼさない。
@@ -112,6 +147,8 @@
             opacity: 0;
             visibility: visible;
             transform: rotateY(90deg);
+            //  選択不能
+            user-select: none;
         }
     }
 }
@@ -123,11 +160,22 @@
     $fscol : RGBA(0,60,0,0.2);
     text-shadow: -1px 0px 0px $fscol, -1px -1px 0px $fscol, 1px -1px 0px $fscol, -1px 1px 0px $fscol, 1px 1px 0px $fscol, 0px 0px 8px $fscol;
     margin-left: auto;
-    margin-top : 10px;
+    margin-top : 60px;
     padding: 2px 20px;
     border-radius : 12px;
     font-family : global.$font-NotoSansJP;
     position : relative;
+    span{
+        background:linear-gradient( transparent 60%, $bgcol 60%);
+        background-position : 0 100%;
+        background-size : 0% 100%;
+        background-repeat : no-repeat;
+        //padding : 0 10px;
+        //margin-left : -10px;
+        background-size: 100% 100%;
+//        color : white;
+    }
+/*    
     &:before{
         position : absolute;
         content : "";
@@ -138,6 +186,7 @@
         background-color : $bgcol;
         z-index: -1;
     }
+*/    
 }
 
 
@@ -173,6 +222,18 @@
 @include global.mq('sp') {
     .l-hero__inner {
         max-width: calc( 100% - 40px );
+    //  div : パーティクル用
+    [data-eff="mv_particle"]{
+        position : absolute;
+        margin-left: 0vw;
+        margin-top : -130px;
+
+        .particle{
+            width: 30px;
+            height:30px;
+        }
+    }
+
     }
     .l-hero__sublead {
         margin-left:0;
@@ -183,5 +244,12 @@
         //background-position-x: left;
         //  植木鉢にしたい場合右寄せ
         //background-position-x: right;
+    }
+}
+
+//  320px(iphone)対策
+@include global.mq('ip') {
+    .l-hero__sublead {
+        font-size: 14px;
     }
 }

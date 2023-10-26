@@ -38,14 +38,35 @@
     font-display: swap;
 }
 
-//  Noto Sans JP
+//  Noto Sans JP 500
+@font-face {
+    font-family: 'Noto Sans JP';
+    font-style: normal;
+    font-weight: 500;
+    font-display: block;
+    src: url("../webfonts/googlefonts/NotoSansJP/NotoSansJP-Medium_subset.woff2") format("woff2"),
+    url("../webfonts/googlefonts/NotoSansJP/NotoSansJP-Medium_subset.ttf") format("truetype");
+    font-display: swap;
+}
+//  Noto Sans JP 400
 @font-face {
     font-family: 'Noto Sans JP';
     font-style: normal;
     font-weight: 400;
     font-display: block;
-    src: url("../webfonts/googlefonts/NotoSansJP/NotoSansJP-Medium.woff2") format("woff2"),
-    url("../webfonts/googlefonts/NotoSansJP/NotoSansJP-Medium.ttf") format("truetype");
+    src: url("../webfonts/googlefonts/NotoSansJP/NotoSansJP-Regular_subset.woff2") format("woff2"),
+    url("../webfonts/googlefonts/NotoSansJP/NotoSansJP-Regular_subset.ttf") format("truetype");
+    font-display: swap;
+}
+
+//  Noto Sans JP 300
+@font-face {
+    font-family: 'Noto Sans JP';
+    font-style: normal;
+    font-weight: 300;
+    font-display: block;
+    src: url("../webfonts/googlefonts/NotoSansJP/NotoSansJP-Light_subset.woff2") format("woff2"),
+    url("../webfonts/googlefonts/NotoSansJP/NotoSansJP-Light_subset.ttf") format("truetype");
     font-display: swap;
 }
 

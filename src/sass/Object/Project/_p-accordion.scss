@@ -86,7 +86,7 @@ summary::-webkit-details-marker {
     
             &:after {
                 left: -0%;
-                top : 9px;
+                top : 50%;//9px;
                 transform: rotate(-90deg);
             }
     
@@ -98,7 +98,7 @@ summary::-webkit-details-marker {
 
 // data-open付与
 details[data-open="true"] .icon {
-    transform: rotate(180deg);
+    transform: translate( 2px, 0 ) rotate(180deg);
     &[data-type="plus"]{
         &:after {
             opacity: 0;
@@ -137,12 +137,13 @@ details[data-open="true"] .icon {
                 }
         
                 &:before {
-                    left: -0px;
-                    top : 50%;
+                    //left: -0px;
+                    //top : 50%;
+                    //transform : translate(0%, 50% );
                 }
                 &:after {
-                    left: -0%;
-                    top : 8px;
+                    //left: 0%;
+                    //top : 8px;
                 }
             }
         }

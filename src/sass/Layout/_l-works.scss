@@ -7,12 +7,14 @@
     width: 100%;
     overflow: hidden;
     height: 100%;
+    padding : 100px 0 60px 0;
 }
 
 .l-works__background {
     position: absolute;
     width: 100%;
     height: 100%;
+    overflow:hidden;
 }
 
 .l-works__bg__left,
@@ -24,18 +26,21 @@
 }
 .l-works__bg__left {
     left: 5%;
-    top: 20%;
-    width: clamp( 100px, 50vw, 200px );
-    height: clamp( 100px, 50vw, 200px );
+    top: 10%;
+    width: clamp( 50px, 50vw, 100px );
+    height: clamp( 50px, 50vw, 100px );
     transform: rotate( 150deg );
 }
 
 .l-works__bg__right {
     right: 5%;
     top: 50%;
-    width: clamp( 250px, 50vw, 500px );
-    height: clamp( 250px, 50vw, 500px );
+    width: clamp( 250px, 50vw, 400px );
+    height: clamp( 250px, 50vw, 400px );
     transform: rotate( 80deg );
+}
+
+.l-works__head {
 }
 
 .l-works__inner {
@@ -49,11 +54,22 @@
     justify-content: center;
     align-items: center;
     color: black;
+    &[data-page="top"]{
+        margin-right: 0;
+    }
+    //transform : translate( 20vw, 0 ) rotate( -3deg );
 }
 
 .l-works__content__wrapper {
     margin-top: 40px;
     width: 100%;
+    &[data-page="top"]{
+        margin-top: 400px;
+        transform : translate( 0vw, 60px ) rotate( -3deg );
+//        margin-right: 0;
+        max-width: 600px;
+        margin-left: auto;
+    }
 }
 
 .l-works__content__inner {
@@ -61,21 +77,24 @@
  // 要素のサイズを(幅 - 40px)などとして、
  // 中央寄せで自動処理させる方が安全である。
 //    margin: 20px;
-    margin: 20px 0;
+    margin: 20px 0 0;
 }
 
+//  元々の一般的な実績一覧
 .l-works__items {
     display: grid;
     grid-template-columns: repeat( 3, minmax(100px, 1fr));
     grid-template-rows: auto;
-    gap: 48px;
-    row-gap: 40px;
+    column-gap: 24px;
+    row-gap: 48px;
+    max-width: calc(100% - 40px );
     margin: auto;
 }
 
 .l-works__item {
     width: fit-content;
-    max-width: calc( 100% - 40px );
+    //max-width: calc( 100% - 40px );
+    //max-width: calc( 280px );
 
     margin: auto;
     height: 100%;
@@ -171,6 +190,250 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top : 80px;
+    //margin : 40px -50% 0;
+    //transform : translate(50vw, 0);
+    .p-button__pf{
+    //    height: 100px;
+    //    max-width:none;
+    }
+}
+
+
+//  イメージ型の背景
+.l-works__content__background {
+    position : absolute;
+    width: 100%;
+    height: 100%;
+//    background-color : white;//global.$color-main-background-dark;
+    background-color : global.$color-main-background-mid;
+    .swiper{
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        z-index: 0;
+        transition : opacity 0.3s;
+        .swiper-wrapper{
+            transition : opacity 0.3s;
+            //opacity : 0;
+            .swiper-slide{
+                //filter:brightness(1);
+                .bigtitle{
+                    font-size: 100px;
+                    text-shadow: -1px 0px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 1px 1px 0px #000, 0px 0px 8px #000;
+                    opacity: 0.1;
+                    //color : transparent;//global.$color-main-background-mid;
+                }
+            }
+        }
+        &[data-disp="true"]{
+            .swiper-wrapper{
+                opacity : 1;
+            }
+        }
+    }
+    picture{
+        width: 100%;
+        height: 100%;
+        img{
+            width: 100%;
+            height: 100%;
+            aspect-ratio : 400/400;
+            object-fit: cover;
+        }
+    }
+}
+.l-works__slideinfo__wrapper{
+    display: flex;
+    flex-direction :column;
+    justify-content: center;
+    align-items: flex-start;
+    position :absolute;
+    left : 0;
+    top : 0;
+    width: 100%;
+    height: 88%;    //  全体が画面下にはみ出している為100%ではない
+    margin-top: auto;
+    margin-bottom : auto;
+    max-width: max( 40%, 400px );
+//    background-color : RGBA(40,80,40,0.2);
+    //color : white;//black;
+    z-index: 10;
+    //border-radius : 4px;
+    font-size: 20px;
+    .l-works__slideinfo__background{
+        position : absolute;
+        left: -5%;
+        top:0;
+        width: 130%;
+        height: 100%;
+        //background-color : rgba(54,74,54,0.9);
+        background-color : rgba(0,0,0,0.5);
+        //background-color : rgba(255,255,255,0.5);
+        filter : blur( 1px );
+    }
+    .l-works__slideinfo__inner{
+        position :relative;
+        display: flex;
+        flex-direction :column;
+        justify-content: center;
+        align-items: flex-start;
+        gap : 10px;
+        width: 100%;
+        height:100%;
+        max-width: 400px;
+        margin:auto;
+        margin-right: 60px;
+//        margin-left : 15vw;
+        padding : 20px 20px;
+        padding-bottom : 10%;
+    }
+    .l-works__slideinfo__title,
+    .l-works__slideinfo__lead,
+    .l-works__slideinfo__date,
+    .l-works__slideinfo__days{
+        display:inline-block;
+        background-color : global.$color-main-background;
+        //color : black;
+        position : relative;
+        padding : 8px 0px 8px 0px;
+        border-radius : 4px;
+        overflow:hidden;
+        //width: object-fit;
+        font-weight: 400;
+        //filter :blur(4px);
+        p{
+            font-size: 24px;
+            text-align:left;
+            padding: 0 40px 0 20px;
+            white-space: nowrap;
+        }
+        .rect{
+            position :absolute;
+            top:0;
+            left: 0;
+            transform : translateX(105%);   //  初期状態で隠しておく
+            width: 100%;
+            height: 100%;
+            background-color : white;
+            //background-color : global.$color-main-background-mid;
+        }
+    }
+    .l-works__slideinfo__lead{
+        font-weight: 400;
+    }
+}
+
+
+//  カード型ではなくイメージのみの箱型
+.l-works__imageitems {
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-end;
+    gap: 20px;
+    .l-works__item{
+        max-width: calc( 280px );
+    }
+}
+
+.l-works__imagebox {
+    overflow: hidden;
+    width: fit-content;
+    border-radius: 4px;
+    background-color: black;
+    transition: 0.3s;
+    position: relative;
+    picture{
+    //    overflow: hidden;
+        //        position : absolute;
+    }
+    .l-works__imagetextwrapper{
+        position : absolute;
+        color : white;
+        bottom:0;
+        width: 100%;
+        height: 100%;
+        max-width: calc( 100% - 6px );
+        text-align:left;
+        display: flex;
+        flex-direction : column;
+        justify-content: flex-end;
+        opacity : 0;
+        transition : opacity 0.3s;
+        .c-title__h4{
+            text-align:left;
+            justify-content: flex-end;
+            font-size: 14px;
+        }
+        .c-lead__hard{
+            text-align:right;
+            font-size: 14px;
+        }
+        z-index: 1;
+    }
+
+    img {
+        transition: 0.3s;
+        transform: scale( 1.01); //  画像の右端切れる対策で少し拡大
+    }
+    &:hover {
+        img {
+            opacity: 0.5;
+            transform: scale(1.05);
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -ms-filter: blur(3px);
+            filter: blur(3px);
+        }
+        &:after {
+            opacity: 1;
+        }
+        .l-works__imagetextwrapper{
+            opacity : 1;
+        }
+    }
+    &:after {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        opacity: 0;
+        content: "クリックして詳細";
+        color: white;
+        font-weight: bold;
+        font-size: clamp(14px, 1.5vw, 20px);
+        z-index: 1;
+        margin: auto;
+        transition: all 0.3s ease 0s;
+        }
+}
+
+
+.l-works__imagebutton__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //margin : 40px 0 40px 0;
+    margin : 20px 0 0px 0;
+    .p-button__pf{
+        height: 100px;
+        max-width:none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .c-button__portfolio{
+    //    transform:rotate(-3deg );
+    }
+    .c-button__hover__goto{
+        &:hover{
+        //    transform : rotate( -3deg );
+        }
+    }
 }
 
 .l-works__button {}
@@ -186,9 +449,16 @@
 }
 
 .l-works__fullpicture {
+    display:flex;
+    flex-direction : column;
     width: 50%;
     height: 100%;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    gap : 40px;
+
+    picture{
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    }
+
     img {
         width: 100%;
     }
@@ -218,6 +488,11 @@
         flex-direction: column;
         width: 100%;
     }
+    .dt__flex{
+        width: 100%;
+        display: flex;
+        //justify-content:center;
+    }
     dt {
         justify-content: flex-start;
     }
@@ -225,6 +500,7 @@
     pre {
         font-family: global.$font-title;
         word-break: break-all;
+        font-weight : 400;
     }
     dd {
         padding-left: 16px;
@@ -254,9 +530,41 @@
             max-width: none;
         }
     }
+    .l-works__slideinfo__wrapper{
+        .l-works__slideinfo__inner{
+            padding-bottom: 40%;
+        }
+    }
 }
 
 @include global.mq('sp') {
+    .l-works__inner {
+        &[data-page="top"]{
+            margin-right : auto;
+        }
+    }
+    .l-works__content__background {
+        .swiper{
+            display: none;
+        }
+        background-color : white;
+    }
+    .l-works__content__wrapper {
+        &[data-page="top"]{
+            transform : none;
+            max-width: none;
+            margin-top: 80px;
+        }
+    }
+    .l-works__imageitems {
+        flex-direction: column;
+        //grid-template-columns: 1fr;
+        row-gap : 40px;
+        .l-works__item {
+            max-width : none;
+        }
+    }
+
     .l-works__items {
         flex-direction: column;
         grid-template-columns: 1fr;
@@ -298,5 +606,13 @@
         .c-title__bg {
             width: 100%;
         }
+    }
+    .l-works__imagebutton__wrapper {
+        .p-button__pf{
+            max-width:calc( 100% - 48px );
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    
     }
 }

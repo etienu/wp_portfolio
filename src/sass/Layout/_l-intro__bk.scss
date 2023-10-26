@@ -6,7 +6,7 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    padding : 200px 0;
+    padding : 100px 0;
     background-color : white;
 }
 
@@ -63,50 +63,83 @@
         color : goldenrod;
         font-family : g.$font-NotoSansJP;
         text-align:right;
-        span{
-            display:inline-block;
-        }
 
     }
     .l-intro__lead {
         text-align:left;
-        //font-feature-settings: 'palt' 1;
-        //letter-spacing : 1.5px;
-        margin: auto 10px;
-        [data-eff="gsapintro_txtmarker"]{
-            position : relative;
-            $col : goldenrod;
-            //$col : g.$color-main-background;// lightgreen;
-            z-index: 0;
-            //  マーカー演出
-            &[data-type="marker"]{
-                transition :color 1.0s,font-weight 2.0s, background 1.0s;
-                background:linear-gradient($col, $col);
-                background-position : 0 100%;
-                background-size : 0% 100%;
-                background-repeat : no-repeat;
-                padding : 0 10px;
-                margin-left : -10px;
-                &[data-disp="true"]{
-                    background-size: 100% 100%;
-                    color : white;
-                }
-            }
-            //  色変化
-            &[data-type="color"]{
-                transition :color 1.0s,font-weight 2.0s, background 2.0s;
-                background : none;
-                &[data-disp="true"]{
-                    color : $col;
-                }
-            }
-        }
+        margin:auto;
     }
 
 }
 
 
 
+
+
+.coffee {
+    position: absolute;//relative;
+    display: flex;
+    justify-content: center;
+    left: 0;
+
+    .coffee_text {
+      position: absolute;
+      bottom: 140px;
+      width: 136px;
+      //font-family: serif;
+      //color: #47443b;
+      font-size: 48px;
+      color : goldenrod;
+      font-family : g.$font-NotoSansJP;
+
+      span {
+        position: absolute;
+        display: block;
+        //font-size: 16px;
+        offset-path: path("M97,304C97,304 294.454,336.553 419,304C543.546,271.447 580.462,247.296 571,214C561.538,180.704 559.648,169.635 525,165C490.352,160.365 111,165 111,165");
+        //offset-path: path("m61.498,27.295c9.366,9.437,4.071,22.205-6.929,23.205-10.006.91-19.834-7.567-19.834-23.475,0-13,12.942-24.525,31.834-24.525,18.704,0,25.174,19.976,25,32-.231,16.017-7.03,24.708-13,34-18.22,28.357-18.22,49.926-13,58");
+        opacity: 0;
+        //animation: move-text 3.2s linear infinite, distort-text 3.2s linear infinite;
+      }
+  /*
+      //@for $i from 1 through 17 {
+        > span:nth-child(#{$i}) {
+          animation-delay: $i * 0.1s;
+        }
+      }
+  
+      @keyframes move-text {
+        0% {
+          offset-distance: 0%;
+          opacity: 0;
+        }
+        10%, 90% {
+          opacity: 1;
+        }
+        100% {
+          offset-distance: 100%;
+          opacity: 0;
+        }
+      }
+  
+      @keyframes distort-text {
+        45% {
+          transform: scaleY(1);
+        }
+        65% {
+          transform: scale(1, 1);
+        }
+        85% {
+          transform: scale(1, 1);
+        }
+        100% {
+          transform: scale(1, -0.5);
+        }
+      }
+*/      
+    }
+  }
+  
 //--------------------------------
 //  レスポンシブ
 //--------------------------------
@@ -116,27 +149,18 @@
     }
     .l-intro__head {
         width: 100%;
-        max-width: min( 800px, calc(100% - 24px ));
     }
     .l-intro__content {
-        flex-direction : column;
-        justify-content : center;
-        max-width: calc(100% - 24px);
         width: 100%;
-        gap: 8px;
         .l-intro__ideal {
-            width: fit-content;//100%;
+            width: 100%;
             font-size : 40px;
             line-height: 78px;
-        //    max-width: 39%;
-            //max-width: min( 600px, calc( 100% - 24px ));
-            margin:auto;
+            max-width: 40%;
         }
         .l-intro__lead {
-            width: fit-content;//100%;
-        //    max-width: 66%;
-            //max-width: min( 600px, calc( 100% - 24px ));
-            margin:auto;
+            width: 100%;
+            max-width: 65%;
         }
     }
 }
@@ -156,26 +180,16 @@
     .l-intro__content {
         flex-direction : column;    
         max-width: calc(100% - 24px);
-        //font-size: 14px;
+        font-size: 14px;
         .l-intro__ideal {
-            //max-width: 100%;
+            max-width: 100%;
             line-height: inherit;
-            //text-align:center;
+            text-align:center;
         }
         .l-intro__lead {
-            margin-top : 20px;
-            font-size: 16px;
-            //max-width: 100%;
+            max-width: 100%;
             text-align:center;
-            //margin-left: 0px;
-        }
-    }
-}
-
-@include g.mq('ip') {
-    .l-intro__content {
-        .l-intro__ideal {
-            font-size : 38px;
+            margin-left: 0px;
         }
     }
 }

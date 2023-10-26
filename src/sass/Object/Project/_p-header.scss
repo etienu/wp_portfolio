@@ -51,7 +51,7 @@
             font-weight: bold;
             font-size: clamp(14px, 2vw, 18px);
             margin: auto clamp( 10px, 1vw, 20px);
-            transition: 0.3s color;
+            transition: color 0.3s;
             position: relative;
             span[data-parts="boxlt"],
             span[data-parts="boxrb"] {
@@ -113,7 +113,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    transition: 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
     i {
         font-size: 40px;
     }

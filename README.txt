@@ -4,11 +4,13 @@ assets : 実際にサイトで使用されるデータフォルダです。
   controlpanel / 管理画面の独自ページに関するコード
   css / コンパイルして出力されたcss
     lib / 利用するライブラリのcss
+    style-admin.css : 管理画面要css
   images / 画像・動画データ
   js / コンパイルして出力されたjs
     lib / 利用するライブラリのjs
   php / パーツとして読み込み使用するphpコード
-    inc / function.php内で必要に応じincludeして使用する機能付け外しコード
+    inc / function.php内で必要に応じてincludeし、機能を付け外しするコード
+    task / jsから呼び出しPHP・WordPressの処理をさせるコード
     template-parts / サイト内でget_template_partで呼び出すパーツ。引数に対応しコードをすっきりさせます。
 
 src : 制作中に使うソースフォルダです。出力はassetsに行われ、完成時は外します。

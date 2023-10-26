@@ -26,7 +26,8 @@
         <?php /* 見出し : 404 404NotFound  */ ?>
         <div class="u-margin__t80"></div>
         <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
-        ['title' => '404','lead'=>"404NotFound",'id'=>"nf",'color'=>'green'] ); ?>
+        ['title' => '404','lead'=>"404NotFound",'id'=>"nf",
+        'side'=>'left', 'color'=>'green'] ); ?>
 
         <div class="p-contact__complete u-margin__t80">
             お探しのページは見つかりませんでした。<br>
@@ -47,6 +48,9 @@
     </div>
 
 </main>
+
+<?php /* お問い合わせボタンパーツ */ ?>
+<?php get_template_part(GET_PATH_R('template').'layout/contact/l-contact-conv', null,['color'=>'green'] ); ?>
 
 <?php get_footer(); ?>
 

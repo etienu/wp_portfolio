@@ -1,10 +1,5 @@
 <head>
 	<meta charset="UTF-8">
-	<?php /* CSS and JavaScript */ ?>
-	<script><?php global $template;?>
-	const wp_template = "<?php echo basename( $template ); ?>";
-	const wp_imgpath = "<?php echo GET_PATH(); ?>";
-	const wp_rootpath = "<?php echo GET_PATH('root'); ?>";</script>
 	<?php
 	//	CSS読み込み
 	//	静的コーディング : ここで記述
@@ -49,7 +44,11 @@
 
 	<?php /* 他 */ ?>
 	<link rel="canonical" href="<?php echo get_pagenum_link(1); ?>">
-
+	<?php /*
+		IE終了の現在不要
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		*/
+	 ?>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="format-detection" content="telephone=no">
 
@@ -58,15 +57,23 @@
 		<meta name="robots" content="noindex,nofollow">
 	<?php endif; ?>
 
+
+	<?php
+	/*
+		<!-- preconnect : 事前接続 -->
+		<link rel="preconnect" href="https://google-analytics.com">
+		<!-- google adsense -->
+		<!-- google search console -->*/
+	?>
 	<!-- Google tag (gtag.js)
 	 -->
-	 <script async src="https://www.googletagmanager.com/gtag/js?id=********"></script>
+	 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMDCTD1P1Z"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 
-		gtag('config', '********');
+		gtag('config', 'G-BMDCTD1P1Z');
 	</script>
 
 

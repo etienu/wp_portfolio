@@ -76,14 +76,14 @@ $TWITTER_ACCOUNT_ID = '';
 
 //  reCAPTCHAv3
 //  js受け渡しでheadに書いてしまうぐらいなら直接javascriptに置いといた方がいいのでは
-$reCAPTCHA_site_key = "********";
-$reCAPTCHA_secret_key = "********";
+$reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
+$reCAPTCHA_secret_key = "6Ld-v70lAAAAAJP86aWA7VQMzv8cIdRu069802Ur";
 
 //  wpmail()メール設定
 define( 'SMTP_HOST', 'sv2339.xserver.jp' );       //メールサーバーのホスト名
 define( 'SMTP_PORT', '465' );       //SMTPポート番号(ssl:465 tls:587)
-define( 'SMTP_USERNAME', '********' );   //ユーザー名
-define( 'SMTP_PASSWORD', '********' );   //パスワード
+define( 'SMTP_USERNAME', 'contact@nino-code.com' );   //ユーザー名
+define( 'SMTP_PASSWORD', 'p5ie1sewo3t' );   //パスワード
 
 
 //----------------------------------------------------
@@ -145,10 +145,24 @@ function disable_author_archive() {
       wp_safe_redirect( home_url('/404.php') );
       exit;
     }
-  }
+}
 add_action('init', 'disable_author_archive');
 
+//----------------------------------------------------
+//  管理用の固定ページにアクセスしたら404リダイレクト
+//----------------------------------------------------
+function disable_page() {
+  if( preg_match('.site_customfield.', $_SERVER['REQUEST_URI']) ){
+    wp_safe_redirect( home_url('/404.php') );
+    exit;
+  }
+}
+add_action('init', 'disable_page');
+
+
+//----------------------------------------------------
 //  ログインページ変更
+//----------------------------------------------------
 include GET_PATH_R('php')."inc/login.php";
 
 
@@ -316,7 +330,7 @@ add_action('admin_enqueue_scripts', 'my_add_admin_style');
 function my_add_admin_style()
 {
   global $WP_CSS_PATH;
-  //wp_enqueue_style('my_add_admin_style', $WP_CSS_PATH . 'style-admin.css');
+  wp_enqueue_style('my_add_admin_style', $WP_CSS_PATH . 'style-admin.css');
 }
 
 //----------------------------------------------------
@@ -663,7 +677,7 @@ function my_enqueue_scripts(){
   if (!is_admin()) {
     //デフォルトjquery削除
     wp_deregister_script( 'jquery' );
-  
+
     //  指定名は全て別にしないと最初の１つしか読み込まれない
     wp_register_script( "headjs-gsap", GET_PATH('js') . "lib/gsap/gsap.min.js", array(),'1.0', false );
     wp_register_script( "headjs-motionpath", GET_PATH('js') . "lib/gsap/MotionPathPlugin.min.js", array(),'1.0', false );
@@ -684,6 +698,16 @@ function my_enqueue_scripts(){
     if (is_page('contact')||is_page('contact-confirm') ) :
       wp_enqueue_script( "headjs-recaptcha", "https://www.google.com/recaptcha/api.js?render=".$reCAPTCHA_site_key, false, false );
     endif;
+
+    //  JavaScript変数受け渡し
+	  global $template;
+    $ary = array(
+      'templatepath' => basename( $template ),
+      'imgpath' => GET_PATH(),
+      'rootpath' => GET_PATH('root')
+    );
+    wp_localize_script('headjs-bundle', 'wp_var', $ary );
+
   }
 }
 add_action( "wp_enqueue_scripts", "my_enqueue_scripts" );
@@ -717,7 +741,7 @@ add_action("phpmailer_init", function ($phpmailer) {
     $phpmailer->Username   = SMTP_USERNAME;   //ユーザー名
     $phpmailer->Password   = SMTP_PASSWORD;   //パスワード
     $phpmailer->SMTPSecure = "ssl";           //SMTP暗号化方式（ssl OR tls）
-    $phpmailer->From       = "contact@etienu.com";    //送信者メールアドレス（Gmailの場合は反映されない）
+    $phpmailer->From       = "contact@nino-code.com";    //送信者メールアドレス（Gmailの場合は反映されない）
   });
 
 

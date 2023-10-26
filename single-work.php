@@ -53,7 +53,9 @@
   ?>
   <div class="l-works__inner">
     <?php /* 見出し : サイト名 種別  */ ?>
-    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null, ['title' => get_the_title(),'lead'=>$category_name,'id'=>"",'color'=>'green'] ); ?>
+    <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
+     ['title' => get_the_title(),'lead'=>$category_name,'id'=>"",
+     'side'=>'left','color'=>'green'] ); ?>
 
 
     <div class="l-works__content__wrapper">
@@ -66,6 +68,46 @@
                 <source srcset="<?php echo GET_PATH()?>works/<?php echo get_post_meta($post->ID, 'work_txt_thumburl', true);?>"  media="(max-width: 768px)" type="image/png"  alt="<?php the_title();?>">
                 <img src="<?php echo GET_PATH()?>works/<?php echo get_post_meta($post->ID, 'work_txt_imageurl', true);?>pc.jpg" alt="全体像" width="600" height="6000" loading="lazy">
             </picture>
+            <?php
+                //  画像名_p2が存在すれば表示
+                $iurl = get_post_meta($post->ID, 'work_txt_imageurl', true);
+                $iurl2 ="";
+                $fname ="";
+                if( $iurl ){
+                    $iurl2 = $iurl."pc_p2";
+                    //  URL
+                    $fname = GET_PATH()."works/".$iurl2.".jpg";
+                    //  URLではだめなので途中からのパス
+                    $checkfname = get_template_directory()."/assets/images/works/".$iurl2.".jpg";
+                    if(file_exists($checkfname)){
+            ?>
+            <picture>
+                <img src="<?php echo $fname;?>" alt="副画像" width="600" height="600" loading="lazy">
+            </picture>
+            <?php
+                    }
+                }
+            ?>
+            <?php
+                //  画像名_p3が存在すれば表示
+                $iurl = get_post_meta($post->ID, 'work_txt_imageurl', true);
+                $iurl2 ="";
+                $fname ="";
+                if( $iurl ){
+                    $iurl2 = $iurl."pc_p3";
+                    //  URL
+                    $fname = GET_PATH()."works/".$iurl2.".jpg";
+                    $checkfname = get_template_directory()."/assets/images/works/".$iurl2.".jpg";
+                    if(file_exists($checkfname)){
+            ?>
+            <picture>
+                <img src="<?php echo $fname;?>" alt="副画像2" width="600" height="600" loading="lazy">
+            </picture>
+            <?php
+                    }
+                }
+            ?>
+
         </div>
         <div class="l-works__infomation">
             <dl>
@@ -155,6 +197,10 @@
     </div>
   </div>
 </section>
+
+<?php /* お問い合わせボタンパーツ */ ?>
+<?php get_template_part(GET_PATH_R('template').'layout/contact/l-contact-conv', null,['color'=>'green'] ); ?>
+
 </main>
 
 <?php get_footer(); ?>

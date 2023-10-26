@@ -30,7 +30,7 @@
       <div>想像を、触れるカタチに</div>
     </h2>
     <div class="l-hero__sublead">
-      <div>シンプルで心地よいサイト、作ります</div>
+      <span>シンプルで心地よいサイト、作ります</span>
     </div>
     <div class="l-hero__scrollbuttonwrapper">
       <a href="#intro">
@@ -108,7 +108,7 @@
         <!-- Slides : グローバルスタンダード -->
         <div class="swiper-slide">
           <?php get_template_part(GET_PATH_R('template').'object/project/p-custompost-worksinfo', null,
-            ['post_type' => 'work','name'=>'wp-01','lead'=>'クライアント様がWP管理画面から<br>情報変更可能な<br>一般的会社HPとなります'] ); ?>
+            ['post_type' => 'work','name'=>'wp-01','lead'=>'クライアント様がWP管理画面から<br>情報変更可能な<br>一般的な会社HPです'] ); ?>
           <picture>
             <source srcset="<?php echo GET_PATH()?>works/pf-wp-01-cover.jpg"  media="(max-width: 768px)" type="image/jpg" alt="">
             <img    src   ="<?php echo GET_PATH()?>works/pf-wp-01-cover_full.jpg" alt="" width="960" height="600" loading="lazy">
@@ -125,7 +125,7 @@
     <?php /* 見出し : 制作実績 */ ?>
       <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
       ['title' => '制作実績','lead'=>"WORKS",'id'=>"works",
-      'side'=>'left'] ); ?>
+      'side'=>'left', 'rotate'=>'true'] ); ?>
   </div>
   <div class="l-works__inner" data-page="top">
     <div class="l-works__content__wrapper" data-page="top">
@@ -169,6 +169,8 @@
     <div class="l-service__content__wrapper">
       <div class="l-service__content__inner">
         <div class="l-service__items">
+          <!--
+          -->
           <div class="l-service__background">
             <div class="l-service__bg__left" data-eff="worksbg-boxl"></div>
             <div class="l-service__bg__right" data-eff="worksbg-boxr3"></div>
@@ -230,7 +232,7 @@
         <div class="u-margin__t80"></div>
         <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
         ['title' => 'できること','lead'=>"SKILL",'id'=>"skills",
-        'color'=>'green', 'side'=>'left'] ); ?>
+        'color'=>'green'] ); ?>
 
         <div class="l-service__skillwrapper">
           <div class="l-service__skillbg">
@@ -331,11 +333,12 @@
 
 <!-- faq -->
 <section class="l-section p-faq">
+    <div class="p-faq__topspace"></div>
     <div class="p-faq__inner">
       <?php /* 見出し : 制作実績 */ ?>
       <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
       ['title' => 'よくある質問','lead'=>"FAQ",'id'=>"faq",
-      'side'=>'right'] ); ?>
+      'side'=>'left'] ); ?>
         <div class="p-faq__content">
             <ul class="p-faq__grid" itemscope itemtype="https://schema.org/FAQPage">
                 <li class="p-faq__griditem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
@@ -349,8 +352,7 @@
                             <div class="p-faq__a__inner" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                                 <p itemprop="text">
                                   NINO-CODEは現状、当サイトの名前となっています。<br>
-                                  私はまだ開業前の個人です。<br><br>
-                                  屋号を登録するのであれば、前職実家の設備管工事会社になぞらえ、苗字+主な仕事内容を連想する名前としてNINO-CODEにしようと考えております。</p>
+                                  私はまだ開業前の個人です。<br>
                             </div>
                         </div>
                     </details>
@@ -400,9 +402,9 @@
                             <div class="p-faq__a__inner" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                                 <p itemprop="text">
                                   頂いた情報を元にNotionやスプレッドシートを利用した
-                                  案件管理ツールに情報をまとめます。<br>
-                                  目安となる工程スケジュール表を作成、各種必要URLやパスワード、情報を一か所にまとめて共有可能です。<br>
-                                  ご質問する内容も、メールでばらばらではなくシートでまとめて共有致します。<br>
+                                  案件管理ツールに情報をまとめます。<br><br>
+                                  目安となる工程スケジュール表を作成、各種必要URLやパスワード、情報を一か所にまとめて共有可能です。<br><br>
+                                  ご質問する内容も、メールでばらばらではなくシートでまとめて共有致します。<br><br>
                                   連絡はメール、zoom、チャットツール等御社に合わせますが記録が残る文面が望ましいです。
                                 </p>
                             </div>
@@ -420,15 +422,21 @@
                         <div class="p-faq__a" data-js="accordion-content">
                             <div class="p-faq__a__inner" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                                 <p itemprop="text">
-                                  基本は仕様を教えて頂いた際に、可能かどうかを判断する検証時間を頂いてからお受けします。<br><br>
-                                  それでも途中から実装難易度の高い要素が発覚した場合、<br>
-                                  一度要点をご相談して代案を出すか、どうしても必要な機能なら同業者に依頼してでも終わらせます。<br><br>
-                                  ですが情報に溢れている現代ですと、一般的に求められている機能の作り方は
-                                  検索やChatGPTへの質問がしっかりできれば答えは得られると考えます。<br>
-                                  (データベースに登録するログインサイト、ECサイト、動的サイトやバックエンドが絡んだような規模のサイトですとまた違う話になってきます)<br><br>
-                                  主な懸念点は「webkit系ブラウザ(iPhone Safari)での解消しがたい挙動違い」といったものになると予想します。<br><br>
-                                  「PC/SPで構成が違う上に複雑なデザイン」<br>
-                                  これは実装できないのではなく時間がかかります。事前に複雑さが分かっていればその分納期を見ていただく・コードの品質より動く事を優先するかご相談という方向性です。
+                                  基本は仕様やデザインを教えて頂いた際に、チェックリストを用いて不明点を洗い出し
+                                  可能かどうかを判断する検証時間を頂いてからお受けします。<br>
+                                  <br>
+                                  それでも途中から実装難易度の高い要素が発覚した場合、
+                                  一度要点をご相談して代案を出すか、どうしても必要な機能なら同業者に依頼してでも終わらせます。<br>
+                                  <br>
+                                  ですが情報に溢れている現代ですと、一般的に必要な機能の作り方は
+                                  検索やChatGPTへの質問で答えは得られると考えます。<br>
+                                  (データベースに登録するログインサイト、ECサイト、動的サイトやバックエンドが絡んだような規模のサイトですとまた違う話になってきます)<br>
+                                  <br>
+                                  主な懸念点は「webkit系ブラウザ(iPhone Safari)で若干挙動が違う」といったものになると予想します。<br>
+                                  <b>現在Macを所持していない事もあり、MacOS上の確認だけをお願いしております。(iPhoneは所持しております)</b><br>
+                                  <br>
+                                  「PC/SPで構成が違いつつ複雑なデザイン」<br>
+                                  これは実装できないのではなく時間がかかります。事前に複雑さが分かっていればその分余裕のある納期をご相談させていただく、急ぎであればコードの品質より動く事を優先するかご相談という方向性です。
                                 </p>
                             </div>
                         </div>
@@ -445,7 +453,7 @@
                         <div class="p-faq__a" data-js="accordion-content">
                             <div class="p-faq__a__inner" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
                                 <p itemprop="text">
-                                可能です。独身ですので、在宅している限り夜間・祭日関係なく作業できます。<br>
+                                可能です。独身ですので、在宅している限り夜間・土日祭日関係なく作業できます。<br><br>
                                 稼働時間としては9:00～18:00を中心に一日８時間、平日休日合わせて週50時間ほど動けます。<br>
                                 </p>
                             </div>
@@ -459,7 +467,7 @@
 
 
 <?php /* お問い合わせボタンパーツ */ ?>
-<?php get_template_part(GET_PATH_R('template').'layout/contact/l-contact-conv' ); ?>
+<?php get_template_part(GET_PATH_R('template').'layout/contact/l-contact-conv', null,['color'=>'white'] ); ?>
 </main>
 
 <?php get_footer(); ?>

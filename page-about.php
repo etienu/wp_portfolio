@@ -32,7 +32,7 @@
             <?php /* 見出し : 自己紹介 */ ?>
             <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
             ['title' => '私について','lead'=>"PROFILE",'id'=>"profile",
-            'side'=>'right'] ); ?>
+            'side'=>'left'] ); ?>
 
         <div class="l-about__lead">
             <div class="l-about__leadblock js-surface__up" data-side="left">
@@ -44,16 +44,24 @@
                     <b>二宮 裕志</b>
                     </strong>
                     <dl>
-                    <div><dt>年齢</dt><dd>41歳(1982年)</dd></div>
-                    <div><dt>出身</dt>
-                        <dd>千葉県</dd>
-                    </div>
+                        <div><dt>年齢</dt><dd>41歳(1982年)</dd></div>
+                        <div><dt>出身</dt><dd>千葉県</dd></div>
                     </dl>
                     <br>
                 </div>
                 <div class="l-about__leadimage">
                     <picture><img src="<?php echo GET_PATH()?>/about/about1.jpg" alt="01" width="300" height="300"></picture>
                 </div>
+            </div>
+            <div class="l-about__leadblock js-surface__up" data-side="center">
+                <p>
+                フリーランスでWeb制作のコーディング業務を代行しています。<br>
+                前職は建築業界、管工事会社に15年程勤務。<br>
+                <br>
+                畑違いに見えますが<br>「設備会社様から管工事業務を請ける」<br>「制作会社様からコーディング業務を請ける」<br>というビジネスの構図は同じです。<br>
+                <br>
+                以下で10代からの簡単な出来事をまとめました。<br>ご興味いただけましたら一読いただけると幸いです。<br>
+                </p>
             </div>
 
             <div class="l-about__leadblock js-surface__up" data-side="right">
@@ -67,7 +75,7 @@
                     N-88BASIC、C++、DirectX<br>
                     といった技術を習得していき<br>
                     ゲーム作りに没頭。<br>
-                    雑誌に投稿し原稿料を頂く経験をします。<br>
+                    <strong>雑誌に投稿し、原稿料を頂く経験をします。</strong><br>
                     <br>
                     自分が生み出したものが世に<br>
                     認知され、評価を頂くという<br>
@@ -119,7 +127,7 @@
                 <br>
                 2020年web制作というお仕事を知ります。<br>
                 <br>
-                設備屋のお仕事自体はあったのですが、<br>
+                設備屋のお仕事は続いていたのですが、<br>
                 コロナの影響で材料費が高騰し採算が合わないので<br>
                 請けられないといった事があり<br>
                 <strong><br class="u-display__sp">
@@ -129,7 +137,7 @@
                 <br>
                 10代からのプログラム経験がありましたが、<br>
                 コーディングは勝手が違い日々勉強が続きました。<br>
-                逆にJSやPHPは習得が早かったです。<br>
+                逆にJSやPHPは馴染みやすかったです。<br>
 
                 </div>
             <div class="l-about__leadimage">
@@ -143,7 +151,7 @@
                     <b>40代、学習継続</b>
                 </strong>
                 <br>
-                退職後、時間ができてから改めて<br>
+                会社都合で退職後、時間ができてから改めて<br>
                 勉強不足を痛感し学習し直しました。<br>
                 <br>
                 今も日々勉強しておりますが、<br>
@@ -195,8 +203,9 @@
         </div>
 
         <div class="l-about__leadblock" data-side="center">
+            <div class="c-anchor__t-100" id="movie"></div>
             <b class=" u-margin__t40">最後に、動画でご挨拶させてください。</b>
-            <video controls>
+            <video controls data-jsitemcounter="about_myvideo">
                 <source src='<?php echo GET_PATH()?>about/selfintro.webm?=2' type="video/webm" />
                 <source src='<?php echo GET_PATH()?>about/selfintro.mp4?=2' type="video/mp4" />
             </video>
@@ -222,7 +231,8 @@
 </section>
 
 <?php /* お問い合わせボタンパーツ */ ?>
-<?php get_template_part(GET_PATH_R('template').'layout/contact/l-contact-conv' ); ?>
+<?php get_template_part(GET_PATH_R('template').'layout/contact/l-contact-conv',
+        null,['color'=>'white'] ); ?>
 </main>
 
 <?php get_footer(); ?>

@@ -27,7 +27,8 @@
   <div class="l-works__inner">
     <?php /* 見出し : できること SKILL  */ ?>
     <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
-    ['title' =>'サイト制作','lead'=>"LP/WordPress",'id'=>"works",'color'=>'green'] ); ?>
+    ['title' =>'サイト制作','lead'=>"LP/WordPress",'id'=>"works",
+    'side'=>'left','color'=>'green'] ); ?>
 
 
     <div class="l-works__content__wrapper">
@@ -92,7 +93,8 @@
         <?php /* 見出し : JavaScript制作 JavaScript  */ ?>
         <div class="u-margin__t80"></div>
         <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
-        ['title' =>'JavaScript','lead'=>"JavaScript",'id'=>"works",'color'=>'green'] ); ?>
+        ['title' =>'JavaScript','lead'=>"JavaScript",'id'=>"works",
+        'color'=>'green'] ); ?>
 
 
         <?php /* JavaScript系 */ ?>
@@ -154,6 +156,9 @@
   </div>
 </section>
 </main>
+
+<?php /* お問い合わせボタンパーツ */ ?>
+<?php get_template_part(GET_PATH_R('template').'layout/contact/l-contact-conv', null,['color'=>'green'] ); ?>
 
 <?php get_footer(); ?>
 

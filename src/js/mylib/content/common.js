@@ -17,7 +17,7 @@ export default class Common {
         //  header.phpで受け渡しているワードプレスのテンプレートファイル名
         //this.wp_template = wp_template;
         //  recaptchaのキー
-        this.reCAPTCHA_site_key = "6Ld-v70lAAAAAH-rR-4E3UJISYwe2Kd7ihL7FM20";
+        this.reCAPTCHA_site_key = "***********";
     }
 
     //------------------------------------------------

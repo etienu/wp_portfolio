@@ -16,7 +16,15 @@
     <div class="l-header__inner">
       <div class="p-header__logo-wrapper">
         <div class="p-header__logo">
-          <a href="<?php echo esc_url(home_url()); ?>"><h1><?php echo get_bloginfo('name');?></h1></a>
+          <a href="<?php echo esc_url(home_url()); ?>">
+            <?php
+                //  ページによってH1かdivか分岐
+                //  カスタム投稿記事「work」
+                if ( is_singular('work') ){ echo "<div>".get_bloginfo('name')."</div>"; }
+                //  他全て
+                else{ echo "<h1>".get_bloginfo('name')."</h1>"; }
+            ?>
+          </a>
         </div>
       </div>
 

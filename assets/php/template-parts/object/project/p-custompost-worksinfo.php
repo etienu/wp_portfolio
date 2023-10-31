@@ -18,25 +18,30 @@ $my_args = array(
     ?>
 
     <div class="l-works__slideinfo__wrapper">
-        <div class="l-works__slideinfo__title">
-            <span class="rect"></span>
-            <p><?php the_title();?></p>
+        <div class="l-works__slideinfo__inner">
+            <div class="l-works__slideinfo__background"></div>
+
+            <div class="l-works__slideinfo__title">
+                <span class="rect"></span>
+                <p><?php the_title();?></p>
+            </div>
+            <div class="l-works__slideinfo__date">
+                <span class="rect"></span>
+                <p>時期 : <?php echo get_post_meta($post->ID, 'work_txt_when', true);?></p>
+            </div>
+            <div class="l-works__slideinfo__days">
+                <span class="rect"></span>
+                <p>日数 : <?php echo get_post_meta($post->ID, 'work_txt_days', true);?></p>
+            </div>
+            <?php if( !empty($args['lead']) ) : ?>
+            <div class="l-works__slideinfo__lead">
+                <span class="rect"></span>
+                <p><?php echo $args['lead'];?></p>
+            </div>
+            <?php endif; ?>
+            <!-- <?php echo get_post_meta($post->ID, 'work_txt_skill', true);?> -->
         </div>
-        <div class="l-works__slideinfo__date">
-            <span class="rect"></span>
-            <p>時期 : <?php echo get_post_meta($post->ID, 'work_txt_when', true);?></p>
-        </div>
-        <div class="l-works__slideinfo__days">
-            <span class="rect"></span>
-            <p>日数 : <?php echo get_post_meta($post->ID, 'work_txt_days', true);?></p>
-        </div>
-        <?php if( !empty($args['lead']) ) : ?>
-        <div class="l-works__slideinfo__lead">
-            <span class="rect"></span>
-            <p><?php echo $args['lead'];?></p>
-        </div>
-        <?php endif; ?>
-        <!-- <?php echo get_post_meta($post->ID, 'work_txt_skill', true);?> -->
+
     </div>
 
     <?php

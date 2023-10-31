@@ -5,7 +5,19 @@
 ?>
   <?php /* 文字列がないと幅が測れない為 */ ?>
   <?php 
+    $cls_rotate = "";
     $c_bg_color = "";
+    $htag = "h2";
+    //  hタグの変更
+    if( array_key_exists( 'htag', $args )){
+      $htag = $args['htag'];
+    }
+    //  rotate使用フラグ
+    if( array_key_exists( 'rotate', $args )){
+      if( strcmp( $args['rotate'], "true" ) == 0 ){
+          $cls_rotate = "rotate";
+      }
+    }
     //  配列に要素"color"があるか
     if( array_key_exists( 'color', $args )){
       //  値はgreenか
@@ -33,8 +45,12 @@
     }
 
   ?>
-  <h2 class="c-title__modan <?php echo $c_bg_color;?>"<?php echo $modanside;?>><?php echo $args['title'];?></h2>
-  <div class="c-title__modan c-title__bg__modan <?php echo $c_bg_color;?>" <?php echo $modansidereverse;?> data-jstype="heading-eff" data-headingtext=<?php echo $args['title'];?>>
+  <?php // H1、H2
+    echo '<'.$htag.' class="c-title__modan '.$c_bg_color.'"'.$modanside.'>';
+    echo $args['title'];
+    echo '</'.$htag.'>';
+  ?>
+  <div class="c-title__modan <?php echo $cls_rotate;?> c-title__bg__modan <?php echo $c_bg_color;?>" <?php echo $modansidereverse;?> data-jstype="heading-eff" data-headingtext=<?php echo $args['title'];?>>
     <span data-headingparts="base">
     <?php
         if( strcmp( $side, "left" ) == 0 ){
@@ -46,7 +62,7 @@
     ?>
     </span>
   </div>
-  <div class="c-title__modan c-title__bg__modan <?php echo $c_bg_color;?>" <?php echo $modanside;?> data-jstype="heading-eff" data-headingtext=<?php echo $args['title'];?>>
+  <div class="c-title__modan <?php echo $cls_rotate;?> c-title__bg__modan <?php echo $c_bg_color;?>" <?php echo $modanside;?> data-jstype="heading-eff" data-headingtext=<?php echo $args['title'];?>>
     <div class="c-anchor__t-100" id="<?php echo $args['id'];?>"></div>
     <span data-headingparts="base">
       <?php

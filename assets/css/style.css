@@ -2768,6 +2768,7 @@ body.dwis-active {
   height: 100%;
   display: flex;
   flex-direction: row;
+  gap: 20px;
 }
 
 .l-works__fullpicture {
@@ -2788,11 +2789,14 @@ body.dwis-active {
   width: 100%;
   max-width: min(50% - 40px, 50%);
   height: 100%;
+  border-radius: 8px;
+  background-color: white;
+  padding: 20px;
+  margin-right: 0;
 }
 
 .l-works__section {
-  margin: 0 80px;
-  width: calc(100% - 80px);
+  width: 100%;
   text-align: left;
 }
 .l-works__section .c-title__bg {
@@ -2827,6 +2831,35 @@ body.dwis-active {
 }
 .l-works__section pre {
   white-space: pre-wrap;
+}
+
+.l-works__passtable dl {
+  border: 1px solid black;
+  width: 100%;
+  max-width: 300px;
+}
+.l-works__passtable dl .item {
+  display: flex;
+  flex-direction: row;
+}
+.l-works__passtable dl .item dt {
+  background-color: #7EAB71;
+  color: #FFFFFF;
+  font-weight: bold;
+  width: 80px;
+  padding: 4px 16px;
+  border-bottom: 1px solid #364a36;
+}
+.l-works__passtable dl .item dd {
+  display: flex;
+  flex: auto;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  border-bottom: 1px solid #7EAB71;
+}
+.l-works__passtable dl .item dd button {
+  height: 100%;
 }
 
 @media screen and (max-width: 959px) {
@@ -4175,6 +4208,9 @@ body.dwis-active {
   background: linear-gradient(to bottom, transparent 0%, #7EAB71 50%, lightgreen 60%, lightgreen 100%);
   border: 3px double #7EAB71;
 }
+.c-title__bg__drop h2 {
+  text-shadow: 0px 0px 8px RGBA(0, 0, 0, 0.8);
+}
 
 .c-title__bg__grad {
   background: linear-gradient(135deg, #7EAB71 0%, #7EAB71 20%, lightgreen 40%, lightgreen 100%);
@@ -4184,6 +4220,17 @@ body.dwis-active {
 .c-title__bg__grad2 {
   background: linear-gradient(-45deg, #7EAB71 0%, #7EAB71 20%, lightgreen 40%, lightgreen 100%);
   border: 3px double #7EAB71;
+}
+
+.c-title__bg__grad3 {
+  background: linear-gradient(-45deg, rgb(197, 197, 197) 0%, rgb(197, 197, 197) 19%, lightgray 20%, white 100%);
+  border: 3px double rgb(197, 197, 197);
+  border-radius: 4px;
+  padding: 16px 40px;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.3));
+}
+.c-title__bg__grad3 h3 {
+  font-weight: 400;
 }
 
 @media screen and (max-width: 959px) {
@@ -4532,6 +4579,9 @@ label:hover .c-form__radio-icon {
   line-height: 1;
 }
 .p-header__logo-wrapper h1 {
+  font-size: 24px;
+}
+.p-header__logo-wrapper div {
   font-size: 24px;
 }
 

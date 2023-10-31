@@ -1463,7 +1463,6 @@ var itemcounters = /*#__PURE__*/function () {
     //  PHPを実行
     //----------------------------------------
     _defineProperty(this, "runPHP", function (i_fileName, i_id) {
-      //    runPHP( i_fileName, i_id ){
       var fname = _this.wptaskdir + i_fileName; //assets/task/以下のファイルを実行
       var xhr = new XMLHttpRequest(); // (1)XMLHttpRequestオブジェクトを作成
       // (2)onreadystatechangeイベントで処理の状況変化を監視
@@ -1478,15 +1477,10 @@ var itemcounters = /*#__PURE__*/function () {
         //  成功
         //console.log("成功しとる");
       };
-      //console.log("runPHP : " + fname);
-      //xhr.open('GET', fname, true );     // (3)HTTPのGETメソッドとアクセスする場所を指定
+
       xhr.open('POST', fname, true); // (3)HTTPのPOSTメソッドとアクセスする場所を指定
       xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); // (3)送信する内容の形式を設定
       var send_txt = 'id=' + i_id;
-      //let fd = new FormData();
-      //fd.append('id', i_id );
-      //console.log( "[send_txt] : " + send_txt );
-      //console.log( fd );
       xhr.send(send_txt); // (4)HTTPリクエストを送信
     });
   }
@@ -1513,7 +1507,6 @@ var itemcounters = /*#__PURE__*/function () {
             //  両方ともスマホで発火しない？
             //  再生時に発火
             el.addEventListener('playing', function () {
-              //  el.playbackRate = 0.75;
               //  phpの実行、IDを渡す
               runphp("task_itemcounter.php", el_id_play);
             });

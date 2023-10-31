@@ -55,7 +55,7 @@
     <?php /* 見出し : サイト名 種別  */ ?>
     <?php get_template_part(GET_PATH_R('template').'object/project/p-heading-eff', null,
      ['title' => get_the_title(),'lead'=>$category_name,'id'=>"",
-     'side'=>'left','color'=>'green'] ); ?>
+     'side'=>'left','color'=>'green', 'htag'=>'h1'] ); ?>
 
 
     <div class="l-works__content__wrapper">
@@ -124,13 +124,37 @@
                 </div>
                 <div class="l-works__section u-margin__t20">
                     <dt class="c-lead">上記リンクはURLにBASIC認証を含めていますので、そのまま移動できます。<br>
-                    もしパスワードを要求された場合は以下を入力して下さい。</dt>
+                    iPhone等でパスワードを要求された場合は以下を入力して下さい。</dt>
                     <dt class="c-lead__hard">BASIC認証</dt>
-                    <dd class="c-lead">USER : <b><?php echo get_post_meta($post->ID, 'work_txt_user', true);?></b></dd>
+                    <dd class="l-works__passtable">
+                        <?php
+                            $pass_user = get_post_meta($post->ID, 'work_txt_user', true);
+                            $pass_pass = get_post_meta($post->ID, 'work_txt_pass', true);
+                        ?>
+                        <dl>
+                            <div class="item"><dt>USER</dt><dd><?php echo $pass_user;?></dd></div>
+                            <div class="item"><dt>PASS</dt><dd><?php echo $pass_pass;?></dd>
+                            <!--
+                                <script language="javascript" type="text/javascript">
+                                    // クリップボードにコピー
+                                    function passTableCopy_OnButtonClick() {
+                                        //  http環境ではエラーになるとの事
+                                        navigator.clipboard.writeText( <?php echo $pass_pass;?> );
+                                        console.log(copyText.value);
+                                    }
+                                </script>                                
+                                <dd><button type="button" onclick="passTableCopy_OnButtonClick();">Copy</button></dd>
+                            -->
+                            </div>
+                        </dl>
+                    <!--USER : <b><?php echo get_post_meta($post->ID, 'work_txt_user', true);?></b> -->
+                    </dd>
                 </div>
+                <!--
                 <div class="l-works__section">
                     <dd class="c-lead">PASS : <b><?php echo get_post_meta($post->ID, 'work_txt_pass', true);?></b></dd>
                 </div>
+                -->
                 <?php endif; ?>
 
                 <?php
@@ -158,29 +182,32 @@
                 <?php endif; ?>
 
                 <div class="l-works__section u-margin__t40">
-                    <dt class="c-title__h3 c-title__bg c-title__bg__grad2">作業範囲</dt>
+                    <dt class="c-title__h2 c-title__bg c-title__bg__drop"><h2>制作情報</h2></dt>
+                </div>
+                <div class="l-works__section u-margin__t20">
+                    <dt class="c-title__h3 c-title__bg c-title__bg__grad3"><h3>作業範囲</h3></dt>
                     <dd><?php echo get_post_meta($post->ID, 'work_txt_mypart', true);?></dd>
                 </div>
-                <div class="l-works__section u-margin__t40">
+                <div class="l-works__section u-margin__t20">
                     <dt>
                         <dl class="rows">
                             <div class="row">
-                                <dt class="c-title__h3 c-title__bg c-title__bg__grad2">時期</dt>
+                                <dt class="c-title__h3 c-title__bg c-title__bg__grad3"><h3>時期</h3></dt>
                                 <dd><?php echo get_post_meta($post->ID, 'work_txt_when', true);?></dd>
                             </div>
                             <div class="row">
-                                <dt class="c-title__h3 c-title__bg c-title__bg__grad2">日数</dt>
+                                <dt class="c-title__h3 c-title__bg c-title__bg__grad3"><h3>日数</h3></dt>
                                 <dd><?php echo get_post_meta($post->ID, 'work_txt_days', true);?></dd>
                             </div>
                         </dl>
                     </dt>
                 </div>
-                <div class="l-works__section u-margin__t40">
-                    <dt class="c-title__h3 c-title__bg c-title__bg__grad2">使用技術</dt>
+                <div class="l-works__section u-margin__t20">
+                    <dt class="c-title__h3 c-title__bg c-title__bg__grad3"><h3>使用技術</h3></dt>
                     <dd><?php echo get_post_meta($post->ID, 'work_txt_skill', true);?></dd>
                 </div>
-                <div class="l-works__section u-margin__t40">
-                    <dt class="c-title__h3 c-title__bg c-title__bg__drop">概要</dt>
+                <div class="l-works__section u-margin__t20">
+                    <dt class="c-title__h3 c-title__bg c-title__bg__grad3"><h3>概要</h3></dt>
                     <dd><pre><?php echo get_post_meta($post->ID, 'work_txt_summary', true);?></pre></dd>
                 </div>
             </dl>

@@ -60,7 +60,7 @@
 
     <div class="l-works__content__wrapper">
       <div class="l-works__content__inner">
-        <div class="l-works__article">
+        <article class="l-works__article">
         <!--記事処理開始 -->
         <?php if( have_posts() ) : ?>
         <div class="l-works__fullpicture">
@@ -213,7 +213,7 @@
             </dl>
         </div>
         <?php endif; ?>
-        </div>
+        </article>
         <!-- 一覧に戻る -->
         <div class="l-works__button__wrapper u-margin__t80">
             <a href="<?php echo esc_url(home_url()); ?>/work" class="c-button__portfolio c-button__hover__back p-button__pf">

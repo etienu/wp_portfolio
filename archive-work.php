@@ -67,7 +67,7 @@
 
             ?>
 
-            <div class="l-works__item">
+            <article class="l-works__item">
                 <div class ="container">
                     <a href="<?php echo get_permalink()?>">
                         <div class="l-works__image">
@@ -82,7 +82,7 @@
                         <div class="c-lead__hard"><?php echo get_post_meta($post->ID, 'work_txt_skill', true);?></div>
                     </div>
                 </div>
-            </div>
+            </article>
 
             <?php
                 endwhile;
@@ -122,7 +122,7 @@
                     if( $work_num_sortindex < 0 ) continue;
             ?>
 
-            <div class="l-works__item">
+            <article class="l-works__item">
                 <div class="container">
                     <a href="<?php echo get_permalink()?>">
                         <div class="l-works__image">
@@ -137,7 +137,7 @@
                         <div class="c-lead__hard"><?php echo get_post_meta($post->ID, 'work_txt_skill', true);?></div>
                     </div>
                 </div>
-            </div>
+            </article>
 
             <?php
                 endwhile;

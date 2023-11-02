@@ -16,7 +16,7 @@
         $my_query->the_post();
     ?>
 
-    <div class="l-works__item <?php echo $effclass;?>">
+    <article class="l-works__item <?php echo $effclass;?>">
         <div class="container">
             <a href="<?php echo get_permalink()?>">
                 <div class="l-works__imagebox">
@@ -31,7 +31,7 @@
                 </div>
                 </a>
         </div>
-    </div>
+    </article>
 
     <?php
         endwhile;
